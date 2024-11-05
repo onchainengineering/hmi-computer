@@ -1,10 +1,9 @@
 import { buildInfo } from "api/queries/buildInfo";
 import { provisionerDaemonGroups } from "api/queries/organizations";
-import type { Organization } from "api/typesGenerated";
 import { EmptyState } from "components/EmptyState/EmptyState";
 import { useEmbeddedMetadata } from "hooks/useEmbeddedMetadata";
 import { useDashboard } from "modules/dashboard/useDashboard";
-import { useManagementSettings } from "modules/management/ManagementSettingsLayout";
+import { useOrganizationSettings } from "modules/management/OrganizationSettingsLayout";
 import type { FC } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
@@ -14,7 +13,7 @@ const OrganizationProvisionersPage: FC = () => {
 	const { organization: organizationName } = useParams() as {
 		organization: string;
 	};
-	const { organization } = useManagementSettings();
+	const { organization } = useOrganizationSettings();
 	const { entitlements } = useDashboard();
 	const { metadata } = useEmbeddedMetadata();
 	const buildInfoQuery = useQuery(buildInfo(metadata["build-info"]));
