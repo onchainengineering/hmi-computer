@@ -6,12 +6,22 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"net/http"
+	"net/url"
+	"os"
 	"reflect"
 	"strconv"
 	"sync"
 	"unicode"
 
+	"golang.org/x/sys/unix"
 	"golang.org/x/xerrors"
+
+	"github.com/hashicorp/go-multierror"
+	"github.com/tailscale/wireguard-go/tun"
+
+	"github.com/coder/coder/v2/codersdk"
+	"github.com/coder/coder/v2/tailnet/proto"
 
 	"cdr.dev/slog"
 )
@@ -24,6 +34,8 @@ type Tunnel struct {
 
 	logMu sync.Mutex
 	logs  []*TunnelMessage
+
+	conn Conn
 }
 
 func NewTunnel(
@@ -42,6 +54,7 @@ func NewTunnel(
 		logger:          logger,
 		requestLoopDone: make(chan struct{}),
 	}
+	logger.AppendSinks(t)
 	t.speaker.start()
 	go t.requestLoop()
 	return t, nil
@@ -54,6 +67,10 @@ func (t *Tunnel) requestLoop() {
 			resp := t.handleRPC(req.msg, req.msg.Rpc.MsgId)
 			if err := req.sendReply(resp); err != nil {
 				t.logger.Debug(t.ctx, "failed to send RPC reply", slog.Error(err))
+			}
+			if _, ok := resp.GetMsg().(*TunnelMessage_Stop); ok {
+				// The speaker has been closed
+				return
 			}
 			continue
 		}
@@ -70,12 +87,8 @@ func (t *Tunnel) handleRPC(req *ManagerMessage, msgID uint64) *TunnelMessage {
 	resp.Rpc = &RPC{ResponseTo: msgID}
 	switch msg := req.GetMsg().(type) {
 	case *ManagerMessage_GetPeerUpdate:
-		// TODO: actually get the peer updates
 		resp.Msg = &TunnelMessage_PeerUpdate{
-			PeerUpdate: &PeerUpdate{
-				UpsertedWorkspaces: nil,
-				UpsertedAgents:     nil,
-			},
+			PeerUpdate: convertWorkspaceUpdate(t.conn.CurrentWorkspaceState()),
 		}
 		return resp
 	case *ManagerMessage_Start:
@@ -84,26 +97,28 @@ func (t *Tunnel) handleRPC(req *ManagerMessage, msgID uint64) *TunnelMessage {
 			slog.F("url", startReq.CoderUrl),
 			slog.F("tunnel_fd", startReq.TunnelFileDescriptor),
 		)
-		// TODO: actually start the tunnel
+		err := t.start(startReq)
+		if err != nil {
+			t.logger.Error(t.ctx, "failed to start tunnel", slog.Error(err))
+		}
 		resp.Msg = &TunnelMessage_Start{
 			Start: &StartResponse{
-				Success: true,
+				Success: err == nil,
 			},
 		}
 		return resp
 	case *ManagerMessage_Stop:
 		t.logger.Info(t.ctx, "stopping CoderVPN tunnel")
-		// TODO: actually stop the tunnel
-		resp.Msg = &TunnelMessage_Stop{
-			Stop: &StopResponse{
-				Success: true,
-			},
-		}
-		err := t.speaker.Close()
+		err := t.stop(msg.Stop)
 		if err != nil {
-			t.logger.Error(t.ctx, "failed to close speaker", slog.Error(err))
+			t.logger.Error(t.ctx, "failed to stop tunnel", slog.Error(err))
 		} else {
 			t.logger.Info(t.ctx, "coderVPN tunnel stopped")
+		}
+		resp.Msg = &TunnelMessage_Stop{
+			Stop: &StopResponse{
+				Success: err == nil,
+			},
 		}
 		return resp
 	default:
@@ -127,6 +142,80 @@ func (t *Tunnel) ApplyNetworkSettings(ctx context.Context, ns *NetworkSettingsRe
 		return xerrors.Errorf("network settings failed: %s", resp.ErrorMessage)
 	}
 	return nil
+}
+
+func (t *Tunnel) PushWorkspaceUpdate(ctx context.Context, update *proto.WorkspaceUpdate) error {
+	msg := &TunnelMessage{
+		Msg: &TunnelMessage_PeerUpdate{
+			PeerUpdate: convertWorkspaceUpdate(update),
+		},
+	}
+	select {
+	case <-t.ctx.Done():
+		return ctx.Err()
+	case t.sendCh <- msg:
+	}
+	return nil
+}
+
+func (t *Tunnel) start(req *StartRequest) error {
+	rawURL := req.GetCoderUrl()
+	if rawURL == "" {
+		return xerrors.New("missing coder url")
+	}
+	svrURL, err := url.Parse(rawURL)
+	if err != nil {
+		return xerrors.Errorf("parse url: %w", err)
+	}
+	apiToken := req.GetApiToken()
+	if apiToken == "" {
+		return xerrors.New("missing api token")
+	}
+
+	sdk := codersdk.New(svrURL)
+	sdk.SetSessionToken(apiToken)
+	client := &Client{sdk: sdk}
+
+	transport := &codersdk.HeaderTransport{
+		Transport: http.DefaultTransport,
+		Header:    http.Header{},
+	}
+	for _, header := range req.GetHeaders() {
+		transport.Header.Add(header.Name, header.Value)
+	}
+	sdk.HTTPClient.Transport = transport
+
+	dev, err := makeTUN(int(req.GetTunnelFileDescriptor()))
+	if err != nil {
+		return xerrors.Errorf("make TUN: %w", err)
+	}
+
+	t.conn, err = client.Dial(t.ctx, &DialOptions{
+		Logger:          t.logger,
+		DNSConfigurator: NewDNSConfigurator(t),
+		Router:          NewRouter(t),
+		TUNDev:          dev,
+		UpdatesCallback: func(wu *proto.WorkspaceUpdate) {
+			err := t.PushWorkspaceUpdate(t.ctx, wu)
+			if err != nil {
+				t.logger.Error(t.ctx, "failed to push workspace update", slog.Error(err))
+			}
+		},
+	})
+	return err
+}
+
+func (t *Tunnel) stop(*StopRequest) error {
+	var err error
+	cErr := t.conn.Close()
+	if cErr != nil {
+		err = multierror.Append(err, xerrors.Errorf("close VPN connection: %w", cErr))
+	}
+	sErr := t.speaker.Close()
+	if sErr != nil {
+		err = multierror.Append(err, xerrors.Errorf("close speaker: %w", sErr))
+	}
+	return err
 }
 
 var _ slog.Sink = &Tunnel{}
@@ -226,4 +315,57 @@ func quote(key string) string {
 		return key
 	}
 	return quoted
+}
+
+func makeTUN(tunFD int) (tun.Device, error) {
+	dupTunFd, err := unix.Dup(tunFD)
+	if err != nil {
+		return nil, xerrors.Errorf("dup tun fd: %w", err)
+	}
+
+	err = unix.SetNonblock(dupTunFd, true)
+	if err != nil {
+		unix.Close(dupTunFd)
+		return nil, xerrors.Errorf("set nonblock: %w", err)
+	}
+	fileTun, err := tun.CreateTUNFromFile(os.NewFile(uintptr(dupTunFd), "/dev/tun"), 0)
+	if err != nil {
+		unix.Close(dupTunFd)
+		return nil, xerrors.Errorf("create TUN from File: %w", err)
+	}
+	return fileTun, nil
+}
+
+func convertWorkspaceUpdate(update *proto.WorkspaceUpdate) *PeerUpdate {
+	out := &PeerUpdate{
+		UpsertedWorkspaces: make([]*Workspace, len(update.UpsertedWorkspaces)),
+		UpsertedAgents:     make([]*Agent, len(update.UpsertedAgents)),
+		DeletedWorkspaces:  make([]*Workspace, len(update.DeletedWorkspaces)),
+		DeletedAgents:      make([]*Agent, len(update.DeletedAgents)),
+	}
+	for i, ws := range update.UpsertedWorkspaces {
+		out.UpsertedWorkspaces[i] = &Workspace{
+			Id:   ws.Id,
+			Name: ws.Name,
+		}
+	}
+	for i, agent := range update.UpsertedAgents {
+		out.UpsertedAgents[i] = &Agent{
+			Id:   agent.Id,
+			Name: agent.Name,
+		}
+	}
+	for i, ws := range update.DeletedWorkspaces {
+		out.DeletedWorkspaces[i] = &Workspace{
+			Id:   ws.Id,
+			Name: ws.Name,
+		}
+	}
+	for i, agent := range update.DeletedAgents {
+		out.DeletedAgents[i] = &Agent{
+			Id:   agent.Id,
+			Name: agent.Name,
+		}
+	}
+	return out
 }

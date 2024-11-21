@@ -1778,6 +1778,10 @@ type fakeWorkspaceUpdatesController struct {
 	calls chan *newWorkspaceUpdatesCall
 }
 
+func (*fakeWorkspaceUpdatesController) CurrentState() *proto.WorkspaceUpdate {
+	panic("unimplemented")
+}
+
 type newWorkspaceUpdatesCall struct {
 	client tailnet.WorkspaceUpdatesClient
 	resp   chan<- tailnet.CloserWaiter

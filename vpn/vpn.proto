@@ -178,6 +178,12 @@ message StartRequest {
 	int32 tunnel_file_descriptor = 1;
 	string coder_url = 2;
 	string api_token = 3;
+	// Additional HTTP headers added to all requests
+	message Header {
+		string name = 1;
+		string value = 2;
+	}
+	repeated Header headers = 4;
 }
 
 message StartResponse {

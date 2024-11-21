@@ -104,6 +104,7 @@ type WorkspaceUpdatesClient interface {
 
 type WorkspaceUpdatesController interface {
 	New(WorkspaceUpdatesClient) CloserWaiter
+	CurrentState() *proto.WorkspaceUpdate
 }
 
 // DNSHostsSetter is something that you can set a mapping of DNS names to IPs on. It's the subset
@@ -856,10 +857,14 @@ func (r *basicResumeTokenRefresher) refresh() {
 }
 
 type tunnelAllWorkspaceUpdatesController struct {
-	coordCtrl     *TunnelSrcCoordController
-	dnsHostSetter DNSHostsSetter
-	ownerUsername string
-	logger        slog.Logger
+	coordCtrl      *TunnelSrcCoordController
+	dnsHostSetter  DNSHostsSetter
+	updateCallback func(*proto.WorkspaceUpdate)
+	ownerUsername  string
+	logger         slog.Logger
+
+	sync.Mutex
+	updater *tunnelUpdater
 }
 
 type workspace struct {
@@ -902,18 +907,51 @@ type agent struct {
 }
 
 func (t *tunnelAllWorkspaceUpdatesController) New(client WorkspaceUpdatesClient) CloserWaiter {
+	t.Lock()
+	defer t.Unlock()
 	updater := &tunnelUpdater{
 		client:         client,
 		errChan:        make(chan error, 1),
 		logger:         t.logger,
 		coordCtrl:      t.coordCtrl,
 		dnsHostsSetter: t.dnsHostSetter,
+		updateCallback: t.updateCallback,
 		ownerUsername:  t.ownerUsername,
 		recvLoopDone:   make(chan struct{}),
 		workspaces:     make(map[uuid.UUID]*workspace),
 	}
-	go updater.recvLoop()
-	return updater
+	t.updater = updater
+	go t.updater.recvLoop()
+	return t.updater
+}
+
+func (t *tunnelAllWorkspaceUpdatesController) CurrentState() *proto.WorkspaceUpdate {
+	t.Lock()
+	defer t.Unlock()
+	if t.updater == nil {
+		return nil
+	}
+	t.updater.Lock()
+	defer t.updater.Unlock()
+	out := &proto.WorkspaceUpdate{
+		UpsertedWorkspaces: make([]*proto.Workspace, 0, len(t.updater.workspaces)),
+		UpsertedAgents:     make([]*proto.Agent, 0, len(t.updater.workspaces)),
+	}
+	for _, w := range t.updater.workspaces {
+		upw := &proto.Workspace{
+			Id:   UUIDToByteSlice(w.id),
+			Name: w.name,
+		}
+		out.UpsertedWorkspaces = append(out.UpsertedWorkspaces, upw)
+		for _, a := range w.agents {
+			out.UpsertedAgents = append(out.UpsertedAgents, &proto.Agent{
+				Id:          UUIDToByteSlice(a.id),
+				Name:        a.name,
+				WorkspaceId: UUIDToByteSlice(w.id),
+			})
+		}
+	}
+	return out
 }
 
 type tunnelUpdater struct {
@@ -922,14 +960,13 @@ type tunnelUpdater struct {
 	client         WorkspaceUpdatesClient
 	coordCtrl      *TunnelSrcCoordController
 	dnsHostsSetter DNSHostsSetter
+	updateCallback func(*proto.WorkspaceUpdate)
 	ownerUsername  string
 	recvLoopDone   chan struct{}
 
-	// don't need the mutex since only manipulated by the recvLoop
-	workspaces map[uuid.UUID]*workspace
-
 	sync.Mutex
-	closed bool
+	workspaces map[uuid.UUID]*workspace
+	closed     bool
 }
 
 func (t *tunnelUpdater) Close(ctx context.Context) error {
@@ -991,6 +1028,8 @@ func (t *tunnelUpdater) recvLoop() {
 }
 
 func (t *tunnelUpdater) handleUpdate(update *proto.WorkspaceUpdate) error {
+	t.Lock()
+	defer t.Unlock()
 	for _, uw := range update.UpsertedWorkspaces {
 		workspaceID, err := uuid.FromBytes(uw.Id)
 		if err != nil {
@@ -1055,6 +1094,10 @@ func (t *tunnelUpdater) handleUpdate(update *proto.WorkspaceUpdate) error {
 		}
 	} else {
 		t.logger.Debug(context.Background(), "skipping setting DNS names because we have no setter")
+	}
+	if t.updateCallback != nil {
+		t.logger.Debug(context.Background(), "calling update callback")
+		t.updateCallback(update)
 	}
 	return nil
 }
@@ -1125,6 +1168,12 @@ func WithDNS(d DNSHostsSetter, ownerUsername string) TunnelAllOption {
 	return func(t *tunnelAllWorkspaceUpdatesController) {
 		t.dnsHostSetter = d
 		t.ownerUsername = ownerUsername
+	}
+}
+
+func WithCallback(cb func(*proto.WorkspaceUpdate)) TunnelAllOption {
+	return func(t *tunnelAllWorkspaceUpdatesController) {
+		t.updateCallback = cb
 	}
 }
 
