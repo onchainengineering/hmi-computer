@@ -8,17 +8,14 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"os"
 	"reflect"
 	"strconv"
 	"sync"
 	"unicode"
 
-	"golang.org/x/sys/unix"
 	"golang.org/x/xerrors"
 
 	"github.com/hashicorp/go-multierror"
-	"github.com/tailscale/wireguard-go/tun"
 
 	"github.com/coder/coder/v2/codersdk"
 	"github.com/coder/coder/v2/tailnet/proto"
@@ -185,6 +182,7 @@ func (t *Tunnel) start(req *StartRequest) error {
 	}
 	sdk.HTTPClient.Transport = transport
 
+	// No-op on non-Darwin platforms.
 	dev, err := makeTUN(int(req.GetTunnelFileDescriptor()))
 	if err != nil {
 		return xerrors.Errorf("make TUN: %w", err)
@@ -315,25 +313,6 @@ func quote(key string) string {
 		return key
 	}
 	return quoted
-}
-
-func makeTUN(tunFD int) (tun.Device, error) {
-	dupTunFd, err := unix.Dup(tunFD)
-	if err != nil {
-		return nil, xerrors.Errorf("dup tun fd: %w", err)
-	}
-
-	err = unix.SetNonblock(dupTunFd, true)
-	if err != nil {
-		unix.Close(dupTunFd)
-		return nil, xerrors.Errorf("set nonblock: %w", err)
-	}
-	fileTun, err := tun.CreateTUNFromFile(os.NewFile(uintptr(dupTunFd), "/dev/tun"), 0)
-	if err != nil {
-		unix.Close(dupTunFd)
-		return nil, xerrors.Errorf("create TUN from File: %w", err)
-	}
-	return fileTun, nil
 }
 
 func convertWorkspaceUpdate(update *proto.WorkspaceUpdate) *PeerUpdate {
