@@ -4,8 +4,8 @@ import (
 	"context"
 	"net/http"
 	"net/netip"
+	"net/url"
 
-	"github.com/tailscale/wireguard-go/tun"
 	"golang.org/x/xerrors"
 	"nhooyr.io/websocket"
 	"tailscale.com/net/dns"
@@ -19,35 +19,66 @@ import (
 	"github.com/coder/quartz"
 )
 
-type Client struct {
-	sdk *codersdk.Client
+type Conn interface {
+	CurrentWorkspaceState() *proto.WorkspaceUpdate
+	Close() error
 }
 
-// NewClient creates a new VPN client.
-func NewClient(c *codersdk.Client) *Client {
-	return &Client{
-		sdk: c,
-	}
+type vpnConn struct {
+	*tailnet.Conn
+
+	cancelFn    func()
+	controller  *tailnet.Controller
+	updatesCtrl *tailnet.TunnelAllWorkspaceUpdatesController
 }
 
-type DialOptions struct {
-	Logger          slog.Logger
-	DNSConfigurator dns.OSConfigurator
-	Router          router.Router
-	TUNDev          tun.Device
-	UpdatesCallback func(*proto.WorkspaceUpdate)
+func (c vpnConn) CurrentWorkspaceState() *proto.WorkspaceUpdate {
+	return c.updatesCtrl.CurrentState()
 }
 
-func (c *Client) Dial(dialCtx context.Context, options *DialOptions) (vpnConn Conn, err error) {
+func (c vpnConn) Close() error {
+	c.cancelFn()
+	<-c.controller.Closed()
+	return c.Conn.Close()
+}
+
+type client struct{}
+
+type Client interface {
+	NewConn(ctx context.Context, serverURL *url.URL, token string, options *Options) (Conn, error)
+}
+
+func NewClient() Client {
+	return &client{}
+}
+
+type Options struct {
+	Headers           http.Header
+	Logger            slog.Logger
+	DNSConfigurator   dns.OSConfigurator
+	Router            router.Router
+	TUNFileDescriptor int
+	UpdateHandler     tailnet.UpdatesHandler
+}
+
+func (*client) NewConn(initCtx context.Context, serverURL *url.URL, token string, options *Options) (vpnC Conn, err error) {
 	if options == nil {
-		options = &DialOptions{}
+		options = &Options{}
 	}
 
-	var headers http.Header
-	if headerTransport, ok := c.sdk.HTTPClient.Transport.(*codersdk.HeaderTransport); ok {
-		headers = headerTransport.Header
+	// No-op on non-Darwin platforms.
+	dev, err := makeTUN(options.TUNFileDescriptor)
+	if err != nil {
+		return nil, xerrors.Errorf("make TUN: %w", err)
 	}
-	headers.Set(codersdk.SessionTokenHeader, c.sdk.SessionToken())
+
+	headers := options.Headers
+	sdk := codersdk.New(serverURL)
+	sdk.SetSessionToken(token)
+	sdk.HTTPClient.Transport = &codersdk.HeaderTransport{
+		Transport: http.DefaultTransport,
+		Header:    headers,
+	}
 
 	// New context, separate from dialCtx. We don't want to cancel the
 	// connection if dialCtx is canceled.
@@ -58,23 +89,24 @@ func (c *Client) Dial(dialCtx context.Context, options *DialOptions) (vpnConn Co
 		}
 	}()
 
-	rpcURL, err := c.sdk.URL.Parse("/api/v2/tailnet")
+	rpcURL, err := sdk.URL.Parse("/api/v2/tailnet")
 	if err != nil {
-		return Conn{}, xerrors.Errorf("parse rpc url: %w", err)
+		return nil, xerrors.Errorf("parse rpc url: %w", err)
 	}
 
-	me, err := c.sdk.User(dialCtx, codersdk.Me)
+	me, err := sdk.User(initCtx, codersdk.Me)
 	if err != nil {
-		return Conn{}, xerrors.Errorf("get user: %w", err)
+		return nil, xerrors.Errorf("get user: %w", err)
 	}
 
-	connInfo, err := workspacesdk.New(c.sdk).AgentConnectionInfoGeneric(dialCtx)
+	connInfo, err := workspacesdk.New(sdk).AgentConnectionInfoGeneric(initCtx)
 	if err != nil {
-		return Conn{}, xerrors.Errorf("get connection info: %w", err)
+		return nil, xerrors.Errorf("get connection info: %w", err)
 	}
 
+	headers.Set(codersdk.SessionTokenHeader, token)
 	dialer := workspacesdk.NewWebsocketDialer(options.Logger, rpcURL, &websocket.DialOptions{
-		HTTPClient:      c.sdk.HTTPClient,
+		HTTPClient:      sdk.HTTPClient,
 		HTTPHeader:      headers,
 		CompressionMode: websocket.CompressionDisabled,
 	}, workspacesdk.WithWorkspaceUpdates(&proto.WorkspaceUpdatesRequest{
@@ -91,10 +123,10 @@ func (c *Client) Dial(dialCtx context.Context, options *DialOptions) (vpnConn Co
 		BlockEndpoints:      connInfo.DisableDirectConnections,
 		DNSConfigurator:     options.DNSConfigurator,
 		Router:              options.Router,
-		TUNDev:              options.TUNDev,
+		TUNDev:              dev,
 	})
 	if err != nil {
-		return Conn{}, xerrors.Errorf("create tailnet: %w", err)
+		return nil, xerrors.Errorf("create tailnet: %w", err)
 	}
 	defer func() {
 		if err != nil {
@@ -108,47 +140,32 @@ func (c *Client) Dial(dialCtx context.Context, options *DialOptions) (vpnConn Co
 	controller.ResumeTokenCtrl = tailnet.NewBasicResumeTokenController(options.Logger, clk)
 	controller.CoordCtrl = coordCtrl
 	controller.DERPCtrl = tailnet.NewBasicDERPController(options.Logger, conn)
-	controller.WorkspaceUpdatesCtrl = tailnet.NewTunnelAllWorkspaceUpdatesController(
+	updatesCtrl := tailnet.NewTunnelAllWorkspaceUpdatesController(
 		options.Logger,
 		coordCtrl,
 		tailnet.WithDNS(conn, me.Name),
-		tailnet.WithCallback(options.UpdatesCallback),
+		tailnet.WithHandler(options.UpdateHandler),
 	)
+	controller.WorkspaceUpdatesCtrl = updatesCtrl
 	controller.Run(ctx)
 
 	options.Logger.Debug(ctx, "running tailnet API v2+ connector")
 
 	select {
-	case <-dialCtx.Done():
-		return Conn{}, xerrors.Errorf("timed out waiting for coordinator and derp map: %w", dialCtx.Err())
+	case <-initCtx.Done():
+		return nil, xerrors.Errorf("timed out waiting for coordinator and derp map: %w", initCtx.Err())
 	case err = <-dialer.Connected():
 		if err != nil {
 			options.Logger.Error(ctx, "failed to connect to tailnet v2+ API", slog.Error(err))
-			return Conn{}, xerrors.Errorf("start connector: %w", err)
+			return nil, xerrors.Errorf("start connector: %w", err)
 		}
 		options.Logger.Debug(ctx, "connected to tailnet v2+ API")
 	}
 
-	return Conn{
-		Conn:       conn,
-		cancelFn:   cancel,
-		controller: controller,
+	return vpnConn{
+		Conn:        conn,
+		cancelFn:    cancel,
+		controller:  controller,
+		updatesCtrl: updatesCtrl,
 	}, nil
-}
-
-type Conn struct {
-	*tailnet.Conn
-
-	cancelFn   func()
-	controller *tailnet.Controller
-}
-
-func (c Conn) CurrentWorkspaceState() *proto.WorkspaceUpdate {
-	return c.controller.WorkspaceUpdatesCtrl.CurrentState()
-}
-
-func (c Conn) Close() error {
-	c.cancelFn()
-	<-c.controller.Closed()
-	return c.Conn.Close()
 }

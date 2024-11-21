@@ -7,6 +7,7 @@ import (
 	"net"
 	"net/netip"
 	"slices"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"testing"
@@ -1451,10 +1452,35 @@ func (f *fakeDNSSetter) SetDNSHosts(hosts map[dnsname.FQDN][]netip.Addr) error {
 	}
 }
 
+func newFakeUpdateHandler(ctx context.Context, t testing.TB) *fakeUpdateHandler {
+	return &fakeUpdateHandler{
+		ctx: ctx,
+		t:   t,
+		ch:  make(chan *proto.WorkspaceUpdate),
+	}
+}
+
+type fakeUpdateHandler struct {
+	ctx context.Context
+	t   testing.TB
+	ch  chan *proto.WorkspaceUpdate
+}
+
+func (f *fakeUpdateHandler) Update(wu *proto.WorkspaceUpdate) error {
+	f.t.Helper()
+	select {
+	case <-f.ctx.Done():
+		return timeoutOnFakeErr
+	case f.ch <- wu:
+		// OK
+	}
+	return nil
+}
+
 func setupConnectedAllWorkspaceUpdatesController(
 	ctx context.Context, t testing.TB, logger slog.Logger, opts ...tailnet.TunnelAllOption,
 ) (
-	*fakeCoordinatorClient, *fakeWorkspaceUpdateClient,
+	*fakeCoordinatorClient, *fakeWorkspaceUpdateClient, *tailnet.TunnelAllWorkspaceUpdatesController,
 ) {
 	fConn := &fakeCoordinatee{}
 	tsc := tailnet.NewTunnelSrcCoordController(logger, fConn)
@@ -1484,7 +1510,7 @@ func setupConnectedAllWorkspaceUpdatesController(
 		err := testutil.RequireRecvCtx(ctx, t, updateCW.Wait())
 		require.ErrorIs(t, err, io.EOF)
 	})
-	return coordC, updateC
+	return coordC, updateC, uut
 }
 
 func TestTunnelAllWorkspaceUpdatesController_Initial(t *testing.T) {
@@ -1492,9 +1518,12 @@ func TestTunnelAllWorkspaceUpdatesController_Initial(t *testing.T) {
 	ctx := testutil.Context(t, testutil.WaitShort)
 	logger := testutil.Logger(t)
 
+	fUH := newFakeUpdateHandler(ctx, t)
 	fDNS := newFakeDNSSetter(ctx, t)
-	coordC, updateC := setupConnectedAllWorkspaceUpdatesController(ctx, t, logger,
-		tailnet.WithDNS(fDNS, "testy"))
+	coordC, updateC, updateCtrl := setupConnectedAllWorkspaceUpdatesController(ctx, t, logger,
+		tailnet.WithDNS(fDNS, "testy"),
+		tailnet.WithHandler(fUH),
+	)
 
 	// Initial update contains 2 workspaces with 1 & 2 agents, respectively
 	w1ID := testUUID(1)
@@ -1541,6 +1570,30 @@ func TestTunnelAllWorkspaceUpdatesController_Initial(t *testing.T) {
 	dnsCall := testutil.RequireRecvCtx(ctx, t, fDNS.calls)
 	require.Equal(t, expectedDNS, dnsCall.hosts)
 	testutil.RequireSendCtx(ctx, t, dnsCall.err, nil)
+
+	// And the callback
+	cbUpdate := testutil.RequireRecvCtx(ctx, t, fUH.ch)
+	require.Equal(t, initUp, cbUpdate)
+
+	// Current state should match
+	state := updateCtrl.CurrentState()
+	slices.SortFunc(state.UpsertedWorkspaces, func(a, b *proto.Workspace) int {
+		return strings.Compare(a.Name, b.Name)
+	})
+	slices.SortFunc(state.UpsertedAgents, func(a, b *proto.Agent) int {
+		return strings.Compare(a.Name, b.Name)
+	})
+	require.Equal(t, &proto.WorkspaceUpdate{
+		UpsertedWorkspaces: []*proto.Workspace{
+			{Id: w1ID[:], Name: "w1"},
+			{Id: w2ID[:], Name: "w2"},
+		},
+		UpsertedAgents: []*proto.Agent{
+			{Id: w1a1ID[:], Name: "w1a1", WorkspaceId: w1ID[:]},
+			{Id: w2a1ID[:], Name: "w2a1", WorkspaceId: w2ID[:]},
+			{Id: w2a2ID[:], Name: "w2a2", WorkspaceId: w2ID[:]},
+		},
+	}, state)
 }
 
 func TestTunnelAllWorkspaceUpdatesController_DeleteAgent(t *testing.T) {
@@ -1548,9 +1601,12 @@ func TestTunnelAllWorkspaceUpdatesController_DeleteAgent(t *testing.T) {
 	ctx := testutil.Context(t, testutil.WaitShort)
 	logger := testutil.Logger(t)
 
+	fUH := newFakeUpdateHandler(ctx, t)
 	fDNS := newFakeDNSSetter(ctx, t)
-	coordC, updateC := setupConnectedAllWorkspaceUpdatesController(ctx, t, logger,
-		tailnet.WithDNS(fDNS, "testy"))
+	coordC, updateC, updateCtrl := setupConnectedAllWorkspaceUpdatesController(ctx, t, logger,
+		tailnet.WithDNS(fDNS, "testy"),
+		tailnet.WithHandler(fUH),
+	)
 
 	w1ID := testUUID(1)
 	w1a1ID := testUUID(1, 1)
@@ -1581,6 +1637,20 @@ func TestTunnelAllWorkspaceUpdatesController_DeleteAgent(t *testing.T) {
 	dnsCall := testutil.RequireRecvCtx(ctx, t, fDNS.calls)
 	require.Equal(t, expectedDNS, dnsCall.hosts)
 	testutil.RequireSendCtx(ctx, t, dnsCall.err, nil)
+
+	cbUpdate := testutil.RequireRecvCtx(ctx, t, fUH.ch)
+	require.Equal(t, initUp, cbUpdate)
+
+	// Current state should match initial
+	state := updateCtrl.CurrentState()
+	require.Equal(t, &proto.WorkspaceUpdate{
+		UpsertedWorkspaces: []*proto.Workspace{
+			{Id: w1ID[:], Name: "w1"},
+		},
+		UpsertedAgents: []*proto.Agent{
+			{Id: w1a1ID[:], Name: "w1a1", WorkspaceId: w1ID[:]},
+		},
+	}, state)
 
 	// Send update that removes w1a1 and adds w1a2
 	agentUpdate := &proto.WorkspaceUpdate{
@@ -1613,6 +1683,19 @@ func TestTunnelAllWorkspaceUpdatesController_DeleteAgent(t *testing.T) {
 	dnsCall = testutil.RequireRecvCtx(ctx, t, fDNS.calls)
 	require.Equal(t, expectedDNS, dnsCall.hosts)
 	testutil.RequireSendCtx(ctx, t, dnsCall.err, nil)
+
+	cbUpdate = testutil.RequireRecvCtx(ctx, t, fUH.ch)
+	require.Equal(t, agentUpdate, cbUpdate)
+
+	state = updateCtrl.CurrentState()
+	require.Equal(t, &proto.WorkspaceUpdate{
+		UpsertedWorkspaces: []*proto.Workspace{
+			{Id: w1ID[:], Name: "w1"},
+		},
+		UpsertedAgents: []*proto.Agent{
+			{Id: w1a2ID[:], Name: "w1a2", WorkspaceId: w1ID[:]},
+		},
+	}, state)
 }
 
 func TestTunnelAllWorkspaceUpdatesController_DNSError(t *testing.T) {

@@ -104,13 +104,17 @@ type WorkspaceUpdatesClient interface {
 
 type WorkspaceUpdatesController interface {
 	New(WorkspaceUpdatesClient) CloserWaiter
-	CurrentState() *proto.WorkspaceUpdate
 }
 
 // DNSHostsSetter is something that you can set a mapping of DNS names to IPs on. It's the subset
 // of the tailnet.Conn that we use to configure DNS records.
 type DNSHostsSetter interface {
 	SetDNSHosts(hosts map[dnsname.FQDN][]netip.Addr) error
+}
+
+// UpdatesHandler is anything that expects a stream of workspace update diffs.
+type UpdatesHandler interface {
+	Update(*proto.WorkspaceUpdate) error
 }
 
 // ControlProtocolClients represents an abstract interface to the tailnet control plane via a set
@@ -856,12 +860,12 @@ func (r *basicResumeTokenRefresher) refresh() {
 	r.timer.Reset(dur, "basicResumeTokenRefresher", "refresh")
 }
 
-type tunnelAllWorkspaceUpdatesController struct {
-	coordCtrl      *TunnelSrcCoordController
-	dnsHostSetter  DNSHostsSetter
-	updateCallback func(*proto.WorkspaceUpdate)
-	ownerUsername  string
-	logger         slog.Logger
+type TunnelAllWorkspaceUpdatesController struct {
+	coordCtrl     *TunnelSrcCoordController
+	dnsHostSetter DNSHostsSetter
+	updateHandler UpdatesHandler
+	ownerUsername string
+	logger        slog.Logger
 
 	sync.Mutex
 	updater *tunnelUpdater
@@ -906,7 +910,7 @@ type agent struct {
 	name string
 }
 
-func (t *tunnelAllWorkspaceUpdatesController) New(client WorkspaceUpdatesClient) CloserWaiter {
+func (t *TunnelAllWorkspaceUpdatesController) New(client WorkspaceUpdatesClient) CloserWaiter {
 	t.Lock()
 	defer t.Unlock()
 	updater := &tunnelUpdater{
@@ -915,7 +919,7 @@ func (t *tunnelAllWorkspaceUpdatesController) New(client WorkspaceUpdatesClient)
 		logger:         t.logger,
 		coordCtrl:      t.coordCtrl,
 		dnsHostsSetter: t.dnsHostSetter,
-		updateCallback: t.updateCallback,
+		updateHandler:  t.updateHandler,
 		ownerUsername:  t.ownerUsername,
 		recvLoopDone:   make(chan struct{}),
 		workspaces:     make(map[uuid.UUID]*workspace),
@@ -925,7 +929,7 @@ func (t *tunnelAllWorkspaceUpdatesController) New(client WorkspaceUpdatesClient)
 	return t.updater
 }
 
-func (t *tunnelAllWorkspaceUpdatesController) CurrentState() *proto.WorkspaceUpdate {
+func (t *TunnelAllWorkspaceUpdatesController) CurrentState() *proto.WorkspaceUpdate {
 	t.Lock()
 	defer t.Unlock()
 	if t.updater == nil {
@@ -960,7 +964,7 @@ type tunnelUpdater struct {
 	client         WorkspaceUpdatesClient
 	coordCtrl      *TunnelSrcCoordController
 	dnsHostsSetter DNSHostsSetter
-	updateCallback func(*proto.WorkspaceUpdate)
+	updateHandler  UpdatesHandler
 	ownerUsername  string
 	recvLoopDone   chan struct{}
 
@@ -1095,9 +1099,12 @@ func (t *tunnelUpdater) handleUpdate(update *proto.WorkspaceUpdate) error {
 	} else {
 		t.logger.Debug(context.Background(), "skipping setting DNS names because we have no setter")
 	}
-	if t.updateCallback != nil {
-		t.logger.Debug(context.Background(), "calling update callback")
-		t.updateCallback(update)
+	if t.updateHandler != nil {
+		t.logger.Debug(context.Background(), "calling update handler")
+		err := t.updateHandler.Update(update)
+		if err != nil {
+			t.logger.Error(context.Background(), "failed to call update handler", slog.Error(err))
+		}
 	}
 	return nil
 }
@@ -1160,20 +1167,20 @@ func (t *tunnelUpdater) allDNSNames() map[dnsname.FQDN][]netip.Addr {
 	return names
 }
 
-type TunnelAllOption func(t *tunnelAllWorkspaceUpdatesController)
+type TunnelAllOption func(t *TunnelAllWorkspaceUpdatesController)
 
 // WithDNS configures the tunnelAllWorkspaceUpdatesController to set DNS names for all workspaces
 // and agents it learns about.
 func WithDNS(d DNSHostsSetter, ownerUsername string) TunnelAllOption {
-	return func(t *tunnelAllWorkspaceUpdatesController) {
+	return func(t *TunnelAllWorkspaceUpdatesController) {
 		t.dnsHostSetter = d
 		t.ownerUsername = ownerUsername
 	}
 }
 
-func WithCallback(cb func(*proto.WorkspaceUpdate)) TunnelAllOption {
-	return func(t *tunnelAllWorkspaceUpdatesController) {
-		t.updateCallback = cb
+func WithHandler(h UpdatesHandler) TunnelAllOption {
+	return func(t *TunnelAllWorkspaceUpdatesController) {
+		t.updateHandler = h
 	}
 }
 
@@ -1182,8 +1189,8 @@ func WithCallback(cb func(*proto.WorkspaceUpdate)) TunnelAllOption {
 // DNSHostSetter is provided, it also programs DNS hosts based on the agent and workspace names.
 func NewTunnelAllWorkspaceUpdatesController(
 	logger slog.Logger, c *TunnelSrcCoordController, opts ...TunnelAllOption,
-) WorkspaceUpdatesController {
-	t := &tunnelAllWorkspaceUpdatesController{logger: logger, coordCtrl: c}
+) *TunnelAllWorkspaceUpdatesController {
+	t := &TunnelAllWorkspaceUpdatesController{logger: logger, coordCtrl: c}
 	for _, opt := range opts {
 		opt(t)
 	}

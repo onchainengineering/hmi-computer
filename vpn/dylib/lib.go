@@ -47,7 +47,7 @@ func OpenTunnel(cReadFD, cWriteFD int32) int32 {
 	}
 
 	// Logs will be sent over the protocol
-	_, err = vpn.NewTunnel(ctx, slog.Make(), conn)
+	_, err = vpn.NewTunnel(ctx, slog.Make(), conn, vpn.NewClient())
 	if err != nil {
 		unix.Close(readFD)
 		unix.Close(writeFD)

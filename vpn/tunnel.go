@@ -15,9 +15,6 @@ import (
 
 	"golang.org/x/xerrors"
 
-	"github.com/hashicorp/go-multierror"
-
-	"github.com/coder/coder/v2/codersdk"
 	"github.com/coder/coder/v2/tailnet/proto"
 
 	"cdr.dev/slog"
@@ -32,15 +29,19 @@ type Tunnel struct {
 	logMu sync.Mutex
 	logs  []*TunnelMessage
 
-	conn Conn
+	client Client
+	conn   Conn
 }
 
 func NewTunnel(
-	ctx context.Context, logger slog.Logger, conn io.ReadWriteCloser,
+	ctx context.Context,
+	logger slog.Logger,
+	mgrConn io.ReadWriteCloser,
+	client Client,
 ) (*Tunnel, error) {
 	logger = logger.Named("vpn")
 	s, err := newSpeaker[*TunnelMessage, *ManagerMessage](
-		ctx, logger, conn, SpeakerRoleTunnel, SpeakerRoleManager)
+		ctx, logger, mgrConn, SpeakerRoleTunnel, SpeakerRoleManager)
 	if err != nil {
 		return nil, err
 	}
@@ -50,8 +51,8 @@ func NewTunnel(
 		ctx:             ctx,
 		logger:          logger,
 		requestLoopDone: make(chan struct{}),
+		client:          client,
 	}
-	logger.AppendSinks(t)
 	t.speaker.start()
 	go t.requestLoop()
 	return t, nil
@@ -66,7 +67,11 @@ func (t *Tunnel) requestLoop() {
 				t.logger.Debug(t.ctx, "failed to send RPC reply", slog.Error(err))
 			}
 			if _, ok := resp.GetMsg().(*TunnelMessage_Stop); ok {
-				// The speaker has been closed
+				// TODO: Wait for the reply to be sent before closing the speaker.
+				// err := t.speaker.Close()
+				// if err != nil {
+				// 	t.logger.Error(t.ctx, "failed to close speaker", slog.Error(err))
+				// }
 				return
 			}
 			continue
@@ -141,7 +146,7 @@ func (t *Tunnel) ApplyNetworkSettings(ctx context.Context, ns *NetworkSettingsRe
 	return nil
 }
 
-func (t *Tunnel) PushWorkspaceUpdate(ctx context.Context, update *proto.WorkspaceUpdate) error {
+func (t *Tunnel) Update(update *proto.WorkspaceUpdate) error {
 	msg := &TunnelMessage{
 		Msg: &TunnelMessage_PeerUpdate{
 			PeerUpdate: convertWorkspaceUpdate(update),
@@ -149,7 +154,7 @@ func (t *Tunnel) PushWorkspaceUpdate(ctx context.Context, update *proto.Workspac
 	}
 	select {
 	case <-t.ctx.Done():
-		return ctx.Err()
+		return t.ctx.Err()
 	case t.sendCh <- msg:
 	}
 	return nil
@@ -168,52 +173,32 @@ func (t *Tunnel) start(req *StartRequest) error {
 	if apiToken == "" {
 		return xerrors.New("missing api token")
 	}
-
-	sdk := codersdk.New(svrURL)
-	sdk.SetSessionToken(apiToken)
-	client := &Client{sdk: sdk}
-
-	transport := &codersdk.HeaderTransport{
-		Transport: http.DefaultTransport,
-		Header:    http.Header{},
-	}
-	for _, header := range req.GetHeaders() {
-		transport.Header.Add(header.Name, header.Value)
-	}
-	sdk.HTTPClient.Transport = transport
-
-	// No-op on non-Darwin platforms.
-	dev, err := makeTUN(int(req.GetTunnelFileDescriptor()))
-	if err != nil {
-		return xerrors.Errorf("make TUN: %w", err)
+	var header http.Header
+	for _, h := range req.GetHeaders() {
+		header.Add(h.GetName(), h.GetValue())
 	}
 
-	t.conn, err = client.Dial(t.ctx, &DialOptions{
-		Logger:          t.logger,
-		DNSConfigurator: NewDNSConfigurator(t),
-		Router:          NewRouter(t),
-		TUNDev:          dev,
-		UpdatesCallback: func(wu *proto.WorkspaceUpdate) {
-			err := t.PushWorkspaceUpdate(t.ctx, wu)
-			if err != nil {
-				t.logger.Error(t.ctx, "failed to push workspace update", slog.Error(err))
-			}
+	t.conn, err = t.client.NewConn(
+		t.ctx,
+		svrURL,
+		apiToken,
+		&Options{
+			Headers:           header,
+			Logger:            t.logger,
+			DNSConfigurator:   NewDNSConfigurator(t),
+			Router:            NewRouter(t),
+			TUNFileDescriptor: int(req.GetTunnelFileDescriptor()),
+			UpdateHandler:     t,
 		},
-	})
+	)
 	return err
 }
 
 func (t *Tunnel) stop(*StopRequest) error {
-	var err error
-	cErr := t.conn.Close()
-	if cErr != nil {
-		err = multierror.Append(err, xerrors.Errorf("close VPN connection: %w", cErr))
+	if t.conn == nil {
+		return nil
 	}
-	sErr := t.speaker.Close()
-	if sErr != nil {
-		err = multierror.Append(err, xerrors.Errorf("close speaker: %w", sErr))
-	}
-	return err
+	return t.conn.Close()
 }
 
 var _ slog.Sink = &Tunnel{}
@@ -255,6 +240,40 @@ func sinkEntryToPb(e slog.SinkEntry) *Log {
 		})
 	}
 	return l
+}
+
+func convertWorkspaceUpdate(update *proto.WorkspaceUpdate) *PeerUpdate {
+	out := &PeerUpdate{
+		UpsertedWorkspaces: make([]*Workspace, len(update.UpsertedWorkspaces)),
+		UpsertedAgents:     make([]*Agent, len(update.UpsertedAgents)),
+		DeletedWorkspaces:  make([]*Workspace, len(update.DeletedWorkspaces)),
+		DeletedAgents:      make([]*Agent, len(update.DeletedAgents)),
+	}
+	for i, ws := range update.UpsertedWorkspaces {
+		out.UpsertedWorkspaces[i] = &Workspace{
+			Id:   ws.Id,
+			Name: ws.Name,
+		}
+	}
+	for i, agent := range update.UpsertedAgents {
+		out.UpsertedAgents[i] = &Agent{
+			Id:   agent.Id,
+			Name: agent.Name,
+		}
+	}
+	for i, ws := range update.DeletedWorkspaces {
+		out.DeletedWorkspaces[i] = &Workspace{
+			Id:   ws.Id,
+			Name: ws.Name,
+		}
+	}
+	for i, agent := range update.DeletedAgents {
+		out.DeletedAgents[i] = &Agent{
+			Id:   agent.Id,
+			Name: agent.Name,
+		}
+	}
+	return out
 }
 
 // the following are taken from sloghuman:
@@ -313,38 +332,4 @@ func quote(key string) string {
 		return key
 	}
 	return quoted
-}
-
-func convertWorkspaceUpdate(update *proto.WorkspaceUpdate) *PeerUpdate {
-	out := &PeerUpdate{
-		UpsertedWorkspaces: make([]*Workspace, len(update.UpsertedWorkspaces)),
-		UpsertedAgents:     make([]*Agent, len(update.UpsertedAgents)),
-		DeletedWorkspaces:  make([]*Workspace, len(update.DeletedWorkspaces)),
-		DeletedAgents:      make([]*Agent, len(update.DeletedAgents)),
-	}
-	for i, ws := range update.UpsertedWorkspaces {
-		out.UpsertedWorkspaces[i] = &Workspace{
-			Id:   ws.Id,
-			Name: ws.Name,
-		}
-	}
-	for i, agent := range update.UpsertedAgents {
-		out.UpsertedAgents[i] = &Agent{
-			Id:   agent.Id,
-			Name: agent.Name,
-		}
-	}
-	for i, ws := range update.DeletedWorkspaces {
-		out.DeletedWorkspaces[i] = &Workspace{
-			Id:   ws.Id,
-			Name: ws.Name,
-		}
-	}
-	for i, agent := range update.DeletedAgents {
-		out.DeletedAgents[i] = &Agent{
-			Id:   agent.Id,
-			Name: agent.Name,
-		}
-	}
-	return out
 }
