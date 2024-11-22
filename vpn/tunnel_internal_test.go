@@ -4,6 +4,7 @@ import (
 	"context"
 	"net"
 	"net/url"
+	"sync"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -29,7 +30,12 @@ type fakeClient struct {
 var _ Client = (*fakeClient)(nil)
 
 func (f *fakeClient) NewConn(context.Context, *url.URL, string, *Options) (Conn, error) {
-	return testutil.RequireRecvCtx(f.ctx, f.t, f.ch), nil
+	select {
+	case <-f.ctx.Done():
+		return nil, f.ctx.Err()
+	case conn := <-f.ch:
+		return conn, nil
+	}
 }
 
 func newFakeConn(state *proto.WorkspaceUpdate) *fakeConn {
@@ -40,8 +46,9 @@ func newFakeConn(state *proto.WorkspaceUpdate) *fakeConn {
 }
 
 type fakeConn struct {
-	state  *proto.WorkspaceUpdate
-	closed chan struct{}
+	state   *proto.WorkspaceUpdate
+	closed  chan struct{}
+	doClose sync.Once
 }
 
 var _ Conn = (*fakeConn)(nil)
@@ -51,7 +58,9 @@ func (f *fakeConn) CurrentWorkspaceState() *proto.WorkspaceUpdate {
 }
 
 func (f *fakeConn) Close() error {
-	close(f.closed)
+	f.doClose.Do(func() {
+		close(f.closed)
+	})
 	return nil
 }
 

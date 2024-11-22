@@ -34,11 +34,11 @@ type vpnConn struct {
 	updatesCtrl *tailnet.TunnelAllWorkspaceUpdatesController
 }
 
-func (c vpnConn) CurrentWorkspaceState() *proto.WorkspaceUpdate {
+func (c *vpnConn) CurrentWorkspaceState() *proto.WorkspaceUpdate {
 	return c.updatesCtrl.CurrentState()
 }
 
-func (c vpnConn) Close() error {
+func (c *vpnConn) Close() error {
 	c.cancelFn()
 	<-c.controller.Closed()
 	return c.Conn.Close()
@@ -89,8 +89,8 @@ func (*client) NewConn(initCtx context.Context, serverURL *url.URL, token string
 		Header:    headers,
 	}
 
-	// New context, separate from dialCtx. We don't want to cancel the
-	// connection if dialCtx is canceled.
+	// New context, separate from initCtx. We don't want to cancel the
+	// connection if initCtx is canceled.
 	ctx, cancel := context.WithCancel(context.Background())
 	defer func() {
 		if err != nil {
@@ -171,7 +171,7 @@ func (*client) NewConn(initCtx context.Context, serverURL *url.URL, token string
 		options.Logger.Debug(ctx, "connected to tailnet v2+ API")
 	}
 
-	return vpnConn{
+	return &vpnConn{
 		Conn:        conn,
 		cancelFn:    cancel,
 		controller:  controller,

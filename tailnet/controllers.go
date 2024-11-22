@@ -867,7 +867,7 @@ type TunnelAllWorkspaceUpdatesController struct {
 	ownerUsername string
 	logger        slog.Logger
 
-	sync.Mutex
+	mu      sync.Mutex
 	updater *tunnelUpdater
 }
 
@@ -911,8 +911,8 @@ type agent struct {
 }
 
 func (t *TunnelAllWorkspaceUpdatesController) New(client WorkspaceUpdatesClient) CloserWaiter {
-	t.Lock()
-	defer t.Unlock()
+	t.mu.Lock()
+	defer t.mu.Unlock()
 	updater := &tunnelUpdater{
 		client:         client,
 		errChan:        make(chan error, 1),
@@ -930,8 +930,8 @@ func (t *TunnelAllWorkspaceUpdatesController) New(client WorkspaceUpdatesClient)
 }
 
 func (t *TunnelAllWorkspaceUpdatesController) CurrentState() *proto.WorkspaceUpdate {
-	t.Lock()
-	defer t.Unlock()
+	t.mu.Lock()
+	defer t.mu.Unlock()
 	if t.updater == nil {
 		return nil
 	}

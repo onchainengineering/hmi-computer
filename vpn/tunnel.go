@@ -14,18 +14,22 @@ import (
 	"unicode"
 
 	"golang.org/x/xerrors"
-
-	"github.com/coder/coder/v2/coderd/util/ptr"
-	"github.com/coder/coder/v2/tailnet/proto"
+	"tailscale.com/net/dns"
+	"tailscale.com/wgengine/router"
 
 	"cdr.dev/slog"
+	"github.com/coder/coder/v2/coderd/util/ptr"
+	"github.com/coder/coder/v2/tailnet/proto"
 )
 
 type Tunnel struct {
 	speaker[*TunnelMessage, *ManagerMessage, ManagerMessage]
 	ctx             context.Context
-	logger          slog.Logger
 	requestLoopDone chan struct{}
+
+	logger          slog.Logger
+	router          router.Router
+	dnsConfigurator dns.OSConfigurator
 
 	logMu sync.Mutex
 	logs  []*TunnelMessage
@@ -34,11 +38,14 @@ type Tunnel struct {
 	conn   Conn
 }
 
+type TunnelOption func(t *Tunnel)
+
 func NewTunnel(
 	ctx context.Context,
 	logger slog.Logger,
 	mgrConn io.ReadWriteCloser,
 	client Client,
+	opts ...TunnelOption,
 ) (*Tunnel, error) {
 	logger = logger.Named("vpn")
 	s, err := newSpeaker[*TunnelMessage, *ManagerMessage](
@@ -53,6 +60,10 @@ func NewTunnel(
 		logger:          logger,
 		requestLoopDone: make(chan struct{}),
 		client:          client,
+	}
+
+	for _, opt := range opts {
+		opt(t)
 	}
 	t.speaker.start()
 	go t.requestLoop()
@@ -106,7 +117,8 @@ func (t *Tunnel) handleRPC(req *ManagerMessage, msgID uint64) *TunnelMessage {
 		}
 		resp.Msg = &TunnelMessage_Start{
 			Start: &StartResponse{
-				Success: err == nil,
+				Success:      err == nil,
+				ErrorMessage: err.Error(),
 			},
 		}
 		return resp
@@ -120,13 +132,32 @@ func (t *Tunnel) handleRPC(req *ManagerMessage, msgID uint64) *TunnelMessage {
 		}
 		resp.Msg = &TunnelMessage_Stop{
 			Stop: &StopResponse{
-				Success: err == nil,
+				Success:      err == nil,
+				ErrorMessage: err.Error(),
 			},
 		}
 		return resp
 	default:
 		t.logger.Warn(t.ctx, "unhandled manager request", slog.F("request", msg))
 		return resp
+	}
+}
+
+func UseAsRouter() TunnelOption {
+	return func(t *Tunnel) {
+		t.router = NewRouter(t)
+	}
+}
+
+func UseAsLogger() TunnelOption {
+	return func(t *Tunnel) {
+		t.logger = t.logger.AppendSinks(t)
+	}
+}
+
+func UseAsDNSConfig() TunnelOption {
+	return func(t *Tunnel) {
+		t.dnsConfigurator = NewDNSConfigurator(t)
 	}
 }
 
@@ -168,7 +199,7 @@ func (t *Tunnel) start(req *StartRequest) error {
 	}
 	svrURL, err := url.Parse(rawURL)
 	if err != nil {
-		return xerrors.Errorf("parse url: %w", err)
+		return xerrors.Errorf("parse url %q: %w", rawURL, err)
 	}
 	apiToken := req.GetApiToken()
 	if apiToken == "" {
@@ -179,19 +210,23 @@ func (t *Tunnel) start(req *StartRequest) error {
 		header.Add(h.GetName(), h.GetValue())
 	}
 
-	t.conn, err = t.client.NewConn(
-		t.ctx,
-		svrURL,
-		apiToken,
-		&Options{
-			Headers:           header,
-			Logger:            t.logger,
-			DNSConfigurator:   NewDNSConfigurator(t),
-			Router:            NewRouter(t),
-			TUNFileDescriptor: ptr.Ref(int(req.GetTunnelFileDescriptor())),
-			UpdateHandler:     t,
-		},
-	)
+	if t.conn == nil {
+		t.conn, err = t.client.NewConn(
+			t.ctx,
+			svrURL,
+			apiToken,
+			&Options{
+				Headers:           header,
+				Logger:            t.logger,
+				DNSConfigurator:   t.dnsConfigurator,
+				Router:            t.router,
+				TUNFileDescriptor: ptr.Ref(int(req.GetTunnelFileDescriptor())),
+				UpdateHandler:     t,
+			},
+		)
+	} else {
+		t.logger.Warn(t.ctx, "asked to start tunnel, but tunnel is already running")
+	}
 	return err
 }
 
@@ -252,26 +287,32 @@ func convertWorkspaceUpdate(update *proto.WorkspaceUpdate) *PeerUpdate {
 	}
 	for i, ws := range update.UpsertedWorkspaces {
 		out.UpsertedWorkspaces[i] = &Workspace{
-			Id:   ws.Id,
-			Name: ws.Name,
+			Id:     ws.Id,
+			Name:   ws.Name,
+			Status: Workspace_Status(ws.Status),
 		}
 	}
 	for i, agent := range update.UpsertedAgents {
 		out.UpsertedAgents[i] = &Agent{
-			Id:   agent.Id,
-			Name: agent.Name,
+			Id:          agent.Id,
+			Name:        agent.Name,
+			WorkspaceId: agent.WorkspaceId,
+			Fqdn:        "",
 		}
 	}
 	for i, ws := range update.DeletedWorkspaces {
 		out.DeletedWorkspaces[i] = &Workspace{
-			Id:   ws.Id,
-			Name: ws.Name,
+			Id:     ws.Id,
+			Name:   ws.Name,
+			Status: Workspace_Status(ws.Status),
 		}
 	}
 	for i, agent := range update.DeletedAgents {
 		out.DeletedAgents[i] = &Agent{
-			Id:   agent.Id,
-			Name: agent.Name,
+			Id:          agent.Id,
+			Name:        agent.Name,
+			WorkspaceId: []byte{},
+			Fqdn:        "",
 		}
 	}
 	return out
