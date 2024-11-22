@@ -11,6 +11,8 @@ import (
 	"tailscale.com/net/dns"
 	"tailscale.com/wgengine/router"
 
+	"github.com/tailscale/wireguard-go/tun"
+
 	"cdr.dev/slog"
 	"github.com/coder/coder/v2/codersdk"
 	"github.com/coder/coder/v2/codersdk/workspacesdk"
@@ -57,7 +59,7 @@ type Options struct {
 	Logger            slog.Logger
 	DNSConfigurator   dns.OSConfigurator
 	Router            router.Router
-	TUNFileDescriptor int
+	TUNFileDescriptor *int
 	UpdateHandler     tailnet.UpdatesHandler
 }
 
@@ -66,10 +68,17 @@ func (*client) NewConn(initCtx context.Context, serverURL *url.URL, token string
 		options = &Options{}
 	}
 
-	// No-op on non-Darwin platforms.
-	dev, err := makeTUN(options.TUNFileDescriptor)
-	if err != nil {
-		return nil, xerrors.Errorf("make TUN: %w", err)
+	if options.Headers == nil {
+		options.Headers = http.Header{}
+	}
+
+	var dev tun.Device
+	if options.TUNFileDescriptor != nil {
+		// No-op on non-Darwin platforms.
+		dev, err = makeTUN(*options.TUNFileDescriptor)
+		if err != nil {
+			return nil, xerrors.Errorf("make TUN: %w", err)
+		}
 	}
 
 	headers := options.Headers

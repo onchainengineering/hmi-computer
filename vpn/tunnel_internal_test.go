@@ -129,7 +129,6 @@ func TestTunnel_PeerUpdate(t *testing.T) {
 
 	errCh := make(chan error, 1)
 	var resp *TunnelMessage
-	// When: we start the tunnel
 	go func() {
 		r, err := mgr.unaryRPC(ctx, &ManagerMessage{
 			Msg: &ManagerMessage_Start{
@@ -143,9 +142,7 @@ func TestTunnel_PeerUpdate(t *testing.T) {
 		resp = r
 		errCh <- err
 	}()
-	// Then: `NewConn` is called,
 	testutil.RequireSendCtx(ctx, t, client.ch, conn)
-	// And: a response is received
 	err := testutil.RequireRecvCtx(ctx, t, errCh)
 	require.NoError(t, err)
 	_, ok := resp.Msg.(*TunnelMessage_Start)
@@ -185,22 +182,80 @@ func TestTunnel_PeerUpdate(t *testing.T) {
 	require.Equal(t, []byte("2"), resp.GetPeerUpdate().UpsertedWorkspaces[1].Id)
 }
 
+func TestTunnel_NetworkSettings(t *testing.T) {
+	t.Parallel()
+
+	ctx := testutil.Context(t, testutil.WaitShort)
+
+	client := newFakeClient(ctx, t)
+	conn := newFakeConn(nil)
+
+	tun, mgr := setupTunnel(t, ctx, client)
+
+	errCh := make(chan error, 1)
+	var resp *TunnelMessage
+	go func() {
+		r, err := mgr.unaryRPC(ctx, &ManagerMessage{
+			Msg: &ManagerMessage_Start{
+				Start: &StartRequest{
+					TunnelFileDescriptor: 2,
+					CoderUrl:             "https://coder.example.com",
+					ApiToken:             "fakeToken",
+				},
+			},
+		})
+		resp = r
+		errCh <- err
+	}()
+	testutil.RequireSendCtx(ctx, t, client.ch, conn)
+	err := testutil.RequireRecvCtx(ctx, t, errCh)
+	require.NoError(t, err)
+	_, ok := resp.Msg.(*TunnelMessage_Start)
+	require.True(t, ok)
+
+	// When: we inform the tunnel of network settings
+	go func() {
+		err := tun.ApplyNetworkSettings(ctx, &NetworkSettingsRequest{
+			Mtu: 1200,
+		})
+		errCh <- err
+	}()
+	// Then: the tunnel sends a NetworkSettings message
+	req := testutil.RequireRecvCtx(ctx, t, mgr.requests)
+	require.NotNil(t, req.msg.Rpc)
+	require.Equal(t, uint32(1200), req.msg.GetNetworkSettings().Mtu)
+	go func() {
+		testutil.RequireSendCtx(ctx, t, mgr.sendCh, &ManagerMessage{
+			Rpc: &RPC{ResponseTo: req.msg.Rpc.MsgId},
+			Msg: &ManagerMessage_NetworkSettings{
+				NetworkSettings: &NetworkSettingsResponse{
+					Success: true,
+				},
+			},
+		})
+	}()
+	// And: `ApplyNetworkSettings` returns without error once the manager responds
+	err = testutil.RequireRecvCtx(ctx, t, errCh)
+	require.NoError(t, err)
+}
+
 //nolint:revive // t takes precedence
 func setupTunnel(t *testing.T, ctx context.Context, client *fakeClient) (*Tunnel, *speaker[*ManagerMessage, *TunnelMessage, TunnelMessage]) {
 	mp, tp := net.Pipe()
 	t.Cleanup(func() { _ = mp.Close() })
 	t.Cleanup(func() { _ = tp.Close() })
+	logger := testutil.Logger(t)
 
 	var tun *Tunnel
 	var mgr *speaker[*ManagerMessage, *TunnelMessage, TunnelMessage]
 	errCh := make(chan error, 2)
 	go func() {
-		tunnel, err := NewTunnel(ctx, testutil.Logger(t).Named("tunnel"), tp, client)
+		tunnel, err := NewTunnel(ctx, logger.Named("tunnel"), tp, client)
 		tun = tunnel
 		errCh <- err
 	}()
 	go func() {
-		manager, err := newSpeaker[*ManagerMessage, *TunnelMessage](ctx, testutil.Logger(t).Named("manager"), mp, SpeakerRoleManager, SpeakerRoleTunnel)
+		manager, err := newSpeaker[*ManagerMessage, *TunnelMessage](ctx, logger.Named("manager"), mp, SpeakerRoleManager, SpeakerRoleTunnel)
 		mgr = manager
 		errCh <- err
 	}()

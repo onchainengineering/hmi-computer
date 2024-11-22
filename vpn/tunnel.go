@@ -15,6 +15,7 @@ import (
 
 	"golang.org/x/xerrors"
 
+	"github.com/coder/coder/v2/coderd/util/ptr"
 	"github.com/coder/coder/v2/tailnet/proto"
 
 	"cdr.dev/slog"
@@ -187,7 +188,7 @@ func (t *Tunnel) start(req *StartRequest) error {
 			Logger:            t.logger,
 			DNSConfigurator:   NewDNSConfigurator(t),
 			Router:            NewRouter(t),
-			TUNFileDescriptor: int(req.GetTunnelFileDescriptor()),
+			TUNFileDescriptor: ptr.Ref(int(req.GetTunnelFileDescriptor())),
 			UpdateHandler:     t,
 		},
 	)
