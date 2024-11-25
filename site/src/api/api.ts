@@ -704,9 +704,6 @@ class ApiMethods {
 		return response.data;
 	};
 
-	/**
-	 * @param organization Can be the organization's ID or name
-	 */
 	getOrganizationIdpSyncSettings =
 		async (): Promise<TypesGen.OrganizationSyncSettings> => {
 			const response = await this.axios.get<TypesGen.OrganizationSyncSettings>(
