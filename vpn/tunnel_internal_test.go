@@ -7,9 +7,10 @@ import (
 	"sync"
 	"testing"
 
+	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
 
-	"github.com/coder/coder/v2/tailnet/proto"
+	"github.com/coder/coder/v2/tailnet"
 	"github.com/coder/coder/v2/testutil"
 )
 
@@ -38,7 +39,7 @@ func (f *fakeClient) NewConn(context.Context, *url.URL, string, *Options) (Conn,
 	}
 }
 
-func newFakeConn(state *proto.WorkspaceUpdate) *fakeConn {
+func newFakeConn(state tailnet.WorkspaceUpdate) *fakeConn {
 	return &fakeConn{
 		closed: make(chan struct{}),
 		state:  state,
@@ -46,15 +47,15 @@ func newFakeConn(state *proto.WorkspaceUpdate) *fakeConn {
 }
 
 type fakeConn struct {
-	state   *proto.WorkspaceUpdate
+	state   tailnet.WorkspaceUpdate
 	closed  chan struct{}
 	doClose sync.Once
 }
 
 var _ Conn = (*fakeConn)(nil)
 
-func (f *fakeConn) CurrentWorkspaceState() *proto.WorkspaceUpdate {
-	return f.state
+func (f *fakeConn) CurrentWorkspaceState() (tailnet.WorkspaceUpdate, error) {
+	return f.state, nil
 }
 
 func (f *fakeConn) Close() error {
@@ -69,7 +70,7 @@ func TestTunnel_StartStop(t *testing.T) {
 
 	ctx := testutil.Context(t, testutil.WaitShort)
 	client := newFakeClient(ctx, t)
-	conn := newFakeConn(nil)
+	conn := newFakeConn(tailnet.WorkspaceUpdate{})
 
 	_, mgr := setupTunnel(t, ctx, client)
 
@@ -122,14 +123,17 @@ func TestTunnel_PeerUpdate(t *testing.T) {
 
 	ctx := testutil.Context(t, testutil.WaitShort)
 
+	wsID1 := uuid.UUID{1}
+	wsID2 := uuid.UUID{2}
+
 	client := newFakeClient(ctx, t)
-	conn := newFakeConn(&proto.WorkspaceUpdate{
-		UpsertedWorkspaces: []*proto.Workspace{
+	conn := newFakeConn(tailnet.WorkspaceUpdate{
+		UpsertedWorkspaces: []*tailnet.Workspace{
 			{
-				Id: []byte("1"),
+				ID: wsID1,
 			},
 			{
-				Id: []byte("2"),
+				ID: wsID2,
 			},
 		},
 	})
@@ -157,11 +161,10 @@ func TestTunnel_PeerUpdate(t *testing.T) {
 	_, ok := resp.Msg.(*TunnelMessage_Start)
 	require.True(t, ok)
 
-	// When: we inform the tunnel of an update
-	err = tun.Update(&proto.WorkspaceUpdate{
-		UpsertedWorkspaces: []*proto.Workspace{
+	err = tun.Update(tailnet.WorkspaceUpdate{
+		UpsertedWorkspaces: []*tailnet.Workspace{
 			{
-				Id: []byte("2"),
+				ID: wsID2,
 			},
 		},
 	})
@@ -171,7 +174,7 @@ func TestTunnel_PeerUpdate(t *testing.T) {
 	require.Nil(t, req.msg.Rpc)
 	require.NotNil(t, req.msg.GetPeerUpdate())
 	require.Len(t, req.msg.GetPeerUpdate().UpsertedWorkspaces, 1)
-	require.Equal(t, []byte("2"), req.msg.GetPeerUpdate().UpsertedWorkspaces[0].Id)
+	require.Equal(t, wsID2[:], req.msg.GetPeerUpdate().UpsertedWorkspaces[0].Id)
 
 	// When: the manager requests a PeerUpdate
 	go func() {
@@ -187,8 +190,8 @@ func TestTunnel_PeerUpdate(t *testing.T) {
 	_, ok = resp.Msg.(*TunnelMessage_PeerUpdate)
 	require.True(t, ok)
 	require.Len(t, resp.GetPeerUpdate().UpsertedWorkspaces, 2)
-	require.Equal(t, []byte("1"), resp.GetPeerUpdate().UpsertedWorkspaces[0].Id)
-	require.Equal(t, []byte("2"), resp.GetPeerUpdate().UpsertedWorkspaces[1].Id)
+	require.Equal(t, wsID1[:], resp.GetPeerUpdate().UpsertedWorkspaces[0].Id)
+	require.Equal(t, wsID2[:], resp.GetPeerUpdate().UpsertedWorkspaces[1].Id)
 }
 
 func TestTunnel_NetworkSettings(t *testing.T) {
@@ -197,7 +200,7 @@ func TestTunnel_NetworkSettings(t *testing.T) {
 	ctx := testutil.Context(t, testutil.WaitShort)
 
 	client := newFakeClient(ctx, t)
-	conn := newFakeConn(nil)
+	conn := newFakeConn(tailnet.WorkspaceUpdate{})
 
 	tun, mgr := setupTunnel(t, ctx, client)
 

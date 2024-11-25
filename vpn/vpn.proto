@@ -104,7 +104,7 @@ message Agent {
 	bytes id = 1; // UUID
 	string name = 2;
 	bytes workspace_id = 3; // UUID
-	string fqdn = 4;
+	repeated string fqdn = 4;
 	repeated string ip_addrs = 5;
 	// last_handshake is the primary indicator of whether we are connected to a peer. Zero value or
 	// anything longer than 5 minutes ago means there is a problem.

@@ -45,7 +45,7 @@ func TestClient_WorkspaceUpdates(t *testing.T) {
 
 	mSub := tailnettest.NewMockSubscription(ctrl)
 	outUpdateCh := make(chan *proto.WorkspaceUpdate, 1)
-	inUpdateCh := make(chan *proto.WorkspaceUpdate, 1)
+	inUpdateCh := make(chan tailnet.WorkspaceUpdate, 1)
 	mProvider.EXPECT().Subscribe(gomock.Any(), userID).Times(1).Return(mSub, nil)
 	mSub.EXPECT().Updates().MinTimes(1).Return(outUpdateCh)
 	mSub.EXPECT().Close().Times(1).Return(nil)
@@ -111,7 +111,7 @@ func TestClient_WorkspaceUpdates(t *testing.T) {
 	connCh := make(chan vpn.Conn)
 	go func() {
 		conn, err := vpn.NewClient().NewConn(ctx, svrURL, "fakeToken", &vpn.Options{
-			UpdateHandler: updateHandler(func(wu *proto.WorkspaceUpdate) error {
+			UpdateHandler: updateHandler(func(wu tailnet.WorkspaceUpdate) error {
 				inUpdateCh <- wu
 				return nil
 			}),
@@ -139,17 +139,21 @@ func TestClient_WorkspaceUpdates(t *testing.T) {
 	// It'll be received by the update handler
 	recvUpdate := testutil.RequireRecvCtx(ctx, t, inUpdateCh)
 	require.Len(t, recvUpdate.UpsertedWorkspaces, 1)
-	require.Equal(t, update.UpsertedWorkspaces[0].Id, recvUpdate.UpsertedWorkspaces[0].Id)
+	require.Equal(t, wsID, recvUpdate.UpsertedWorkspaces[0].ID)
 
 	// And be reflected on the Conn's state
-	require.Equal(t, &proto.WorkspaceUpdate{
-		UpsertedWorkspaces: []*proto.Workspace{
+	state, err := conn.CurrentWorkspaceState()
+	require.NoError(t, err)
+	require.Equal(t, tailnet.WorkspaceUpdate{
+		UpsertedWorkspaces: []*tailnet.Workspace{
 			{
-				Id: wsID[:],
+				ID: wsID,
 			},
 		},
-		UpsertedAgents: []*proto.Agent{},
-	}, conn.CurrentWorkspaceState())
+		UpsertedAgents:    []*tailnet.Agent{},
+		DeletedWorkspaces: []*tailnet.Workspace{},
+		DeletedAgents:     []*tailnet.Agent{},
+	}, state)
 
 	// Close the conn
 	conn.Close()
@@ -157,9 +161,9 @@ func TestClient_WorkspaceUpdates(t *testing.T) {
 	require.NoError(t, err)
 }
 
-type updateHandler func(*proto.WorkspaceUpdate) error
+type updateHandler func(tailnet.WorkspaceUpdate) error
 
-func (h updateHandler) Update(u *proto.WorkspaceUpdate) error {
+func (h updateHandler) Update(u tailnet.WorkspaceUpdate) error {
 	return h(u)
 }
 

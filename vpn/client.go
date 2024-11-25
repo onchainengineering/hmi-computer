@@ -22,7 +22,7 @@ import (
 )
 
 type Conn interface {
-	CurrentWorkspaceState() *proto.WorkspaceUpdate
+	CurrentWorkspaceState() (tailnet.WorkspaceUpdate, error)
 	Close() error
 }
 
@@ -34,7 +34,7 @@ type vpnConn struct {
 	updatesCtrl *tailnet.TunnelAllWorkspaceUpdatesController
 }
 
-func (c *vpnConn) CurrentWorkspaceState() *proto.WorkspaceUpdate {
+func (c *vpnConn) CurrentWorkspaceState() (tailnet.WorkspaceUpdate, error) {
 	return c.updatesCtrl.CurrentState()
 }
 

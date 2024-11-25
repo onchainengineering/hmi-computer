@@ -19,7 +19,7 @@ import (
 
 	"cdr.dev/slog"
 	"github.com/coder/coder/v2/coderd/util/ptr"
-	"github.com/coder/coder/v2/tailnet/proto"
+	"github.com/coder/coder/v2/tailnet"
 )
 
 type Tunnel struct {
@@ -27,15 +27,17 @@ type Tunnel struct {
 	ctx             context.Context
 	requestLoopDone chan struct{}
 
-	logger          slog.Logger
-	router          router.Router
-	dnsConfigurator dns.OSConfigurator
+	logger slog.Logger
 
 	logMu sync.Mutex
 	logs  []*TunnelMessage
 
 	client Client
 	conn   Conn
+
+	// router and dnsConfigurator may be nil
+	router          router.Router
+	dnsConfigurator dns.OSConfigurator
 }
 
 type TunnelOption func(t *Tunnel)
@@ -101,8 +103,12 @@ func (t *Tunnel) handleRPC(req *ManagerMessage, msgID uint64) *TunnelMessage {
 	resp.Rpc = &RPC{ResponseTo: msgID}
 	switch msg := req.GetMsg().(type) {
 	case *ManagerMessage_GetPeerUpdate:
+		state, err := t.conn.CurrentWorkspaceState()
+		if err != nil {
+			t.logger.Critical(t.ctx, "failed to get current workspace state", slog.Error(err))
+		}
 		resp.Msg = &TunnelMessage_PeerUpdate{
-			PeerUpdate: convertWorkspaceUpdate(t.conn.CurrentWorkspaceState()),
+			PeerUpdate: convertWorkspaceUpdate(state),
 		}
 		return resp
 	case *ManagerMessage_Start:
@@ -112,28 +118,32 @@ func (t *Tunnel) handleRPC(req *ManagerMessage, msgID uint64) *TunnelMessage {
 			slog.F("tunnel_fd", startReq.TunnelFileDescriptor),
 		)
 		err := t.start(startReq)
+		var errStr string
 		if err != nil {
 			t.logger.Error(t.ctx, "failed to start tunnel", slog.Error(err))
+			errStr = err.Error()
 		}
 		resp.Msg = &TunnelMessage_Start{
 			Start: &StartResponse{
 				Success:      err == nil,
-				ErrorMessage: err.Error(),
+				ErrorMessage: errStr,
 			},
 		}
 		return resp
 	case *ManagerMessage_Stop:
 		t.logger.Info(t.ctx, "stopping CoderVPN tunnel")
 		err := t.stop(msg.Stop)
+		var errStr string
 		if err != nil {
 			t.logger.Error(t.ctx, "failed to stop tunnel", slog.Error(err))
+			errStr = err.Error()
 		} else {
 			t.logger.Info(t.ctx, "coderVPN tunnel stopped")
 		}
 		resp.Msg = &TunnelMessage_Stop{
 			Stop: &StopResponse{
 				Success:      err == nil,
-				ErrorMessage: err.Error(),
+				ErrorMessage: errStr,
 			},
 		}
 		return resp
@@ -178,7 +188,7 @@ func (t *Tunnel) ApplyNetworkSettings(ctx context.Context, ns *NetworkSettingsRe
 	return nil
 }
 
-func (t *Tunnel) Update(update *proto.WorkspaceUpdate) error {
+func (t *Tunnel) Update(update tailnet.WorkspaceUpdate) error {
 	msg := &TunnelMessage{
 		Msg: &TunnelMessage_PeerUpdate{
 			PeerUpdate: convertWorkspaceUpdate(update),
@@ -278,7 +288,7 @@ func sinkEntryToPb(e slog.SinkEntry) *Log {
 	return l
 }
 
-func convertWorkspaceUpdate(update *proto.WorkspaceUpdate) *PeerUpdate {
+func convertWorkspaceUpdate(update tailnet.WorkspaceUpdate) *PeerUpdate {
 	out := &PeerUpdate{
 		UpsertedWorkspaces: make([]*Workspace, len(update.UpsertedWorkspaces)),
 		UpsertedAgents:     make([]*Agent, len(update.UpsertedAgents)),
@@ -287,32 +297,46 @@ func convertWorkspaceUpdate(update *proto.WorkspaceUpdate) *PeerUpdate {
 	}
 	for i, ws := range update.UpsertedWorkspaces {
 		out.UpsertedWorkspaces[i] = &Workspace{
-			Id:     ws.Id,
+			Id:     tailnet.UUIDToByteSlice(ws.ID),
 			Name:   ws.Name,
 			Status: Workspace_Status(ws.Status),
 		}
 	}
 	for i, agent := range update.UpsertedAgents {
+		fqdn := make([]string, 0, len(agent.Hosts))
+		for name := range agent.Hosts {
+			fqdn = append(fqdn, name.WithoutTrailingDot())
+		}
 		out.UpsertedAgents[i] = &Agent{
-			Id:          agent.Id,
+			Id:          tailnet.UUIDToByteSlice(agent.ID),
 			Name:        agent.Name,
-			WorkspaceId: agent.WorkspaceId,
-			Fqdn:        "",
+			WorkspaceId: tailnet.UUIDToByteSlice(agent.WorkspaceID),
+			Fqdn:        fqdn,
+			IpAddrs:     []string{tailnet.CoderServicePrefix.AddrFromUUID(agent.ID).String()},
+			// TODO: Populate
+			LastHandshake: nil,
 		}
 	}
 	for i, ws := range update.DeletedWorkspaces {
 		out.DeletedWorkspaces[i] = &Workspace{
-			Id:     ws.Id,
+			Id:     tailnet.UUIDToByteSlice(ws.ID),
 			Name:   ws.Name,
 			Status: Workspace_Status(ws.Status),
 		}
 	}
 	for i, agent := range update.DeletedAgents {
+		fqdn := make([]string, 0, len(agent.Hosts))
+		for name := range agent.Hosts {
+			fqdn = append(fqdn, name.WithoutTrailingDot())
+		}
 		out.DeletedAgents[i] = &Agent{
-			Id:          agent.Id,
+			Id:          tailnet.UUIDToByteSlice(agent.ID),
 			Name:        agent.Name,
-			WorkspaceId: []byte{},
-			Fqdn:        "",
+			WorkspaceId: tailnet.UUIDToByteSlice(agent.WorkspaceID),
+			Fqdn:        fqdn,
+			IpAddrs:     []string{tailnet.CoderServicePrefix.AddrFromUUID(agent.ID).String()},
+			// TODO: Populate
+			LastHandshake: nil,
 		}
 	}
 	return out

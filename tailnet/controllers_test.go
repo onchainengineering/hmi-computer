@@ -1456,17 +1456,17 @@ func newFakeUpdateHandler(ctx context.Context, t testing.TB) *fakeUpdateHandler 
 	return &fakeUpdateHandler{
 		ctx: ctx,
 		t:   t,
-		ch:  make(chan *proto.WorkspaceUpdate),
+		ch:  make(chan tailnet.WorkspaceUpdate),
 	}
 }
 
 type fakeUpdateHandler struct {
 	ctx context.Context
 	t   testing.TB
-	ch  chan *proto.WorkspaceUpdate
+	ch  chan tailnet.WorkspaceUpdate
 }
 
-func (f *fakeUpdateHandler) Update(wu *proto.WorkspaceUpdate) error {
+func (f *fakeUpdateHandler) Update(wu tailnet.WorkspaceUpdate) error {
 	f.t.Helper()
 	select {
 	case <-f.ctx.Done():
@@ -1571,29 +1571,53 @@ func TestTunnelAllWorkspaceUpdatesController_Initial(t *testing.T) {
 	require.Equal(t, expectedDNS, dnsCall.hosts)
 	testutil.RequireSendCtx(ctx, t, dnsCall.err, nil)
 
+	currentState := tailnet.WorkspaceUpdate{
+		UpsertedWorkspaces: []*tailnet.Workspace{
+			{ID: w1ID, Name: "w1"},
+			{ID: w2ID, Name: "w2"},
+		},
+		UpsertedAgents: []*tailnet.Agent{
+			{
+				ID: w1a1ID, Name: "w1a1", WorkspaceID: w1ID,
+				Hosts: map[dnsname.FQDN][]netip.Addr{
+					"w1.coder.":            {netip.MustParseAddr("fd60:627a:a42b:0101::")},
+					"w1a1.w1.me.coder.":    {netip.MustParseAddr("fd60:627a:a42b:0101::")},
+					"w1a1.w1.testy.coder.": {netip.MustParseAddr("fd60:627a:a42b:0101::")},
+				},
+			},
+			{
+				ID: w2a1ID, Name: "w2a1", WorkspaceID: w2ID,
+				Hosts: map[dnsname.FQDN][]netip.Addr{
+					"w2a1.w2.me.coder.":    {netip.MustParseAddr("fd60:627a:a42b:0201::")},
+					"w2a1.w2.testy.coder.": {netip.MustParseAddr("fd60:627a:a42b:0201::")},
+				},
+			},
+			{
+				ID: w2a2ID, Name: "w2a2", WorkspaceID: w2ID,
+				Hosts: map[dnsname.FQDN][]netip.Addr{
+					"w2a2.w2.me.coder.":    {netip.MustParseAddr("fd60:627a:a42b:0202::")},
+					"w2a2.w2.testy.coder.": {netip.MustParseAddr("fd60:627a:a42b:0202::")},
+				},
+			},
+		},
+		DeletedWorkspaces: []*tailnet.Workspace{},
+		DeletedAgents:     []*tailnet.Agent{},
+	}
+
 	// And the callback
 	cbUpdate := testutil.RequireRecvCtx(ctx, t, fUH.ch)
-	require.Equal(t, initUp, cbUpdate)
+	require.Equal(t, currentState, cbUpdate)
 
-	// Current state should match
-	state := updateCtrl.CurrentState()
-	slices.SortFunc(state.UpsertedWorkspaces, func(a, b *proto.Workspace) int {
+	// Current recvState should match
+	recvState, err := updateCtrl.CurrentState()
+	require.NoError(t, err)
+	slices.SortFunc(recvState.UpsertedWorkspaces, func(a, b *tailnet.Workspace) int {
 		return strings.Compare(a.Name, b.Name)
 	})
-	slices.SortFunc(state.UpsertedAgents, func(a, b *proto.Agent) int {
+	slices.SortFunc(recvState.UpsertedAgents, func(a, b *tailnet.Agent) int {
 		return strings.Compare(a.Name, b.Name)
 	})
-	require.Equal(t, &proto.WorkspaceUpdate{
-		UpsertedWorkspaces: []*proto.Workspace{
-			{Id: w1ID[:], Name: "w1"},
-			{Id: w2ID[:], Name: "w2"},
-		},
-		UpsertedAgents: []*proto.Agent{
-			{Id: w1a1ID[:], Name: "w1a1", WorkspaceId: w1ID[:]},
-			{Id: w2a1ID[:], Name: "w2a1", WorkspaceId: w2ID[:]},
-			{Id: w2a2ID[:], Name: "w2a2", WorkspaceId: w2ID[:]},
-		},
-	}, state)
+	require.Equal(t, currentState, recvState)
 }
 
 func TestTunnelAllWorkspaceUpdatesController_DeleteAgent(t *testing.T) {
@@ -1638,19 +1662,28 @@ func TestTunnelAllWorkspaceUpdatesController_DeleteAgent(t *testing.T) {
 	require.Equal(t, expectedDNS, dnsCall.hosts)
 	testutil.RequireSendCtx(ctx, t, dnsCall.err, nil)
 
+	initRecvUp := tailnet.WorkspaceUpdate{
+		UpsertedWorkspaces: []*tailnet.Workspace{
+			{ID: w1ID, Name: "w1"},
+		},
+		UpsertedAgents: []*tailnet.Agent{
+			{ID: w1a1ID, Name: "w1a1", WorkspaceID: w1ID, Hosts: map[dnsname.FQDN][]netip.Addr{
+				"w1a1.w1.testy.coder.": {netip.MustParseAddr("fd60:627a:a42b:0101::")},
+				"w1a1.w1.me.coder.":    {netip.MustParseAddr("fd60:627a:a42b:0101::")},
+				"w1.coder.":            {netip.MustParseAddr("fd60:627a:a42b:0101::")},
+			}},
+		},
+		DeletedWorkspaces: []*tailnet.Workspace{},
+		DeletedAgents:     []*tailnet.Agent{},
+	}
+
 	cbUpdate := testutil.RequireRecvCtx(ctx, t, fUH.ch)
-	require.Equal(t, initUp, cbUpdate)
+	require.Equal(t, initRecvUp, cbUpdate)
 
 	// Current state should match initial
-	state := updateCtrl.CurrentState()
-	require.Equal(t, &proto.WorkspaceUpdate{
-		UpsertedWorkspaces: []*proto.Workspace{
-			{Id: w1ID[:], Name: "w1"},
-		},
-		UpsertedAgents: []*proto.Agent{
-			{Id: w1a1ID[:], Name: "w1a1", WorkspaceId: w1ID[:]},
-		},
-	}, state)
+	state, err := updateCtrl.CurrentState()
+	require.NoError(t, err)
+	require.Equal(t, initRecvUp, state)
 
 	// Send update that removes w1a1 and adds w1a2
 	agentUpdate := &proto.WorkspaceUpdate{
@@ -1685,16 +1718,41 @@ func TestTunnelAllWorkspaceUpdatesController_DeleteAgent(t *testing.T) {
 	testutil.RequireSendCtx(ctx, t, dnsCall.err, nil)
 
 	cbUpdate = testutil.RequireRecvCtx(ctx, t, fUH.ch)
-	require.Equal(t, agentUpdate, cbUpdate)
+	sndRecvUpdate := tailnet.WorkspaceUpdate{
+		UpsertedWorkspaces: []*tailnet.Workspace{},
+		UpsertedAgents: []*tailnet.Agent{
+			{ID: w1a2ID, Name: "w1a2", WorkspaceID: w1ID, Hosts: map[dnsname.FQDN][]netip.Addr{
+				"w1a2.w1.testy.coder.": {netip.MustParseAddr("fd60:627a:a42b:0102::")},
+				"w1a2.w1.me.coder.":    {netip.MustParseAddr("fd60:627a:a42b:0102::")},
+				"w1.coder.":            {netip.MustParseAddr("fd60:627a:a42b:0102::")},
+			}},
+		},
+		DeletedWorkspaces: []*tailnet.Workspace{},
+		DeletedAgents: []*tailnet.Agent{
+			{ID: w1a1ID, Name: "w1a1", WorkspaceID: w1ID, Hosts: map[dnsname.FQDN][]netip.Addr{
+				"w1a1.w1.testy.coder.": {netip.MustParseAddr("fd60:627a:a42b:0101::")},
+				"w1a1.w1.me.coder.":    {netip.MustParseAddr("fd60:627a:a42b:0101::")},
+				"w1.coder.":            {netip.MustParseAddr("fd60:627a:a42b:0101::")},
+			}},
+		},
+	}
+	require.Equal(t, sndRecvUpdate, cbUpdate)
 
-	state = updateCtrl.CurrentState()
-	require.Equal(t, &proto.WorkspaceUpdate{
-		UpsertedWorkspaces: []*proto.Workspace{
-			{Id: w1ID[:], Name: "w1"},
+	state, err = updateCtrl.CurrentState()
+	require.NoError(t, err)
+	require.Equal(t, tailnet.WorkspaceUpdate{
+		UpsertedWorkspaces: []*tailnet.Workspace{
+			{ID: w1ID, Name: "w1"},
 		},
-		UpsertedAgents: []*proto.Agent{
-			{Id: w1a2ID[:], Name: "w1a2", WorkspaceId: w1ID[:]},
+		UpsertedAgents: []*tailnet.Agent{
+			{ID: w1a2ID, Name: "w1a2", WorkspaceID: w1ID, Hosts: map[dnsname.FQDN][]netip.Addr{
+				"w1a2.w1.testy.coder.": {netip.MustParseAddr("fd60:627a:a42b:0102::")},
+				"w1a2.w1.me.coder.":    {netip.MustParseAddr("fd60:627a:a42b:0102::")},
+				"w1.coder.":            {netip.MustParseAddr("fd60:627a:a42b:0102::")},
+			}},
 		},
+		DeletedWorkspaces: []*tailnet.Workspace{},
+		DeletedAgents:     []*tailnet.Agent{},
 	}, state)
 }
 
