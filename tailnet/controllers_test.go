@@ -1557,15 +1557,19 @@ func TestTunnelAllWorkspaceUpdatesController_Initial(t *testing.T) {
 	require.Contains(t, adds, w2a1ID)
 	require.Contains(t, adds, w2a2ID)
 
+	ws1a1IP := netip.MustParseAddr("fd60:627a:a42b:0101::")
+	w2a1IP := netip.MustParseAddr("fd60:627a:a42b:0201::")
+	w2a2IP := netip.MustParseAddr("fd60:627a:a42b:0202::")
+
 	// Also triggers setting DNS hosts
 	expectedDNS := map[dnsname.FQDN][]netip.Addr{
-		"w1a1.w1.me.coder.":    {netip.MustParseAddr("fd60:627a:a42b:0101::")},
-		"w2a1.w2.me.coder.":    {netip.MustParseAddr("fd60:627a:a42b:0201::")},
-		"w2a2.w2.me.coder.":    {netip.MustParseAddr("fd60:627a:a42b:0202::")},
-		"w1a1.w1.testy.coder.": {netip.MustParseAddr("fd60:627a:a42b:0101::")},
-		"w2a1.w2.testy.coder.": {netip.MustParseAddr("fd60:627a:a42b:0201::")},
-		"w2a2.w2.testy.coder.": {netip.MustParseAddr("fd60:627a:a42b:0202::")},
-		"w1.coder.":            {netip.MustParseAddr("fd60:627a:a42b:0101::")},
+		"w1a1.w1.me.coder.":    {ws1a1IP},
+		"w2a1.w2.me.coder.":    {w2a1IP},
+		"w2a2.w2.me.coder.":    {w2a2IP},
+		"w1a1.w1.testy.coder.": {ws1a1IP},
+		"w2a1.w2.testy.coder.": {w2a1IP},
+		"w2a2.w2.testy.coder.": {w2a2IP},
+		"w1.coder.":            {ws1a1IP},
 	}
 	dnsCall := testutil.RequireRecvCtx(ctx, t, fDNS.calls)
 	require.Equal(t, expectedDNS, dnsCall.hosts)
@@ -1580,23 +1584,23 @@ func TestTunnelAllWorkspaceUpdatesController_Initial(t *testing.T) {
 			{
 				ID: w1a1ID, Name: "w1a1", WorkspaceID: w1ID,
 				Hosts: map[dnsname.FQDN][]netip.Addr{
-					"w1.coder.":            {netip.MustParseAddr("fd60:627a:a42b:0101::")},
-					"w1a1.w1.me.coder.":    {netip.MustParseAddr("fd60:627a:a42b:0101::")},
-					"w1a1.w1.testy.coder.": {netip.MustParseAddr("fd60:627a:a42b:0101::")},
+					"w1.coder.":            {ws1a1IP},
+					"w1a1.w1.me.coder.":    {ws1a1IP},
+					"w1a1.w1.testy.coder.": {ws1a1IP},
 				},
 			},
 			{
 				ID: w2a1ID, Name: "w2a1", WorkspaceID: w2ID,
 				Hosts: map[dnsname.FQDN][]netip.Addr{
-					"w2a1.w2.me.coder.":    {netip.MustParseAddr("fd60:627a:a42b:0201::")},
-					"w2a1.w2.testy.coder.": {netip.MustParseAddr("fd60:627a:a42b:0201::")},
+					"w2a1.w2.me.coder.":    {w2a1IP},
+					"w2a1.w2.testy.coder.": {w2a1IP},
 				},
 			},
 			{
 				ID: w2a2ID, Name: "w2a2", WorkspaceID: w2ID,
 				Hosts: map[dnsname.FQDN][]netip.Addr{
-					"w2a2.w2.me.coder.":    {netip.MustParseAddr("fd60:627a:a42b:0202::")},
-					"w2a2.w2.testy.coder.": {netip.MustParseAddr("fd60:627a:a42b:0202::")},
+					"w2a2.w2.me.coder.":    {w2a2IP},
+					"w2a2.w2.testy.coder.": {w2a2IP},
 				},
 			},
 		},
@@ -1635,6 +1639,9 @@ func TestTunnelAllWorkspaceUpdatesController_DeleteAgent(t *testing.T) {
 	w1ID := testUUID(1)
 	w1a1ID := testUUID(1, 1)
 	w1a2ID := testUUID(1, 2)
+	ws1a1IP := netip.MustParseAddr("fd60:627a:a42b:0101::")
+	ws1a2IP := netip.MustParseAddr("fd60:627a:a42b:0102::")
+
 	initUp := &proto.WorkspaceUpdate{
 		UpsertedWorkspaces: []*proto.Workspace{
 			{Id: w1ID[:], Name: "w1"},
@@ -1654,9 +1661,9 @@ func TestTunnelAllWorkspaceUpdatesController_DeleteAgent(t *testing.T) {
 
 	// DNS for w1a1
 	expectedDNS := map[dnsname.FQDN][]netip.Addr{
-		"w1a1.w1.testy.coder.": {netip.MustParseAddr("fd60:627a:a42b:0101::")},
-		"w1a1.w1.me.coder.":    {netip.MustParseAddr("fd60:627a:a42b:0101::")},
-		"w1.coder.":            {netip.MustParseAddr("fd60:627a:a42b:0101::")},
+		"w1a1.w1.testy.coder.": {ws1a1IP},
+		"w1a1.w1.me.coder.":    {ws1a1IP},
+		"w1.coder.":            {ws1a1IP},
 	}
 	dnsCall := testutil.RequireRecvCtx(ctx, t, fDNS.calls)
 	require.Equal(t, expectedDNS, dnsCall.hosts)
@@ -1668,9 +1675,9 @@ func TestTunnelAllWorkspaceUpdatesController_DeleteAgent(t *testing.T) {
 		},
 		UpsertedAgents: []*tailnet.Agent{
 			{ID: w1a1ID, Name: "w1a1", WorkspaceID: w1ID, Hosts: map[dnsname.FQDN][]netip.Addr{
-				"w1a1.w1.testy.coder.": {netip.MustParseAddr("fd60:627a:a42b:0101::")},
-				"w1a1.w1.me.coder.":    {netip.MustParseAddr("fd60:627a:a42b:0101::")},
-				"w1.coder.":            {netip.MustParseAddr("fd60:627a:a42b:0101::")},
+				"w1a1.w1.testy.coder.": {ws1a1IP},
+				"w1a1.w1.me.coder.":    {ws1a1IP},
+				"w1.coder.":            {ws1a1IP},
 			}},
 		},
 		DeletedWorkspaces: []*tailnet.Workspace{},
@@ -1709,9 +1716,9 @@ func TestTunnelAllWorkspaceUpdatesController_DeleteAgent(t *testing.T) {
 
 	// DNS contains only w1a2
 	expectedDNS = map[dnsname.FQDN][]netip.Addr{
-		"w1a2.w1.testy.coder.": {netip.MustParseAddr("fd60:627a:a42b:0102::")},
-		"w1a2.w1.me.coder.":    {netip.MustParseAddr("fd60:627a:a42b:0102::")},
-		"w1.coder.":            {netip.MustParseAddr("fd60:627a:a42b:0102::")},
+		"w1a2.w1.testy.coder.": {ws1a2IP},
+		"w1a2.w1.me.coder.":    {ws1a2IP},
+		"w1.coder.":            {ws1a2IP},
 	}
 	dnsCall = testutil.RequireRecvCtx(ctx, t, fDNS.calls)
 	require.Equal(t, expectedDNS, dnsCall.hosts)
@@ -1722,17 +1729,17 @@ func TestTunnelAllWorkspaceUpdatesController_DeleteAgent(t *testing.T) {
 		UpsertedWorkspaces: []*tailnet.Workspace{},
 		UpsertedAgents: []*tailnet.Agent{
 			{ID: w1a2ID, Name: "w1a2", WorkspaceID: w1ID, Hosts: map[dnsname.FQDN][]netip.Addr{
-				"w1a2.w1.testy.coder.": {netip.MustParseAddr("fd60:627a:a42b:0102::")},
-				"w1a2.w1.me.coder.":    {netip.MustParseAddr("fd60:627a:a42b:0102::")},
-				"w1.coder.":            {netip.MustParseAddr("fd60:627a:a42b:0102::")},
+				"w1a2.w1.testy.coder.": {ws1a2IP},
+				"w1a2.w1.me.coder.":    {ws1a2IP},
+				"w1.coder.":            {ws1a2IP},
 			}},
 		},
 		DeletedWorkspaces: []*tailnet.Workspace{},
 		DeletedAgents: []*tailnet.Agent{
 			{ID: w1a1ID, Name: "w1a1", WorkspaceID: w1ID, Hosts: map[dnsname.FQDN][]netip.Addr{
-				"w1a1.w1.testy.coder.": {netip.MustParseAddr("fd60:627a:a42b:0101::")},
-				"w1a1.w1.me.coder.":    {netip.MustParseAddr("fd60:627a:a42b:0101::")},
-				"w1.coder.":            {netip.MustParseAddr("fd60:627a:a42b:0101::")},
+				"w1a1.w1.testy.coder.": {ws1a1IP},
+				"w1a1.w1.me.coder.":    {ws1a1IP},
+				"w1.coder.":            {ws1a1IP},
 			}},
 		},
 	}
@@ -1746,9 +1753,9 @@ func TestTunnelAllWorkspaceUpdatesController_DeleteAgent(t *testing.T) {
 		},
 		UpsertedAgents: []*tailnet.Agent{
 			{ID: w1a2ID, Name: "w1a2", WorkspaceID: w1ID, Hosts: map[dnsname.FQDN][]netip.Addr{
-				"w1a2.w1.testy.coder.": {netip.MustParseAddr("fd60:627a:a42b:0102::")},
-				"w1a2.w1.me.coder.":    {netip.MustParseAddr("fd60:627a:a42b:0102::")},
-				"w1.coder.":            {netip.MustParseAddr("fd60:627a:a42b:0102::")},
+				"w1a2.w1.testy.coder.": {ws1a2IP},
+				"w1a2.w1.me.coder.":    {ws1a2IP},
+				"w1.coder.":            {ws1a2IP},
 			}},
 		},
 		DeletedWorkspaces: []*tailnet.Workspace{},
@@ -1776,6 +1783,8 @@ func TestTunnelAllWorkspaceUpdatesController_DNSError(t *testing.T) {
 
 	w1ID := testUUID(1)
 	w1a1ID := testUUID(1, 1)
+	ws1a1IP := netip.MustParseAddr("fd60:627a:a42b:0101::")
+
 	initUp := &proto.WorkspaceUpdate{
 		UpsertedWorkspaces: []*proto.Workspace{
 			{Id: w1ID[:], Name: "w1"},
@@ -1789,9 +1798,9 @@ func TestTunnelAllWorkspaceUpdatesController_DNSError(t *testing.T) {
 
 	// DNS for w1a1
 	expectedDNS := map[dnsname.FQDN][]netip.Addr{
-		"w1a1.w1.me.coder.":    {netip.MustParseAddr("fd60:627a:a42b:0101::")},
-		"w1a1.w1.testy.coder.": {netip.MustParseAddr("fd60:627a:a42b:0101::")},
-		"w1.coder.":            {netip.MustParseAddr("fd60:627a:a42b:0101::")},
+		"w1a1.w1.me.coder.":    {ws1a1IP},
+		"w1a1.w1.testy.coder.": {ws1a1IP},
+		"w1.coder.":            {ws1a1IP},
 	}
 	dnsCall := testutil.RequireRecvCtx(ctx, t, fDNS.calls)
 	require.Equal(t, expectedDNS, dnsCall.hosts)
