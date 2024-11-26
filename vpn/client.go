@@ -5,12 +5,15 @@ import (
 	"net/http"
 	"net/netip"
 	"net/url"
+	"time"
 
 	"golang.org/x/xerrors"
 	"nhooyr.io/websocket"
+	"tailscale.com/ipn/ipnstate"
 	"tailscale.com/net/dns"
 	"tailscale.com/wgengine/router"
 
+	"github.com/google/uuid"
 	"github.com/tailscale/wireguard-go/tun"
 
 	"cdr.dev/slog"
@@ -23,6 +26,8 @@ import (
 
 type Conn interface {
 	CurrentWorkspaceState() (tailnet.WorkspaceUpdate, error)
+	GetPeerDiagnostics(peerID uuid.UUID) tailnet.PeerDiagnostics
+	Ping(ctx context.Context, ip netip.Addr) (time.Duration, bool, *ipnstate.PingResult, error)
 	Close() error
 }
 
