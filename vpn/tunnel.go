@@ -17,7 +17,6 @@ import (
 
 	"golang.org/x/exp/maps"
 	"golang.org/x/xerrors"
-	"google.golang.org/protobuf/types/known/durationpb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"tailscale.com/net/dns"
 	"tailscale.com/util/dnsname"
@@ -28,10 +27,12 @@ import (
 	"cdr.dev/slog"
 	"github.com/coder/coder/v2/coderd/util/ptr"
 	"github.com/coder/coder/v2/tailnet"
+	"github.com/coder/quartz"
 )
 
-// The interval at which the tunnel sends network status updates to the manager.
-const netStatusInterval = 30 * time.Second
+// netStatusInterval is the interval at which the tunnel sends network status updates to the manager.
+// This is currently only used to keep `last_handshake` up to date.
+const netStatusInterval = 10 * time.Second
 
 type Tunnel struct {
 	speaker[*TunnelMessage, *ManagerMessage, ManagerMessage]
@@ -57,6 +58,8 @@ type Tunnel struct {
 	// router and dnsConfigurator may be nil
 	router          router.Router
 	dnsConfigurator dns.OSConfigurator
+
+	clock quartz.Clock
 }
 
 type TunnelOption func(t *Tunnel)
@@ -84,6 +87,7 @@ func NewTunnel(
 		netLoopDone:     make(chan struct{}),
 		client:          client,
 		agents:          make(map[uuid.UUID]*tailnet.Agent),
+		clock:           quartz.NewReal(),
 	}
 
 	for _, opt := range opts {
@@ -121,7 +125,7 @@ func (t *Tunnel) requestLoop() {
 }
 
 func (t *Tunnel) netStatusLoop() {
-	ticker := time.NewTicker(netStatusInterval)
+	ticker := t.clock.NewTicker(netStatusInterval)
 	defer ticker.Stop()
 	defer close(t.netLoopDone)
 	for {
@@ -209,6 +213,12 @@ func UseAsLogger() TunnelOption {
 func UseAsDNSConfig() TunnelOption {
 	return func(t *Tunnel) {
 		t.dnsConfigurator = NewDNSConfigurator(t)
+	}
+}
+
+func WithClock(clock quartz.Clock) TunnelOption {
+	return func(r *Tunnel) {
+		r.clock = clock
 	}
 }
 
@@ -376,22 +386,18 @@ func (t *Tunnel) createPeerUpdate(update tailnet.WorkspaceUpdate) (*PeerUpdate, 
 			Fqdn:          fqdn,
 			IpAddrs:       hostsToIPStrings(agent.Hosts),
 			LastHandshake: nil,
-			Latency:       nil,
 		}
 	}
 	return out, nil
 }
 
-// Given a list of agents, populate their network info, and return them as proto agents.
+// Given a list of `tailnet.Agent`, populate their network info, and conver them to proto agents.
 func (t *Tunnel) populateAgents(agents []*tailnet.Agent) ([]*Agent, error) {
 	if t.conn == nil {
 		return nil, xerrors.New("no active connection")
 	}
 
 	out := make([]*Agent, 0, len(agents))
-	var wg sync.WaitGroup
-	pingCtx, cancelFunc := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancelFunc()
 
 	for _, agent := range agents {
 		fqdn := make([]string, 0, len(agent.Hosts))
@@ -405,22 +411,10 @@ func (t *Tunnel) populateAgents(agents []*tailnet.Agent) ([]*Agent, error) {
 			Fqdn:        fqdn,
 			IpAddrs:     hostsToIPStrings(agent.Hosts),
 		}
-		agentIP := tailnet.CoderServicePrefix.AddrFromUUID(agent.ID)
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			duration, _, _, err := t.conn.Ping(pingCtx, agentIP)
-			if err != nil {
-				return
-			}
-			protoAgent.Latency = durationpb.New(duration)
-		}()
 		diags := t.conn.GetPeerDiagnostics(agent.ID)
-		//nolint:revive // outdated rule
 		protoAgent.LastHandshake = timestamppb.New(diags.LastWireguardHandshake)
 		out = append(out, protoAgent)
 	}
-	wg.Wait()
 
 	return out, nil
 }

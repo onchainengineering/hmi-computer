@@ -13,14 +13,13 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
-	"google.golang.org/protobuf/types/known/durationpb"
 	"google.golang.org/protobuf/types/known/timestamppb"
-	"tailscale.com/ipn/ipnstate"
 	"tailscale.com/util/dnsname"
 
 	"github.com/coder/coder/v2/tailnet"
 	"github.com/coder/coder/v2/tailnet/proto"
 	"github.com/coder/coder/v2/testutil"
+	"github.com/coder/quartz"
 )
 
 func newFakeClient(ctx context.Context, t *testing.T) *fakeClient {
@@ -69,10 +68,6 @@ func (f *fakeConn) CurrentWorkspaceState() (tailnet.WorkspaceUpdate, error) {
 	return f.state, nil
 }
 
-func (*fakeConn) Ping(context.Context, netip.Addr) (time.Duration, bool, *ipnstate.PingResult, error) {
-	return time.Millisecond * 100, true, &ipnstate.PingResult{}, nil
-}
-
 func (f *fakeConn) GetPeerDiagnostics(uuid.UUID) tailnet.PeerDiagnostics {
 	return tailnet.PeerDiagnostics{
 		LastWireguardHandshake: f.hsTime,
@@ -93,7 +88,7 @@ func TestTunnel_StartStop(t *testing.T) {
 	client := newFakeClient(ctx, t)
 	conn := newFakeConn(tailnet.WorkspaceUpdate{}, time.Time{})
 
-	_, mgr := setupTunnel(t, ctx, client)
+	_, mgr := setupTunnel(t, ctx, client, quartz.NewMock(t))
 
 	errCh := make(chan error, 1)
 	var resp *TunnelMessage
@@ -159,7 +154,7 @@ func TestTunnel_PeerUpdate(t *testing.T) {
 		},
 	}, time.Time{})
 
-	tun, mgr := setupTunnel(t, ctx, client)
+	tun, mgr := setupTunnel(t, ctx, client, quartz.NewMock(t))
 
 	errCh := make(chan error, 1)
 	var resp *TunnelMessage
@@ -224,7 +219,7 @@ func TestTunnel_NetworkSettings(t *testing.T) {
 	client := newFakeClient(ctx, t)
 	conn := newFakeConn(tailnet.WorkspaceUpdate{}, time.Time{})
 
-	tun, mgr := setupTunnel(t, ctx, client)
+	tun, mgr := setupTunnel(t, ctx, client, quartz.NewMock(t))
 
 	errCh := make(chan error, 1)
 	var resp *TunnelMessage
@@ -287,7 +282,7 @@ func TestTunnel_createPeerUpdate(t *testing.T) {
 
 	client := newFakeClient(ctx, t)
 
-	tun, _ := setupTunnel(t, ctx, client)
+	tun, _ := setupTunnel(t, ctx, client, quartz.NewMock(t))
 	hsTime := time.Now().Add(-time.Minute).UTC()
 	tun.conn = newFakeConn(tailnet.WorkspaceUpdate{}, hsTime)
 
@@ -337,7 +332,6 @@ func TestTunnel_createPeerUpdate(t *testing.T) {
 				Fqdn:          []string{"w1.coder.", "w1a1.w1.me.coder.", "w1a1.w1.testy.coder."},
 				IpAddrs:       []string{w1a1IP.String()},
 				LastHandshake: timestamppb.New(hsTime),
-				Latency:       durationpb.New(100 * time.Millisecond),
 			},
 		},
 		DeletedWorkspaces: []*Workspace{
@@ -348,7 +342,6 @@ func TestTunnel_createPeerUpdate(t *testing.T) {
 				Id: w2a1ID[:], Name: "w2a1", WorkspaceId: w2ID[:],
 				Fqdn:          []string{"w2.coder.", "w2a1.w2.me.coder.", "w2a1.w2.testy.coder."},
 				IpAddrs:       []string{w2a1IP.String()},
-				Latency:       nil,
 				LastHandshake: nil,
 			},
 		},
@@ -360,6 +353,8 @@ func TestTunnel_sendAgentUpdate(t *testing.T) {
 
 	ctx := testutil.Context(t, testutil.WaitShort)
 
+	mClock := quartz.NewMock(t)
+
 	wID1 := uuid.UUID{1}
 	aID1 := uuid.UUID{2}
 	aID2 := uuid.UUID{3}
@@ -368,8 +363,7 @@ func TestTunnel_sendAgentUpdate(t *testing.T) {
 	client := newFakeClient(ctx, t)
 	conn := newFakeConn(tailnet.WorkspaceUpdate{}, hsTime)
 
-	tun, mgr := setupTunnel(t, ctx, client)
-
+	tun, mgr := setupTunnel(t, ctx, client, mClock)
 	errCh := make(chan error, 1)
 	var resp *TunnelMessage
 	go func() {
@@ -390,9 +384,6 @@ func TestTunnel_sendAgentUpdate(t *testing.T) {
 	require.NoError(t, err)
 	_, ok := resp.Msg.(*TunnelMessage_Start)
 	require.True(t, ok)
-
-	// `sendAgentUpdate` is a no-op if there's no agents
-	tun.sendAgentUpdate()
 
 	// Inform the tunnel of the initial state
 	err = tun.Update(tailnet.WorkspaceUpdate{
@@ -422,8 +413,7 @@ func TestTunnel_sendAgentUpdate(t *testing.T) {
 	// `sendAgentUpdate` produces the same PeerUpdate message until an agent
 	// update is received
 	for range 2 {
-		// When: we send a (normally scheduled) agent update
-		tun.sendAgentUpdate()
+		mClock.AdvanceNext()
 		// Then: the tunnel sends a PeerUpdate message of agent upserts,
 		// with the last handshake and latency set
 		req = testutil.RequireRecvCtx(ctx, t, mgr.requests)
@@ -432,7 +422,6 @@ func TestTunnel_sendAgentUpdate(t *testing.T) {
 		require.Len(t, req.msg.GetPeerUpdate().UpsertedAgents, 1)
 		require.Equal(t, aID1[:], req.msg.GetPeerUpdate().UpsertedAgents[0].Id)
 		require.Equal(t, hsTime, req.msg.GetPeerUpdate().UpsertedAgents[0].LastHandshake.AsTime())
-		require.Equal(t, 100*time.Millisecond, req.msg.GetPeerUpdate().UpsertedAgents[0].Latency.AsDuration())
 	}
 
 	// Upsert a new agent
@@ -453,7 +442,7 @@ func TestTunnel_sendAgentUpdate(t *testing.T) {
 	testutil.RequireRecvCtx(ctx, t, mgr.requests)
 
 	// The new update includes the new agent
-	tun.sendAgentUpdate()
+	mClock.AdvanceNext()
 	req = testutil.RequireRecvCtx(ctx, t, mgr.requests)
 	require.Nil(t, req.msg.Rpc)
 	require.NotNil(t, req.msg.GetPeerUpdate())
@@ -464,10 +453,8 @@ func TestTunnel_sendAgentUpdate(t *testing.T) {
 
 	require.Equal(t, aID1[:], req.msg.GetPeerUpdate().UpsertedAgents[0].Id)
 	require.Equal(t, hsTime, req.msg.GetPeerUpdate().UpsertedAgents[0].LastHandshake.AsTime())
-	require.Equal(t, 100*time.Millisecond, req.msg.GetPeerUpdate().UpsertedAgents[0].Latency.AsDuration())
 	require.Equal(t, aID2[:], req.msg.GetPeerUpdate().UpsertedAgents[1].Id)
 	require.Equal(t, hsTime, req.msg.GetPeerUpdate().UpsertedAgents[1].LastHandshake.AsTime())
-	require.Equal(t, 100*time.Millisecond, req.msg.GetPeerUpdate().UpsertedAgents[1].Latency.AsDuration())
 
 	// Delete an agent
 	err = tun.Update(tailnet.WorkspaceUpdate{
@@ -486,18 +473,17 @@ func TestTunnel_sendAgentUpdate(t *testing.T) {
 	testutil.RequireRecvCtx(ctx, t, mgr.requests)
 
 	// The new update doesn't include the deleted agent
-	tun.sendAgentUpdate()
+	mClock.AdvanceNext()
 	req = testutil.RequireRecvCtx(ctx, t, mgr.requests)
 	require.Nil(t, req.msg.Rpc)
 	require.NotNil(t, req.msg.GetPeerUpdate())
 	require.Len(t, req.msg.GetPeerUpdate().UpsertedAgents, 1)
 	require.Equal(t, aID2[:], req.msg.GetPeerUpdate().UpsertedAgents[0].Id)
 	require.Equal(t, hsTime, req.msg.GetPeerUpdate().UpsertedAgents[0].LastHandshake.AsTime())
-	require.Equal(t, 100*time.Millisecond, req.msg.GetPeerUpdate().UpsertedAgents[0].Latency.AsDuration())
 }
 
 //nolint:revive // t takes precedence
-func setupTunnel(t *testing.T, ctx context.Context, client *fakeClient) (*Tunnel, *speaker[*ManagerMessage, *TunnelMessage, TunnelMessage]) {
+func setupTunnel(t *testing.T, ctx context.Context, client *fakeClient, mClock quartz.Clock) (*Tunnel, *speaker[*ManagerMessage, *TunnelMessage, TunnelMessage]) {
 	mp, tp := net.Pipe()
 	t.Cleanup(func() { _ = mp.Close() })
 	t.Cleanup(func() { _ = tp.Close() })
@@ -507,7 +493,7 @@ func setupTunnel(t *testing.T, ctx context.Context, client *fakeClient) (*Tunnel
 	var mgr *speaker[*ManagerMessage, *TunnelMessage, TunnelMessage]
 	errCh := make(chan error, 2)
 	go func() {
-		tunnel, err := NewTunnel(ctx, logger.Named("tunnel"), tp, client)
+		tunnel, err := NewTunnel(ctx, logger.Named("tunnel"), tp, client, WithClock(mClock))
 		tun = tunnel
 		errCh <- err
 	}()

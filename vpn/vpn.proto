@@ -2,7 +2,6 @@ syntax = "proto3";
 option go_package = "github.com/coder/coder/v2/vpn";
 
 import "google/protobuf/timestamp.proto";
-import "google/protobuf/duration.proto";
 
 package vpn;
 
@@ -110,7 +109,6 @@ message Agent {
 	// last_handshake is the primary indicator of whether we are connected to a peer. Zero value or
 	// anything longer than 5 minutes ago means there is a problem.
 	google.protobuf.Timestamp last_handshake = 6;
-	google.protobuf.Duration latency = 7;
 }
 
 // NetworkSettingsRequest is based on
