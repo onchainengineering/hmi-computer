@@ -49,6 +49,7 @@ func OpenTunnel(cReadFD, cWriteFD int32) int32 {
 	_, err = vpn.NewTunnel(ctx, slog.Make(), conn, vpn.NewClient(),
 		vpn.UseAsDNSConfig(),
 		vpn.UseAsRouter(),
+		vpn.UseAsLogger(),
 	)
 	if err != nil {
 		unix.Close(readFD)

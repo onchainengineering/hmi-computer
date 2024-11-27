@@ -35,6 +35,9 @@ type Tunnel struct {
 	client Client
 	conn   Conn
 
+	// clientLogger is deliberately separate, to avoid the tunnel using itself
+	// as a sink for it's own logs, which could lead to deadlocks
+	clientLogger slog.Logger
 	// router and dnsConfigurator may be nil
 	router          router.Router
 	dnsConfigurator dns.OSConfigurator
@@ -60,6 +63,7 @@ func NewTunnel(
 		speaker:         *(s),
 		ctx:             ctx,
 		logger:          logger,
+		clientLogger:    slog.Make(),
 		requestLoopDone: make(chan struct{}),
 		client:          client,
 	}
@@ -161,7 +165,7 @@ func UseAsRouter() TunnelOption {
 
 func UseAsLogger() TunnelOption {
 	return func(t *Tunnel) {
-		t.logger = t.logger.AppendSinks(t)
+		t.clientLogger = t.clientLogger.AppendSinks(t)
 	}
 }
 
@@ -227,7 +231,7 @@ func (t *Tunnel) start(req *StartRequest) error {
 			apiToken,
 			&Options{
 				Headers:           header,
-				Logger:            t.logger,
+				Logger:            t.clientLogger,
 				DNSConfigurator:   t.dnsConfigurator,
 				Router:            t.router,
 				TUNFileDescriptor: ptr.Ref(int(req.GetTunnelFileDescriptor())),
@@ -305,7 +309,7 @@ func convertWorkspaceUpdate(update tailnet.WorkspaceUpdate) *PeerUpdate {
 	for i, agent := range update.UpsertedAgents {
 		fqdn := make([]string, 0, len(agent.Hosts))
 		for name := range agent.Hosts {
-			fqdn = append(fqdn, name.WithoutTrailingDot())
+			fqdn = append(fqdn, name.WithTrailingDot())
 		}
 		out.UpsertedAgents[i] = &Agent{
 			Id:          tailnet.UUIDToByteSlice(agent.ID),
@@ -327,7 +331,7 @@ func convertWorkspaceUpdate(update tailnet.WorkspaceUpdate) *PeerUpdate {
 	for i, agent := range update.DeletedAgents {
 		fqdn := make([]string, 0, len(agent.Hosts))
 		for name := range agent.Hosts {
-			fqdn = append(fqdn, name.WithoutTrailingDot())
+			fqdn = append(fqdn, name.WithTrailingDot())
 		}
 		out.DeletedAgents[i] = &Agent{
 			Id:          tailnet.UUIDToByteSlice(agent.ID),
