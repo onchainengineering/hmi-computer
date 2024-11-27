@@ -391,7 +391,7 @@ func (t *Tunnel) createPeerUpdate(update tailnet.WorkspaceUpdate) (*PeerUpdate, 
 	return out, nil
 }
 
-// Given a list of `tailnet.Agent`, populate their network info, and conver them to proto agents.
+// Given a list of `tailnet.Agent`, populate their network info, and convert them to proto agents.
 func (t *Tunnel) populateAgents(agents []*tailnet.Agent) ([]*Agent, error) {
 	if t.conn == nil {
 		return nil, xerrors.New("no active connection")
