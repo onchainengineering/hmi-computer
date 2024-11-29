@@ -1,4 +1,5 @@
 import AlertTitle from "@mui/material/AlertTitle";
+import LinearProgress from "@mui/material/LinearProgress";
 import type {
 	DAUsResponse,
 	Entitlements,
@@ -36,6 +37,12 @@ export const GeneralSettingsPageView: FC<GeneralSettingsPageViewProps> = ({
 	safeExperiments,
 	invalidExperiments,
 }) => {
+	const licenseUtilizationPercentage =
+		entitlements?.features?.user_limit?.actual &&
+		entitlements?.features?.user_limit?.limit
+			? entitlements.features.user_limit.actual /
+				entitlements.features.user_limit.limit
+			: undefined;
 	return (
 		<>
 			<SettingsHeader
@@ -51,6 +58,32 @@ export const GeneralSettingsPageView: FC<GeneralSettingsPageViewProps> = ({
 					<div css={{ marginBottom: 24, height: 200 }}>
 						<ChartSection title={<ActiveUsersTitle interval="day" />}>
 							<ActiveUserChart data={deploymentDAUs.entries} interval="day" />
+						</ChartSection>
+					</div>
+				)}
+				{licenseUtilizationPercentage && (
+					<div css={{ marginBottom: 24, height: 200 }}>
+						<ChartSection title="License Utilization">
+							<LinearProgress
+								variant="determinate"
+								value={licenseUtilizationPercentage * 100}
+								css={{
+									height: 24,
+									borderRadius: 4,
+									marginBottom: 8,
+								}}
+							/>
+							<span
+								css={{
+									fontSize: "0.75rem",
+									display: "block",
+									textAlign: "right",
+								}}
+							>
+								{Math.round(licenseUtilizationPercentage * 100)}% used (
+								{entitlements!.features.user_limit.actual}/
+								{entitlements!.features.user_limit.limit} users)
+							</span>
 						</ChartSection>
 					</div>
 				)}
