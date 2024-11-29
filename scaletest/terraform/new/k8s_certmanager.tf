@@ -1,5 +1,3 @@
-# Terraform configuration for cert-manaer
-
 locals {
   cert_manager_namespace                    = "cert-manager"
   cert_manager_helm_repo                    = "https://charts.jetstack.io"
@@ -10,6 +8,8 @@ locals {
 }
 
 resource "kubernetes_secret" "cloudflare-api-key" {
+  provider = kubernetes.primary
+
   metadata {
     name      = "cloudflare-api-key-secret"
     namespace = local.cert_manager_namespace
@@ -20,12 +20,16 @@ resource "kubernetes_secret" "cloudflare-api-key" {
 }
 
 resource "kubernetes_namespace" "cert-manager-namespace" {
+  provider = kubernetes.primary
+
   metadata {
     name = local.cert_manager_namespace
   }
 }
 
 resource "helm_release" "cert-manager" {
+  provider = helm.primary
+
   repository = local.cert_manager_helm_repo
   chart      = local.cert_manager_helm_chart
   name       = local.cert_manager_release_name
@@ -36,37 +40,9 @@ EOF
   ]
 }
 
-# resource "kubernetes_manifest" "cloudflare-cluster-issuer" {
-#   manifest = {
-#     apiVersion = "cert-manager.io/v1"
-#     kind       = "ClusterIssuer"
-#     metadata = {
-#       name = "cloudflare-issuer"
-#     }
-#     spec = {
-#       acme = {
-#         email = var.cloudflare_email
-#         privateKeySecretRef = {
-#           name = local.cloudflare_issuer_private_key_secret_name
-#         }
-#         solvers = [
-#           {
-#             dns01 = {
-#               cloudflare = {
-#                 apiTokenSecretRef = {
-#                   name = kubernetes_secret.cloudflare-api-key.metadata.0.name
-#                   key  = "api-token"
-#                 }
-#               }
-#             }
-#           }
-#         ]
-#       }
-#     }
-#   }
-# }
-
 resource "kubectl_manifest" "cloudflare-cluster-issuer" {
+  provider = kubectl.primary
+
   depends_on = [ helm_release.cert-manager ]
     yaml_body = <<YAML
 apiVersion: cert-manager.io/v1

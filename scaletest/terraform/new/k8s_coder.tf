@@ -1,9 +1,12 @@
 data "google_client_config" "default" {}
 
 locals {
-  coder_url                 = var.coder_access_url
+  coder_subdomain           = "${var.name}-primary-scaletest"
+  coder_url                 = "https://${local.coder_subdomain}.${var.cloudflare_domain}"
   coder_admin_email         = "admin@coder.com"
+  coder_admin_full_name     = "Coder Admin"
   coder_admin_user          = "coder"
+  coder_admin_password      = "SomeSecurePassword!"
   coder_helm_repo           = "https://helm.coder.com/v2"
   coder_helm_chart          = "coder"
   coder_namespace           = "coder-${var.name}"
@@ -14,6 +17,8 @@ locals {
 }
 
 resource "kubernetes_namespace" "coder_namespace" {
+  provider = kubernetes.primary
+
   metadata {
     name = local.coder_namespace
   }
@@ -33,7 +38,7 @@ resource "kubernetes_secret" "coder-db" {
     namespace = kubernetes_namespace.coder_namespace.metadata.0.name
   }
   data = {
-    url = var.coder_db_url
+    url = local.coder_db_url
   }
   lifecycle {
     ignore_changes = [timeouts, wait_for_service_account_token]
@@ -41,6 +46,8 @@ resource "kubernetes_secret" "coder-db" {
 }
 
 resource "kubernetes_secret" "provisionerd_psk" {
+  provider = kubernetes.primary
+
   type = "Opaque"
   metadata {
     name      = "coder-provisioner-psk"
@@ -56,32 +63,16 @@ resource "kubernetes_secret" "provisionerd_psk" {
 
 # OIDC secret needs to be manually provisioned for now.
 data "kubernetes_secret" "coder_oidc" {
+  provider = kubernetes.primary
   metadata {
     namespace = kubernetes_namespace.coder_namespace.metadata.0.name
     name      = "coder-oidc"
   }
 }
 
-# resource "kubernetes_manifest" "coder_certificate" {
-#   manifest = {
-#     apiVersion = "cert-manager.io/v1"
-#     kind       = "Certificate"
-#     metadata = {
-#       name      = "${var.name}"
-#       namespace = kubernetes_namespace.coder_namespace.metadata.0.name
-#     }
-#     spec = {
-#       secretName = "${var.name}-tls"
-#       dnsNames   = regex("https?://([^/]+)", local.coder_url)
-#       issuerRef = {
-#         name = "cloudflare-issuer"
-#         kind = "ClusterIssuer"
-#       }
-#     }
-#   }
-# }
-
 resource "kubectl_manifest" "coder_certificate" {
+  provider = kubectl.primary
+
   depends_on = [ helm_release.cert-manager ]
   yaml_body = <<YAML
 apiVersion: cert-manager.io/v1
@@ -100,6 +91,8 @@ YAML
 }
 
 data "kubernetes_secret" "coder_tls" {
+  provider = kubernetes.primary
+
   metadata {
     namespace = kubernetes_namespace.coder_namespace.metadata.0.name
     name      = "${var.name}-tls"
@@ -108,6 +101,8 @@ data "kubernetes_secret" "coder_tls" {
 }
 
 resource "helm_release" "coder-chart" {
+  provider = helm.primary
+
   repository = local.coder_helm_repo
   chart      = local.coder_helm_chart
   name       = local.coder_release_name
@@ -122,7 +117,7 @@ coder:
         - matchExpressions:
           - key: "cloud.google.com/gke-nodepool"
             operator: "In"
-            values: ["${var.kubernetes_nodepool_coder}"]
+            values: ["${google_container_node_pool.node_pool["primary_coder"].name}"]
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
       - weight: 1
@@ -215,7 +210,7 @@ coder:
   service:
     enable: true
     sessionAffinity: None
-    loadBalancerIP: "${var.coder_address}"
+    loadBalancerIP: "${google_compute_address.coder["primary"].address}"
   volumeMounts:
   - mountPath: "/tmp"
     name: cache
@@ -243,7 +238,7 @@ coder:
         - matchExpressions:
           - key: "cloud.google.com/gke-nodepool"
             operator: "In"
-            values: ["${var.kubernetes_nodepool_coder}"]
+            values: ["${google_container_node_pool.node_pool["primary_coder"].name}"]
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
       - weight: 1
@@ -298,99 +293,56 @@ EOF
   ]
 }
 
-resource "local_file" "kubernetes_template" {
-  filename = "${path.module}/../.coderv2/templates/kubernetes/main.tf"
-  content  = <<EOF
-    terraform {
-      required_providers {
-        coder = {
-          source  = "coder/coder"
-          version = "~> 0.23.0"
-        }
-        kubernetes = {
-          source  = "hashicorp/kubernetes"
-          version = "~> 2.30"
-        }
-      }
+data "http" "coder_healthy" {
+  url = "http://${local.coder_subdomain}.${var.cloudflare_domain}"
+  // Wait up to 5 minutes for DNS to propogate
+  retry {
+    attempts = 30
+    min_delay_ms = 10000
+  }
+
+  lifecycle {
+    postcondition {
+        condition = self.status_code == 200
+        error_message = "${self.url} returned an unhealthy status code"
     }
+  }
 
-    provider "coder" {}
-
-    provider "kubernetes" {
-      config_path = null # always use host
-    }
-
-    data "coder_workspace" "me" {}
-    data "coder_workspace_owner" "me" {}
-
-    resource "coder_agent" "main" {
-      os                     = "linux"
-      arch                   = "amd64"
-    }
-
-    resource "kubernetes_pod" "main" {
-      count = data.coder_workspace.me.start_count
-      metadata {
-        name      = "coder-$${lower(data.coder_workspace_owner.me.name)}-$${lower(data.coder_workspace.me.name)}"
-        namespace = "${local.coder_namespace}"
-        labels = {
-          "app.kubernetes.io/name"     = "coder-workspace"
-          "app.kubernetes.io/instance" = "coder-workspace-$${lower(data.coder_workspace_owner.me.name)}-$${lower(data.coder_workspace.me.name)}"
-        }
-      }
-      spec {
-        security_context {
-          run_as_user = "1000"
-          fs_group    = "1000"
-        }
-        container {
-          name              = "dev"
-          image             = "${var.workspace_image}"
-          image_pull_policy = "Always"
-          command           = ["sh", "-c", coder_agent.main.init_script]
-          security_context {
-            run_as_user = "1000"
-          }
-          env {
-            name  = "CODER_AGENT_TOKEN"
-            value = coder_agent.main.token
-          }
-          resources {
-            requests = {
-              "cpu"    = "${var.workspace_cpu_request}"
-              "memory" = "${var.workspace_mem_request}"
-            }
-            limits = {
-              "cpu"    = "${var.workspace_cpu_limit}"
-              "memory" = "${var.workspace_mem_limit}"
-            }
-          }
-        }
-
-        affinity {
-          node_affinity {
-            required_during_scheduling_ignored_during_execution {
-              node_selector_term {
-                match_expressions {
-                  key = "cloud.google.com/gke-nodepool"
-                  operator = "In"
-                  values = ["${var.kubernetes_nodepool_workspaces}"]
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  EOF
+  depends_on = [ helm_release.coder-chart, cloudflare_record.coder ]
 }
 
-resource "local_file" "output_vars" {
-  filename = "${path.module}/../../.coderv2/url"
-  content  = local.coder_url
+resource "terraform_data" "proxy_tokens" {
+  count = 1
+  provisioner "local-exec" {
+    interpreter = [ "/bin/bash", "-c" ]
+    command = <<EOF
+curl 'http://${local.coder_subdomain}.${var.cloudflare_domain}/api/v2/users/first' \
+  --data-raw $'{"email":"${local.coder_admin_email}","password":"${local.coder_admin_password}","username":"${local.coder_admin_user}","name":"${local.coder_admin_full_name}","trial":false}' \
+  --insecure --silent --output /dev/null
+
+token=$(curl 'http://${local.coder_subdomain}.${var.cloudflare_domain}/api/v2/users/login' \
+  --data-raw $'{"email":"${local.coder_admin_email}","password":"${local.coder_admin_password}"}' \
+  --insecure --silent | jq -r .session_token)
+
+curl 'http://${local.coder_subdomain}.${var.cloudflare_domain}/api/v2/licenses' \
+  -H "Coder-Session-Token: $${token}" \
+  --data-raw '{"license":"${var.coder_license}"}' \
+  --insecure --silent --output /dev/null
+
+europe_token=$(curl 'http://${local.coder_subdomain}.${var.cloudflare_domain}/api/v2/workspaceproxies' \
+  -H "Coder-Session-Token: $${token}" \
+  --data-raw '{"name":"europe"}' \
+  --insecure --silent | jq -r .proxy_token)
+
+asia_token=$(curl 'http://${local.coder_subdomain}.${var.cloudflare_domain}/api/v2/workspaceproxies' \
+  -H "Coder-Session-Token: $${token}" \
+  --data-raw '{"name":"asia"}' \
+  --insecure --silent | jq -r .proxy_token)
+
+echo "{\"europe\": \"$${europe_token}\", \"asia\": \"$${asia_token}\"}"
+EOF
+  }
+
+  depends_on = [ data.http.coder_healthy ]
 }
 
-output "coder_url" {
-  description = "URL of the Coder deployment"
-  value       = local.coder_url
-}
