@@ -10,15 +10,15 @@ import (
 
 	"cdr.dev/slog"
 
-	"github.com/coder/coder/v2/coderd/database"
-	"github.com/coder/coder/v2/coderd/database/dbauthz"
-	"github.com/coder/coder/v2/coderd/database/pubsub"
-	"github.com/coder/coder/v2/coderd/rbac"
-	"github.com/coder/coder/v2/coderd/util/slice"
-	"github.com/coder/coder/v2/coderd/wspubsub"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/tailnet"
-	"github.com/coder/coder/v2/tailnet/proto"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbauthz"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/pubsub"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/slice"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/wspubsub"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/proto"
 )
 
 type UpdatesQuerier interface {

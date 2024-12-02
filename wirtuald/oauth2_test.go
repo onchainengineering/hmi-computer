@@ -13,17 +13,17 @@ import (
 	"github.com/stretchr/testify/require"
 	"golang.org/x/oauth2"
 
-	"github.com/coder/coder/v2/coderd/apikey"
-	"github.com/coder/coder/v2/coderd/coderdtest"
-	"github.com/coder/coder/v2/coderd/coderdtest/oidctest"
-	"github.com/coder/coder/v2/coderd/database"
-	"github.com/coder/coder/v2/coderd/database/dbtestutil"
-	"github.com/coder/coder/v2/coderd/database/dbtime"
-	"github.com/coder/coder/v2/coderd/identityprovider"
-	"github.com/coder/coder/v2/coderd/userpassword"
-	"github.com/coder/coder/v2/coderd/util/ptr"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/apikey"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest/oidctest"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtestutil"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/identityprovider"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/userpassword"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/ptr"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
 )
 
 func TestOAuth2ProviderApps(t *testing.T) {

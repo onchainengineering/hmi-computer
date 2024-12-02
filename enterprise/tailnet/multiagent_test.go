@@ -8,10 +8,10 @@ import (
 
 	"cdr.dev/slog"
 	"cdr.dev/slog/sloggers/slogtest"
-	"github.com/coder/coder/v2/coderd/database/dbtestutil"
-	"github.com/coder/coder/v2/enterprise/tailnet"
-	agpltest "github.com/coder/coder/v2/tailnet/test"
-	"github.com/coder/coder/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtestutil"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/tailnet"
+	agpltest "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/test"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
 )
 
 // TestPGCoordinator_MultiAgent tests a single coordinator with a MultiAgent

@@ -9,11 +9,11 @@ import (
 	"github.com/go-chi/httprate"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/coderd/database"
-	"github.com/coder/coder/v2/coderd/httpapi"
-	"github.com/coder/coder/v2/coderd/rbac"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/cryptorand"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpapi"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cryptorand"
 )
 
 // RateLimit returns a handler that limits requests per-minute based

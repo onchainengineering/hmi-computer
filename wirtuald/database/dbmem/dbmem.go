@@ -22,16 +22,16 @@ import (
 	"golang.org/x/exp/slices"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/coderd/notifications/types"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications/types"
 
-	"github.com/coder/coder/v2/coderd/database"
-	"github.com/coder/coder/v2/coderd/database/dbtime"
-	"github.com/coder/coder/v2/coderd/rbac"
-	"github.com/coder/coder/v2/coderd/rbac/regosql"
-	"github.com/coder/coder/v2/coderd/util/slice"
-	"github.com/coder/coder/v2/coderd/workspaceapps/appurl"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/provisionersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac/regosql"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/slice"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/workspaceapps/appurl"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk"
 )
 
 var validProxyByHostnameRegex = regexp.MustCompile(`^[a-zA-Z0-9._-]+$`)

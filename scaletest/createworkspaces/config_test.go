@@ -7,12 +7,12 @@ import (
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
 
-	"github.com/coder/coder/v2/coderd/httpapi"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/scaletest/agentconn"
-	"github.com/coder/coder/v2/scaletest/createworkspaces"
-	"github.com/coder/coder/v2/scaletest/reconnectingpty"
-	"github.com/coder/coder/v2/scaletest/workspacebuild"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpapi"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/agentconn"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/createworkspaces"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/reconnectingpty"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/workspacebuild"
 )
 
 func Test_UserConfig(t *testing.T) {

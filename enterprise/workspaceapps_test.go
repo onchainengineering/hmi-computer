@@ -4,14 +4,14 @@ import (
 	"net"
 	"testing"
 
-	"github.com/coder/coder/v2/coderd/coderdtest"
-	"github.com/coder/coder/v2/coderd/database/dbtestutil"
-	"github.com/coder/coder/v2/coderd/httpmw"
-	"github.com/coder/coder/v2/coderd/workspaceapps/apptest"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/enterprise/coderd/coderdenttest"
-	"github.com/coder/coder/v2/enterprise/coderd/license"
 	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtestutil"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpmw"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/workspaceapps/apptest"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/coderd/coderdenttest"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/coderd/license"
 )
 
 func TestWorkspaceApps(t *testing.T) {

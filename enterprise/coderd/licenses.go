@@ -21,15 +21,15 @@ import (
 	"golang.org/x/xerrors"
 
 	"cdr.dev/slog"
-	"github.com/coder/coder/v2/coderd"
-	"github.com/coder/coder/v2/coderd/audit"
-	"github.com/coder/coder/v2/coderd/database"
-	"github.com/coder/coder/v2/coderd/database/dbtime"
-	"github.com/coder/coder/v2/coderd/httpapi"
-	"github.com/coder/coder/v2/coderd/rbac"
-	"github.com/coder/coder/v2/coderd/rbac/policy"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/enterprise/coderd/license"
+	"github.com/onchainengineering/hmi-computer/v2/coderd"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/audit"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpapi"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac/policy"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/coderd/license"
 )
 
 const (

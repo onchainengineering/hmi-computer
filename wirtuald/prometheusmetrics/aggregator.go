@@ -11,11 +11,11 @@ import (
 	"github.com/prometheus/common/model"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/coderd/agentmetrics"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/agentmetrics"
 
 	"cdr.dev/slog"
 
-	agentproto "github.com/coder/coder/v2/agent/proto"
+	agentproto "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/agent/proto"
 )
 
 const (

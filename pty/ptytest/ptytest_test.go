@@ -8,9 +8,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/coder/coder/v2/pty/ptytest"
-	"github.com/coder/coder/v2/testutil"
 	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/pty/ptytest"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestPtytest(t *testing.T) {
@@ -41,7 +41,7 @@ func TestPtytest(t *testing.T) {
 		require.Equal(t, "line 5", pty.ExpectMatch("5"))
 	})
 
-	// See https://github.com/coder/coder/issues/2122 for the motivation
+	// See https://github.com/onchainengineering/hmi-computerneering/hmi-computer/issues/2122 for the motivation
 	// behind this test.
 	t.Run("Ptytest should not hang when output is not consumed", func(t *testing.T) {
 		t.Parallel()

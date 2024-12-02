@@ -13,7 +13,7 @@ import (
 	"github.com/lib/pq"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
 )
 
 type awsIamRdsDriver struct {

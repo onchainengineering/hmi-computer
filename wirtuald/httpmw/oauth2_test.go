@@ -11,9 +11,9 @@ import (
 	"github.com/stretchr/testify/require"
 	"golang.org/x/oauth2"
 
-	"github.com/coder/coder/v2/coderd/httpmw"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpmw"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
 )
 
 type testOAuth2Provider struct {

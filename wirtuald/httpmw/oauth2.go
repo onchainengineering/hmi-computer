@@ -11,11 +11,11 @@ import (
 	"github.com/google/uuid"
 	"golang.org/x/oauth2"
 
-	"github.com/coder/coder/v2/coderd/database"
-	"github.com/coder/coder/v2/coderd/httpapi"
-	"github.com/coder/coder/v2/coderd/promoauth"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/cryptorand"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpapi"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/promoauth"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cryptorand"
 )
 
 type oauth2StateKey struct{}

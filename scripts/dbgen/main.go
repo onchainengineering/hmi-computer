@@ -603,7 +603,7 @@ func loadInterfaceFuncs(f *dst.File, interfaceName string) ([]querierFunction, e
 				if !ident.IsExported() {
 					continue
 				}
-				ident.Path = "github.com/coder/coder/v2/coderd/database"
+				ident.Path = "github.com/onchainengineering/hmi-computer/v2/coderd/database"
 			}
 		}
 

@@ -19,15 +19,15 @@ import (
 	tslogger "tailscale.com/types/logger"
 	"tailscale.com/types/nettype"
 
-	"github.com/coder/coder/v2/tailnet"
-	"github.com/coder/coder/v2/tailnet/proto"
-	"github.com/coder/coder/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/tailnet"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/proto"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
 )
 
-//go:generate mockgen -destination ./coordinatormock.go -package tailnettest github.com/coder/coder/v2/tailnet Coordinator
-//go:generate mockgen -destination ./coordinateemock.go -package tailnettest github.com/coder/coder/v2/tailnet Coordinatee
-//go:generate mockgen -destination ./workspaceupdatesprovidermock.go -package tailnettest github.com/coder/coder/v2/tailnet WorkspaceUpdatesProvider
-//go:generate mockgen -destination ./subscriptionmock.go -package tailnettest github.com/coder/coder/v2/tailnet Subscription
+//go:generate mockgen -destination ./coordinatormock.go -package tailnettest github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet Coordinator
+//go:generate mockgen -destination ./coordinateemock.go -package tailnettest github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet Coordinatee
+//go:generate mockgen -destination ./workspaceupdatesprovidermock.go -package tailnettest github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet WorkspaceUpdatesProvider
+//go:generate mockgen -destination ./subscriptionmock.go -package tailnettest github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet Subscription
 
 type derpAndSTUNCfg struct {
 	DisableSTUN    bool

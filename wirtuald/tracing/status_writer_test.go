@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/coderd/tracing"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/tracing"
 )
 
 func TestStatusWriter(t *testing.T) {

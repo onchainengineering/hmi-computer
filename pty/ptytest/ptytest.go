@@ -19,9 +19,9 @@ import (
 	"golang.org/x/exp/slices"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/pty"
-	"github.com/coder/coder/v2/testutil"
 	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/pty"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func New(t *testing.T, opts ...pty.Option) *PTY {

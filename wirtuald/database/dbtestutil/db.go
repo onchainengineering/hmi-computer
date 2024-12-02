@@ -19,10 +19,10 @@ import (
 	"golang.org/x/xerrors"
 
 	"cdr.dev/slog"
-	"github.com/coder/coder/v2/coderd/database"
-	"github.com/coder/coder/v2/coderd/database/dbmem"
-	"github.com/coder/coder/v2/coderd/database/pubsub"
-	"github.com/coder/coder/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbmem"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/pubsub"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
 )
 
 // WillUsePostgres returns true if a call to NewDB() will return a real, postgres-backed Store and Pubsub.

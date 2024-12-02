@@ -8,7 +8,7 @@ set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 cdroot
 
-deps=$(./scripts/list_dependencies.sh github.com/coder/coder/v2/codersdk)
+deps=$(./scripts/list_dependencies.sh github.com/onchainengineering/hmi-computer/v2/codersdk)
 
 set +e
 replaces=$(grep "^replace" go.mod | awk '{print $2}')

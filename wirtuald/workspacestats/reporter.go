@@ -11,15 +11,15 @@ import (
 
 	"cdr.dev/slog"
 
-	agentproto "github.com/coder/coder/v2/agent/proto"
-	"github.com/coder/coder/v2/coderd/database"
-	"github.com/coder/coder/v2/coderd/database/dbtime"
-	"github.com/coder/coder/v2/coderd/database/pubsub"
-	"github.com/coder/coder/v2/coderd/prometheusmetrics"
-	"github.com/coder/coder/v2/coderd/schedule"
-	"github.com/coder/coder/v2/coderd/util/slice"
-	"github.com/coder/coder/v2/coderd/workspaceapps"
-	"github.com/coder/coder/v2/coderd/wspubsub"
+	agentproto "github.com/onchainengineering/hmi-computer/v2/agent/proto"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/pubsub"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/prometheusmetrics"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/schedule"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/slice"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/workspaceapps"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/wspubsub"
 )
 
 type ReporterOptions struct {

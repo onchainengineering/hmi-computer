@@ -8,11 +8,11 @@ import (
 	"golang.org/x/xerrors"
 
 	"cdr.dev/slog"
-	agentproto "github.com/coder/coder/v2/agent/proto"
-	"github.com/coder/coder/v2/coderd/database"
-	"github.com/coder/coder/v2/coderd/database/dbtime"
-	"github.com/coder/coder/v2/coderd/wspubsub"
-	"github.com/coder/coder/v2/codersdk/agentsdk"
+	agentproto "github.com/onchainengineering/hmi-computer/v2/agent/proto"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/wspubsub"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/agentsdk"
 )
 
 type LogsAPI struct {

@@ -8,9 +8,9 @@ import (
 	"golang.org/x/mod/semver"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/buildinfo"
-	"github.com/coder/coder/v2/coderd/httpapi"
-	"github.com/coder/coder/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/buildinfo"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpapi"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
 )
 
 // @Summary Update check

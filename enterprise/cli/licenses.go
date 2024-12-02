@@ -13,9 +13,9 @@ import (
 	"github.com/google/uuid"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/cli/cliui"
-	"github.com/coder/coder/v2/codersdk"
 	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cli/cliui"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 var jwtRegexp = regexp.MustCompile(`^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$`)

@@ -21,16 +21,16 @@ import (
 	"golang.org/x/oauth2"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/coderd"
-	"github.com/coder/coder/v2/coderd/coderdtest/oidctest"
-	"github.com/coder/coder/v2/coderd/database"
-	"github.com/coder/coder/v2/coderd/database/dbauthz"
-	"github.com/coder/coder/v2/coderd/database/dbmem"
-	"github.com/coder/coder/v2/coderd/database/dbmock"
-	"github.com/coder/coder/v2/coderd/externalauth"
-	"github.com/coder/coder/v2/coderd/promoauth"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest/oidctest"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbauthz"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbmem"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbmock"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/externalauth"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/promoauth"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
 )
 
 func TestRefreshToken(t *testing.T) {

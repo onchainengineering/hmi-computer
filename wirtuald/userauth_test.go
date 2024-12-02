@@ -26,22 +26,22 @@ import (
 
 	"cdr.dev/slog"
 	"cdr.dev/slog/sloggers/slogtest"
-	"github.com/coder/coder/v2/coderd"
-	"github.com/coder/coder/v2/coderd/audit"
-	"github.com/coder/coder/v2/coderd/coderdtest"
-	"github.com/coder/coder/v2/coderd/coderdtest/oidctest"
-	"github.com/coder/coder/v2/coderd/cryptokeys"
-	"github.com/coder/coder/v2/coderd/database"
-	"github.com/coder/coder/v2/coderd/database/dbauthz"
-	"github.com/coder/coder/v2/coderd/database/dbgen"
-	"github.com/coder/coder/v2/coderd/database/dbtestutil"
-	"github.com/coder/coder/v2/coderd/jwtutils"
-	"github.com/coder/coder/v2/coderd/notifications"
-	"github.com/coder/coder/v2/coderd/notifications/notificationstest"
-	"github.com/coder/coder/v2/coderd/promoauth"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/cryptorand"
-	"github.com/coder/coder/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/audit"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest/oidctest"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/cryptokeys"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbauthz"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbgen"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtestutil"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/jwtutils"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications/notificationstest"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/promoauth"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cryptorand"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
 )
 
 // This test specifically tests logging in with OIDC when an expired
@@ -763,8 +763,8 @@ func TestUserOAuth2Github(t *testing.T) {
 
 	// The bug only is exercised when a deleted user with the same linked_id exists.
 	// Still related open issues:
-	// - https://github.com/coder/coder/issues/12116
-	// - https://github.com/coder/coder/issues/12115
+	// - https://github.com/onchainengineering/hmi-computerneering/hmi-computer/issues/12116
+	// - https://github.com/onchainengineering/hmi-computerneering/hmi-computer/issues/12115
 	t.Run("ChangedEmail", func(t *testing.T) {
 		t.Parallel()
 
@@ -1104,7 +1104,7 @@ func TestUserOIDC(t *testing.T) {
 			StatusCode:   http.StatusOK,
 		},
 		{
-			// See: https://github.com/coder/coder/issues/4472
+			// See: https://github.com/onchainengineering/hmi-computerneering/hmi-computer/issues/4472
 			Name: "UsernameIsEmail",
 			IDTokenClaims: jwt.MapClaims{
 				"preferred_username": "kyle@kwc.io",

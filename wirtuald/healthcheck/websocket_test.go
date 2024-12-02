@@ -11,9 +11,9 @@ import (
 	"github.com/stretchr/testify/require"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/coderd/healthcheck"
-	"github.com/coder/coder/v2/coderd/healthcheck/health"
-	"github.com/coder/coder/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/healthcheck"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/healthcheck/health"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
 )
 
 func TestWebsocket(t *testing.T) {

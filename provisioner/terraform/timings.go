@@ -9,9 +9,9 @@ import (
 	"github.com/cespare/xxhash"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	"github.com/coder/coder/v2/coderd/database"
-	"github.com/coder/coder/v2/coderd/database/dbtime"
-	"github.com/coder/coder/v2/provisionersdk/proto"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk/proto"
 )
 
 type timingKind string

@@ -11,10 +11,10 @@ import (
 	"github.com/stretchr/testify/require"
 	"go.uber.org/goleak"
 
-	"github.com/coder/coder/v2/coderd/cryptokeys"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/testutil"
 	"github.com/coder/quartz"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/cryptokeys"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestMain(m *testing.M) {

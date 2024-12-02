@@ -7,12 +7,12 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/coder/coder/v2/cli/clitest"
-	"github.com/coder/coder/v2/cli/config"
-	"github.com/coder/coder/v2/coderd/coderdtest"
-	"github.com/coder/coder/v2/enterprise/cli"
-	"github.com/coder/coder/v2/enterprise/coderd/coderdenttest"
 	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cli/clitest"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cli/config"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/cli"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/coderd/coderdenttest"
 )
 
 func newCLI(t *testing.T, args ...string) (*serpent.Invocation, config.Root) {

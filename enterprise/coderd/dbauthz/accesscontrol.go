@@ -6,8 +6,8 @@ import (
 	"github.com/google/uuid"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/coderd/database"
-	agpldbz "github.com/coder/coder/v2/coderd/database/dbauthz"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	agpldbz "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbauthz"
 )
 
 type EnterpriseTemplateAccessControlStore struct{}

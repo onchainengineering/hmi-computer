@@ -17,15 +17,15 @@ import (
 
 	"cdr.dev/slog"
 
-	"github.com/coder/coder/v2/coderd/audit"
-	"github.com/coder/coder/v2/coderd/database"
-	"github.com/coder/coder/v2/coderd/database/dbauthz"
-	"github.com/coder/coder/v2/coderd/database/dbtime"
-	"github.com/coder/coder/v2/coderd/database/provisionerjobs"
-	"github.com/coder/coder/v2/coderd/database/pubsub"
-	"github.com/coder/coder/v2/coderd/notifications"
-	"github.com/coder/coder/v2/coderd/schedule"
-	"github.com/coder/coder/v2/coderd/wsbuilder"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/audit"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbauthz"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/provisionerjobs"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/pubsub"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/schedule"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/wsbuilder"
 )
 
 // Executor automatically starts or stops workspaces.

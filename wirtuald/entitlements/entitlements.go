@@ -10,7 +10,7 @@ import (
 	"golang.org/x/exp/slices"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 type Set struct {

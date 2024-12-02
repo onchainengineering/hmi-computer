@@ -4,7 +4,7 @@ import (
 	"net/textproto"
 	"strings"
 
-	"github.com/coder/coder/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 // StripCoderCookies removes the session token from the cookie header provided.

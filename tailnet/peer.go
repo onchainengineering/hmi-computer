@@ -10,7 +10,7 @@ import (
 
 	"cdr.dev/slog"
 
-	"github.com/coder/coder/v2/tailnet/proto"
+	"github.com/onchainengineering/hmi-computer/v2/tailnet/proto"
 )
 
 type peer struct {

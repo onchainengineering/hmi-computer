@@ -7,7 +7,7 @@ import (
 	"github.com/open-policy-agent/opa/ast"
 	"github.com/stretchr/testify/require"
 
-	"github.com/coder/coder/v2/coderd/rbac/policy"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac/policy"
 )
 
 // BenchmarkRBACValueAllocation benchmarks the cost of allocating a rego input

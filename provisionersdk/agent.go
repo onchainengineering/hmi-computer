@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/coder/coder/v2/provisionersdk/proto"
+	"github.com/onchainengineering/hmi-computer/v2/provisionersdk/proto"
 )
 
 var (

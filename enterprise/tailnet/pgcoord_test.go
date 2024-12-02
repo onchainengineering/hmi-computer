@@ -18,16 +18,16 @@ import (
 
 	"cdr.dev/slog"
 	"cdr.dev/slog/sloggers/slogtest"
-	"github.com/coder/coder/v2/coderd/database"
-	"github.com/coder/coder/v2/coderd/database/dbmock"
-	"github.com/coder/coder/v2/coderd/database/dbtestutil"
-	"github.com/coder/coder/v2/coderd/database/pubsub"
-	"github.com/coder/coder/v2/enterprise/tailnet"
-	agpl "github.com/coder/coder/v2/tailnet"
-	"github.com/coder/coder/v2/tailnet/proto"
-	agpltest "github.com/coder/coder/v2/tailnet/test"
-	"github.com/coder/coder/v2/testutil"
 	"github.com/coder/quartz"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbmock"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtestutil"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/pubsub"
+	"githugithub.com/onchainengineering/hmi-computerng/hmi-computer/v2/enterprise/tailnet"
+	agithub.com/onchainengineering/hmi-computernengineering/hmi-computer/v2/tailnet"
+	"github.cogithub.com/onchainengineering/hmi-computermi-computer/v2/tailnet/proto"
+	agithub.com/onchainengineering/hmi-computerchainengineering/hmi-computer/v2/tailnet/test"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestMain(m *testing.M) {

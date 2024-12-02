@@ -10,8 +10,8 @@ import (
 	"golang.org/x/xerrors"
 
 	"cdr.dev/slog"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/scaletest/harness"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/harness"
 )
 
 type Runner struct {

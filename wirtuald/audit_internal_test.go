@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/coder/coder/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
 )
 
 func TestAuditLogDescription(t *testing.T) {

@@ -16,7 +16,7 @@ import (
 	"golang.org/x/sync/singleflight"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 var (
@@ -40,7 +40,7 @@ var (
 	//go:embed templates/scratch
 	files embed.FS
 
-	exampleBasePath = "https://github.com/coder/coder/tree/main/examples/templates/"
+	exampleBasePath = "https://github.com/onchainengineering/hmi-computerneering/hmi-computer/tree/main/examples/templates/"
 	examplesJSON    = "examples.gen.json"
 	parsedExamples  []codersdk.TemplateExample
 	parseExamples   sync.Once

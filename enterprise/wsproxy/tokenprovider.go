@@ -7,10 +7,10 @@ import (
 
 	"cdr.dev/slog"
 
-	"github.com/coder/coder/v2/coderd/cryptokeys"
-	"github.com/coder/coder/v2/coderd/jwtutils"
-	"github.com/coder/coder/v2/coderd/workspaceapps"
-	"github.com/coder/coder/v2/enterprise/wsproxy/wsproxysdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/cryptokeys"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/jwtutils"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/workspaceapps"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/wsproxy/wsproxysdk"
 )
 
 var _ workspaceapps.SignedTokenProvider = (*TokenProvider)(nil)

@@ -26,12 +26,12 @@ import (
 	"google.golang.org/protobuf/types/known/wrapperspb"
 
 	"cdr.dev/slog"
-	"github.com/coder/coder/v2/buildinfo"
-	clitelemetry "github.com/coder/coder/v2/cli/telemetry"
-	"github.com/coder/coder/v2/coderd/database"
-	"github.com/coder/coder/v2/coderd/database/dbtime"
-	"github.com/coder/coder/v2/codersdk"
-	tailnetproto "github.com/coder/coder/v2/tailnet/proto"
+	"github.com/onchainengineering/hmi-computer/v2/buildinfo"
+	clitelemetry "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cli/telemetry"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	tailnetproto "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/proto"
 )
 
 const (

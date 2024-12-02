@@ -19,10 +19,10 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/coder/coder/v2/coderd/devtunnel"
-	"github.com/coder/coder/v2/testutil"
 	"github.com/coder/wgtunnel/tunneld"
-	"github.com/coder/wgtunnel/tunnelsdk"
+	"github.com/onchainengineering/hmi-computernel/tunnelsdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/devtunnel"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 // The tunnel leaks a few goroutines that aren't impactful to production scenarios.

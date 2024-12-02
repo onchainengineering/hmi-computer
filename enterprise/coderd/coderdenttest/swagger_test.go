@@ -5,8 +5,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/coder/coder/v2/coderd/coderdtest"
-	"github.com/coder/coder/v2/enterprise/coderd/coderdenttest"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/coderdtest"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/coderd/coderdenttest"
 )
 
 func TestEnterpriseEndpointsDocumented(t *testing.T) {

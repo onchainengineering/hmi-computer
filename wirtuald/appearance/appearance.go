@@ -3,7 +3,7 @@ package appearance
 import (
 	"context"
 
-	"github.com/coder/coder/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 type Fetcher interface {

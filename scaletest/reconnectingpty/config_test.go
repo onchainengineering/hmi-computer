@@ -7,9 +7,9 @@ import (
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
 
-	"github.com/coder/coder/v2/coderd/httpapi"
-	"github.com/coder/coder/v2/codersdk/workspacesdk"
-	"github.com/coder/coder/v2/scaletest/reconnectingpty"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpapi"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/workspacesdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/reconnectingpty"
 )
 
 func Test_Config(t *testing.T) {

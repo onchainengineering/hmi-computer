@@ -24,13 +24,13 @@ import (
 	"tailscale.com/tailcfg"
 
 	"cdr.dev/slog"
-	"github.com/coder/coder/v2/coderd/tracing"
-	"github.com/coder/coder/v2/coderd/workspaceapps"
-	"github.com/coder/coder/v2/coderd/workspaceapps/appurl"
-	"github.com/coder/coder/v2/codersdk/workspacesdk"
-	"github.com/coder/coder/v2/site"
-	"github.com/coder/coder/v2/tailnet"
-	"github.com/coder/coder/v2/tailnet/proto"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/tracing"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/workspaceapps"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/workspaceapps/appurl"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/workspacesdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/site"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/proto"
 )
 
 var tailnetTransport *http.Transport

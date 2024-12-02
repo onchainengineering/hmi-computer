@@ -13,9 +13,9 @@ import (
 
 	"cdr.dev/slog"
 
-	"github.com/coder/coder/v2/coderd/database"
-	"github.com/coder/coder/v2/coderd/unhanger"
-	"github.com/coder/coder/v2/provisionersdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/unhanger"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk"
 )
 
 type ServeOptions struct {

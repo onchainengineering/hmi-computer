@@ -6,10 +6,10 @@ import (
 	"github.com/google/uuid"
 	"nhooyr.io/websocket"
 
-	"github.com/coder/coder/v2/apiversion"
-	"github.com/coder/coder/v2/coderd/httpapi"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/tailnet/proto"
+	"github.com/onchainengineering/hmi-computer/v2/apiversion"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpapi"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/proto"
 )
 
 // @Summary Workspace Proxy Coordinate

@@ -16,9 +16,9 @@ import (
 	"github.com/go-playground/validator/v10"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/coderd/httpapi/httpapiconstraints"
-	"github.com/coder/coder/v2/coderd/tracing"
-	"github.com/coder/coder/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpapi/httpapiconstraints"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/tracing"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
 )
 
 var Validate *validator.Validate

@@ -10,12 +10,12 @@ import (
 
 	"cdr.dev/slog"
 	"cdr.dev/slog/sloggers/sloghuman"
-	"github.com/coder/coder/v2/cli"
-	"github.com/coder/coder/v2/cli/cliui"
-	"github.com/coder/coder/v2/coderd/database/awsiamrds"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/enterprise/dbcrypt"
 	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cli"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cli/cliui"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/awsiamrds"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/dbcrypt"
 
 	"golang.org/x/xerrors"
 )

@@ -18,7 +18,7 @@ const docTemplate = `{
         },
         "license": {
             "name": "AGPL-3.0",
-            "url": "https://github.com/coder/coder/blob/main/LICENSE"
+            "url": "https://github.com/onchainengineering/hmi-computer/blob/main/LICENSE"
         },
         "version": "{{.Version}}"
     },

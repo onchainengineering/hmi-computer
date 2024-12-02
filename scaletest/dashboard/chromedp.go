@@ -13,7 +13,7 @@ import (
 	"github.com/chromedp/chromedp"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/cryptorand"
+	"github.com/onchainengineering/hmi-computer/v2/cryptorand"
 
 	"cdr.dev/slog"
 )

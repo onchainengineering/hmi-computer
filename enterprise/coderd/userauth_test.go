@@ -11,22 +11,22 @@ import (
 	"github.com/stretchr/testify/require"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/coderd"
-	"github.com/coder/coder/v2/coderd/coderdtest"
-	"github.com/coder/coder/v2/coderd/coderdtest/oidctest"
-	"github.com/coder/coder/v2/coderd/database"
-	"github.com/coder/coder/v2/coderd/database/db2sdk"
-	"github.com/coder/coder/v2/coderd/database/dbauthz"
-	"github.com/coder/coder/v2/coderd/database/dbgen"
-	"github.com/coder/coder/v2/coderd/database/dbtestutil"
-	"github.com/coder/coder/v2/coderd/rbac"
-	"github.com/coder/coder/v2/coderd/util/slice"
-	"github.com/coder/coder/v2/codersdk"
-	coderden "github.com/coder/coder/v2/enterprise/coderd"
-	"github.com/coder/coder/v2/enterprise/coderd/coderdenttest"
-	"github.com/coder/coder/v2/enterprise/coderd/license"
-	"github.com/coder/coder/v2/testutil"
 	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest/oidctest"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/db2sdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbauthz"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbgen"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtestutil"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/slice"
+	"github.cogithub.com/onchainengineering/hmi-computermi-computer/v2/codersdk"
+	cgithub.com/onchainengineering/hmi-computerchainengineering/hmi-computer/v2/enterprise/coderd"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/coderd/coderdenttest"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/coderd/license"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 // nolint:bodyclose
@@ -330,7 +330,7 @@ func TestUserOIDC(t *testing.T) {
 		// roles from an updated claim.
 		t.Run("NewUserAndRemoveRolesOnRefresh", func(t *testing.T) {
 			// TODO: Implement new feature to update roles/groups on OIDC
-			// refresh tokens. https://github.com/coder/coder/issues/9312
+			// refresh tokens. https://github.com/onchainengineering/hmi-computerneering/hmi-computer/issues/9312
 			t.Skip("Refreshing tokens does not update roles :(")
 			t.Parallel()
 
@@ -514,7 +514,7 @@ func TestUserOIDC(t *testing.T) {
 			t.Parallel()
 
 			// TODO: Implement new feature to update roles/groups on OIDC
-			// refresh tokens. https://github.com/coder/coder/issues/9312
+			// refresh tokens. https://github.com/onchainengineering/hmi-computerneering/hmi-computer/issues/9312
 			t.Skip("Refreshing tokens does not update groups :(")
 
 			const groupClaim = "custom-groups"

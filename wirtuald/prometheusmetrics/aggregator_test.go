@@ -15,12 +15,12 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"cdr.dev/slog/sloggers/slogtest"
-	"github.com/coder/coder/v2/coderd/agentmetrics"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/agentmetrics"
 
-	agentproto "github.com/coder/coder/v2/agent/proto"
-	"github.com/coder/coder/v2/coderd/prometheusmetrics"
-	"github.com/coder/coder/v2/cryptorand"
-	"github.com/coder/coder/v2/testutil"
+	agentproto "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/agent/proto"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/prometheusmetrics"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cryptorand"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
 )
 
 const (

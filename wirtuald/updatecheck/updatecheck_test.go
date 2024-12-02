@@ -14,9 +14,9 @@ import (
 
 	"cdr.dev/slog/sloggers/slogtest"
 
-	"github.com/coder/coder/v2/coderd/database/dbmem"
-	"github.com/coder/coder/v2/coderd/updatecheck"
-	"github.com/coder/coder/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbmem"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/updatecheck"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
 )
 
 func TestChecker_Notify(t *testing.T) {

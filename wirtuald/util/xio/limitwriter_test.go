@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/coder/coder/v2/coderd/util/xio"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/util/xio"
 )
 
 func TestLimitWriter(t *testing.T) {

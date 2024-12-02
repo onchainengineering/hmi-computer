@@ -7,7 +7,7 @@ import (
 
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/provisionersdk/proto"
+	"github.com/onchainengineering/hmi-computer/v2/provisionersdk/proto"
 )
 
 type module struct {

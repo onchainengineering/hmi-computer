@@ -20,16 +20,16 @@ import (
 	"go.opentelemetry.io/otel/trace"
 	"tailscale.com/tailcfg"
 
-	"github.com/coder/coder/v2/agent"
-	"github.com/coder/coder/v2/agent/agenttest"
-	"github.com/coder/coder/v2/agent/proto"
-	"github.com/coder/coder/v2/coderd"
-	"github.com/coder/coder/v2/coderd/workspaceapps/appurl"
-	"github.com/coder/coder/v2/codersdk/agentsdk"
-	"github.com/coder/coder/v2/codersdk/workspacesdk"
-	"github.com/coder/coder/v2/tailnet"
-	"github.com/coder/coder/v2/tailnet/tailnettest"
-	"github.com/coder/coder/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/agent"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/agent/agenttest"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/agent/proto"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/workspaceapps/appurl"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/agentsdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/workspacesdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/tailnettest"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
 )
 
 func TestServerTailnet_AgentConn_OK(t *testing.T) {

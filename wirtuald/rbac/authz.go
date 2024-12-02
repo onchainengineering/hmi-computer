@@ -19,11 +19,11 @@ import (
 	"go.opentelemetry.io/otel/trace"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/coderd/rbac/policy"
-	"github.com/coder/coder/v2/coderd/rbac/regosql"
-	"github.com/coder/coder/v2/coderd/rbac/regosql/sqltypes"
-	"github.com/coder/coder/v2/coderd/tracing"
-	"github.com/coder/coder/v2/coderd/util/slice"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac/policy"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac/regosql"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac/regosql/sqltypes"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/tracing"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/slice"
 )
 
 type AuthCall struct {

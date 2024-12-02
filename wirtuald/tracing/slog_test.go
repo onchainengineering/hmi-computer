@@ -13,7 +13,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"cdr.dev/slog"
-	"github.com/coder/coder/v2/coderd/tracing"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/tracing"
 )
 
 type stringer string

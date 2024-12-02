@@ -11,9 +11,9 @@ import (
 	"google.golang.org/protobuf/types/known/durationpb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	"github.com/coder/coder/v2/coderd/jwtutils"
-	"github.com/coder/coder/v2/tailnet/proto"
 	"github.com/coder/quartz"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/jwtutils"
+	"github.com/onchainengineering/hmi-computer/v2/tailnet/proto"
 )
 
 const (

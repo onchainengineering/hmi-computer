@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/coder/coder/v2/coderd/prometheusmetrics"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/prometheusmetrics"
 )
 
 func TestCollector_Add(t *testing.T) {

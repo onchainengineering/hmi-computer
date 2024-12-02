@@ -7,11 +7,11 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/coder/coder/v2/codersdk/drpc"
-	"github.com/coder/coder/v2/provisioner/echo"
-	"github.com/coder/coder/v2/provisionersdk"
-	"github.com/coder/coder/v2/provisionersdk/proto"
-	"github.com/coder/coder/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/drpc"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisioner/echo"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk/proto"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
 )
 
 func TestEcho(t *testing.T) {

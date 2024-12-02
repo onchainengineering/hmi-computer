@@ -19,28 +19,28 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"cdr.dev/slog"
-	"github.com/coder/coder/v2/agent/agenttest"
-	"github.com/coder/coder/v2/coderd/audit"
-	"github.com/coder/coder/v2/coderd/coderdtest"
-	"github.com/coder/coder/v2/coderd/database"
-	"github.com/coder/coder/v2/coderd/database/dbauthz"
-	"github.com/coder/coder/v2/coderd/database/dbfake"
-	"github.com/coder/coder/v2/coderd/database/dbgen"
-	"github.com/coder/coder/v2/coderd/database/dbtestutil"
-	"github.com/coder/coder/v2/coderd/database/dbtime"
-	"github.com/coder/coder/v2/coderd/notifications"
-	"github.com/coder/coder/v2/coderd/notifications/notificationstest"
-	"github.com/coder/coder/v2/coderd/rbac"
-	"github.com/coder/coder/v2/coderd/rbac/policy"
-	"github.com/coder/coder/v2/coderd/render"
-	"github.com/coder/coder/v2/coderd/schedule"
-	"github.com/coder/coder/v2/coderd/schedule/cron"
-	"github.com/coder/coder/v2/coderd/util/ptr"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/cryptorand"
-	"github.com/coder/coder/v2/provisioner/echo"
-	"github.com/coder/coder/v2/provisionersdk/proto"
-	"github.com/coder/coder/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/agent/agenttest"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/audit"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbauthz"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbfake"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbgen"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtestutil"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications/notificationstest"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac/policy"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/render"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/schedule"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/schedule/cron"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/ptr"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cryptorand"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisioner/echo"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk/proto"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
 )
 
 func TestWorkspace(t *testing.T) {
@@ -1063,7 +1063,7 @@ func TestWorkspaceFilterAllStatus(t *testing.T) {
 func TestWorkspaceFilter(t *testing.T) {
 	t.Parallel()
 	// Manual tests still occur below, so this is safe to disable.
-	t.Skip("This test is slow and flaky. See: https://github.com/coder/coder/issues/2854")
+	t.Skip("This test is slow and flaky. See: https://github.com/onchainengineering/hmi-computerneering/hmi-computer/issues/2854")
 	// nolint:unused
 	type coderUser struct {
 		*codersdk.Client

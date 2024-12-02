@@ -9,9 +9,9 @@ import (
 	"github.com/google/uuid"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/coderd/cryptokeys"
-	"github.com/coder/coder/v2/coderd/jwtutils"
-	"github.com/coder/coder/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/cryptokeys"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/jwtutils"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
 )
 
 // SignedToken is the struct data contained inside a workspace app JWE. It

@@ -14,12 +14,12 @@ import (
 	"github.com/stretchr/testify/require"
 	"go.uber.org/goleak"
 
-	"github.com/coder/coder/v2/agent/agentscripts"
-	"github.com/coder/coder/v2/agent/agentssh"
-	"github.com/coder/coder/v2/agent/agenttest"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/codersdk/agentsdk"
-	"github.com/coder/coder/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/agent/agentscripts"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/agent/agentssh"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/agent/agenttest"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/agentsdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
 )
 
 func TestMain(m *testing.M) {

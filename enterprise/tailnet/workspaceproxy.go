@@ -7,8 +7,8 @@ import (
 	"github.com/google/uuid"
 
 	"cdr.dev/slog"
-	"github.com/coder/coder/v2/apiversion"
-	agpl "github.com/coder/coder/v2/tailnet"
+	"github.com/onchainengineering/hmi-computer/v2/apiversion"
+	agpl "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet"
 )
 
 type ClientService struct {

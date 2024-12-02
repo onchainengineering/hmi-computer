@@ -7,10 +7,10 @@ import (
 	"github.com/google/uuid"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/coderd/database"
-	agpl "github.com/coder/coder/v2/coderd/schedule"
-	"github.com/coder/coder/v2/coderd/schedule/cron"
-	"github.com/coder/coder/v2/coderd/tracing"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	agpl "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/schedule"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/schedule/cron"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/tracing"
 )
 
 // enterpriseUserQuietHoursScheduleStore provides an

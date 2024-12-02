@@ -20,12 +20,12 @@ import (
 	"golang.org/x/xerrors"
 
 	"cdr.dev/slog"
-	"github.com/coder/coder/v2/coderd/tracing"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/provisionerd/proto"
-	"github.com/coder/coder/v2/provisionerd/runner"
-	sdkproto "github.com/coder/coder/v2/provisionersdk/proto"
 	"github.com/coder/retry"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/tracing"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionerd/proto"
+	"github.cogithub.com/onchainengineering/hmi-computermi-computer/v2/provisionerd/runner"
+	sdkproto "github.com/onchainengineering/hmi-computer/v2/provisionersdk/proto"
 )
 
 // Dialer represents the function to create a daemon client connection.

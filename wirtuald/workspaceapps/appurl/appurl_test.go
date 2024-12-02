@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/coder/coder/v2/coderd/workspaceapps/appurl"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/workspaceapps/appurl"
 )
 
 func TestApplicationURLString(t *testing.T) {

@@ -15,11 +15,11 @@ import (
 	"golang.org/x/xerrors"
 	"tailscale.com/tailcfg"
 
-	"github.com/coder/coder/v2/tailnet"
-	"github.com/coder/coder/v2/tailnet/proto"
-	"github.com/coder/coder/v2/tailnet/tailnettest"
-	"github.com/coder/coder/v2/testutil"
 	"github.com/coder/quartz"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/proto"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/tailnettest"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestClientService_ServeClient_V2(t *testing.T) {

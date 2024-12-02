@@ -8,10 +8,10 @@ import (
 	"github.com/hashicorp/terraform-config-inspect/tfconfig"
 	"github.com/mitchellh/go-wordwrap"
 
-	"github.com/coder/coder/v2/coderd/tracing"
-	"github.com/coder/coder/v2/provisioner/terraform/tfparse"
-	"github.com/coder/coder/v2/provisionersdk"
-	"github.com/coder/coder/v2/provisionersdk/proto"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/tracing"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisioner/terraform/tfparse"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk/proto"
 )
 
 // Parse extracts Terraform variables from source-code.

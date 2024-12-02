@@ -8,7 +8,7 @@ import (
 
 	"golang.org/x/oauth2"
 
-	"github.com/coder/coder/v2/coderd/promoauth"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/promoauth"
 )
 
 type OAuth2Config struct {

@@ -7,7 +7,7 @@ import (
 	"golang.org/x/xerrors"
 
 	"cdr.dev/slog"
-	"github.com/coder/coder/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
 )
 
 // Rotate rotates the database encryption keys by re-encrypting all user tokens

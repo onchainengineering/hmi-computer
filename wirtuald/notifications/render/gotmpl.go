@@ -6,7 +6,7 @@ import (
 
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/coderd/notifications/types"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications/types"
 )
 
 // NoValue is used when a template variable is not found.

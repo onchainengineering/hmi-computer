@@ -5,11 +5,11 @@ import (
 
 	"golang.org/x/xerrors"
 
-	agpl "github.com/coder/coder/v2/cli"
-	"github.com/coder/coder/v2/cli/cliui"
-	"github.com/coder/coder/v2/codersdk"
 	"github.com/coder/pretty"
-	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computernt"
+	agithub.com/onchainengineering/hmi-computernengineering/hmi-computer/v2/cli"
+	"github.com/onchainengineering/hmi-computer/v2/cli/cliui"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 func (r *RootCmd) groupCreate() *serpent.Command {

@@ -9,9 +9,9 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/stretchr/testify/require"
 
-	"github.com/coder/coder/v2/coderd/entitlements"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/enterprise/coderd/license"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/entitlements"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/coderd/license"
 )
 
 func TestCollectLicenseMetrics(t *testing.T) {

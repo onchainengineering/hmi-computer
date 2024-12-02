@@ -14,8 +14,8 @@ import (
 	"golang.org/x/xerrors"
 
 	"cdr.dev/slog"
-	"github.com/coder/coder/v2/agent/agentssh"
-	"github.com/coder/coder/v2/codersdk/workspacesdk"
+	"github.com/onchainengineering/hmi-computer/v2/agent/agentssh"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/workspacesdk"
 )
 
 type Server struct {

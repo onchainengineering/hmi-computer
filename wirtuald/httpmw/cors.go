@@ -7,7 +7,7 @@ import (
 
 	"github.com/go-chi/cors"
 
-	"github.com/coder/coder/v2/coderd/workspaceapps/appurl"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/workspaceapps/appurl"
 )
 
 const (

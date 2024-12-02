@@ -11,7 +11,7 @@ import (
 	"google.golang.org/protobuf/proto"
 
 	"cdr.dev/slog"
-	"github.com/coder/coder/v2/apiversion"
+	"github.com/onchainengineering/hmi-computer/v2/apiversion"
 )
 
 type SpeakerRole string

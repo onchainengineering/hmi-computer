@@ -11,8 +11,8 @@ import (
 	"github.com/lib/pq"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/coderd/rbac"
-	"github.com/coder/coder/v2/coderd/rbac/regosql"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac/regosql"
 )
 
 const (

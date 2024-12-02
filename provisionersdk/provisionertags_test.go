@@ -3,7 +3,7 @@ package provisionersdk_test
 import (
 	"testing"
 
-	"github.com/coder/coder/v2/provisionersdk"
+	"github.com/onchainengineering/hmi-computer/v2/provisionersdk"
 
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"

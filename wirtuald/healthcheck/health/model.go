@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/coder/coder/v2/coderd/util/ptr"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/util/ptr"
 )
 
 const (

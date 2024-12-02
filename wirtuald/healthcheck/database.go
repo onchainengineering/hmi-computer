@@ -6,9 +6,9 @@ import (
 
 	"golang.org/x/exp/slices"
 
-	"github.com/coder/coder/v2/coderd/database"
-	"github.com/coder/coder/v2/coderd/healthcheck/health"
-	"github.com/coder/coder/v2/codersdk/healthsdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/healthcheck/health"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/healthsdk"
 )
 
 const (

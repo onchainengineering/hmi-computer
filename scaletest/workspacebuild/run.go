@@ -13,11 +13,11 @@ import (
 	"cdr.dev/slog"
 	"cdr.dev/slog/sloggers/sloghuman"
 
-	"github.com/coder/coder/v2/coderd/tracing"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/cryptorand"
-	"github.com/coder/coder/v2/scaletest/harness"
-	"github.com/coder/coder/v2/scaletest/loadtestutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/tracing"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cryptorand"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/harness"
+	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/loadtestutil"
 )
 
 type Runner struct {
