@@ -29,7 +29,7 @@ func TestTar(t *testing.T) {
 		_ = file.Close()
 
 		// If we follow symlinks, Tar would fail.
-		// See https://github.com/onchainengineering/hmi-computerneering/hmi-computer/issues/5677.
+		// See https://github.com/onchainengineering/hmi-computer/issues/5677.
 		err = os.Symlink("no-exists", filepath.Join(dir, "link"))
 		require.NoError(t, err)
 

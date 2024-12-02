@@ -6,7 +6,7 @@ import (
 	_ "time/tzdata"
 
 	"github.com/onchainengineering/hmi-computer/v2/agent/agentexec"
-	entcli "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/cli"
+	entcli "github.com/onchainengineering/hmi-computer/v2/enterprise/cli"
 )
 
 func main() {

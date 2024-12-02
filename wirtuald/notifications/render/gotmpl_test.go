@@ -7,7 +7,7 @@ import (
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications/render"
 
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications/types"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications/types"
 )
 
 func TestGoTemplate(t *testing.T) {

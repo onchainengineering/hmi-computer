@@ -12,15 +12,15 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/coder/quartz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications/dispatch"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications/render"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications/types"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications/dispatch"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications/render"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications/types"
 	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 
 	"cdr.dev/slog"
 
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
 )
 
 const (

@@ -14,8 +14,8 @@ import (
 	"github.com/coder/quartz"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications/dispatch"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications/dispatch"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 var ErrInvalidDispatchTimeout = xerrors.New("dispatch timeout must be less than lease period")

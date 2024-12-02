@@ -13,11 +13,11 @@ import (
 	"golang.org/x/xerrors"
 
 	agpl "github.com/onchainengineering/hmi-computer/v2/coderd/appearance"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpapi"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac/policy"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpapi"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac/policy"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 // @Summary Get appearance

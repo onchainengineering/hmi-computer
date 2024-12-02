@@ -11,8 +11,8 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cryptorand"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computer/v2/cryptorand"
 )
 
 type CreateParams struct {

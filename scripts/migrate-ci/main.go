@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/database/migrations"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cryptorand"
+	"github.com/onchainengineering/hmi-computer/v2/cryptorand"
 )
 
 func main() {

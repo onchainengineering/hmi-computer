@@ -6,10 +6,10 @@ import (
 	"time"
 
 	"github.com/onchainengineering/hmi-computer/v2/buildinfo"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/healthcheck/derphealth"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/healthcheck/health"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/ptr"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/healthsdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/healthcheck/derphealth"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/healthcheck/health"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/util/ptr"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/healthsdk"
 )
 
 type Checker interface {

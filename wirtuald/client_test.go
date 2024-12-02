@@ -7,10 +7,10 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/onchainengineering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
-// Issue: https://github.com/onchainengineering/hmi-computerneering/hmi-computer/issues/5249
+// Issue: https://github.com/onchainengineering/hmi-computer/issues/5249
 // While running tests in parallel, the web server seems to be overloaded and responds with HTTP 502.
 // require.Eventually expects correct HTTP responses.
 

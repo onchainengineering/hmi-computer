@@ -24,14 +24,14 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/db2sdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbgen"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbmem"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpmw"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/site"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/db2sdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbgen"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbmem"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpmw"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/site"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestInjection(t *testing.T) {

@@ -9,9 +9,9 @@ import (
 	"golang.org/x/xerrors"
 
 	agentproto "github.com/onchainengineering/hmi-computer/v2/agent/proto"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/appearance"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/agentsdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/appearance"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/agentsdk"
 )
 
 func TestGetAnnouncementBanners(t *testing.T) {

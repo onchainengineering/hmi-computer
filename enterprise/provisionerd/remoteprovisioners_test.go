@@ -11,12 +11,12 @@ import (
 
 	"cdr.dev/slog"
 	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/provisionerd"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisioner/echo"
-	agpl "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionerd"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionerd/proto"
-	sdkproto "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk/proto"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/provisionerd"
+	"github.com/onchainengineering/hmi-computer/v2/provisioner/echo"
+	agpl "github.com/onchainengineering/hmi-computer/v2/provisionerd"
+	"github.com/onchainengineering/hmi-computer/v2/provisionerd/proto"
+	sdkproto "github.com/onchainengineering/hmi-computer/v2/provisionersdk/proto"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestMain(m *testing.M) {

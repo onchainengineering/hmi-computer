@@ -23,8 +23,8 @@ import (
 	"golang.org/x/sync/errgroup"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtestutil"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/migrations"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/migrations"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestMain(m *testing.M) {
@@ -285,7 +285,7 @@ func TestMigrateUpWithFixtures(t *testing.T) {
 		if len(emptyTables) > 0 {
 			t.Logf("The following tables have zero rows, consider adding fixtures for them or create a full database dump:")
 			t.Errorf("tables have zero rows: %v", emptyTables)
-			t.Logf("See https://github.com/onchainengineering/hmi-computerneering/hmi-computer/blob/main/docs/CONTRIBUTING.md#database-fixtures-for-testing-migrations for more information")
+			t.Logf("See https://github.com/onchainengineering/hmi-computer/blob/main/docs/CONTRIBUTING.md#database-fixtures-for-testing-migrations for more information")
 		}
 	})
 

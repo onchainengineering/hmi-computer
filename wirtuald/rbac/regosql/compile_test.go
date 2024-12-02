@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac/regosql"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac/regosql/sqltypes"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac/regosql/sqltypes"
 )
 
 // TestRegoQueriesNoVariables handles cases without variables. These should be

@@ -14,13 +14,13 @@ import (
 	"tailscale.com/tailcfg"
 
 	agentproto "github.com/onchainengineering/hmi-computer/v2/agent/proto"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/db2sdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbauthz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/externalauth"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/workspaceapps/appurl"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/db2sdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbauthz"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/externalauth"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/workspaceapps/appurl"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/tailnet"
 )
 
 type ManifestAPI struct {

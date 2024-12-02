@@ -26,7 +26,7 @@ import (
 
 	"github.com/onchainengineering/hmi-computer/v2/testutil"
 
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk"
+	"github.com/onchainengineering/hmi-computer/v2/provisionersdk"
 )
 
 // mimicking the --version output which we use to test the binary (see provisionersdk/scripts/bootstrap_*).

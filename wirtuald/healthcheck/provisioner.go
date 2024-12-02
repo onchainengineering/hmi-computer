@@ -7,16 +7,16 @@ import (
 	"golang.org/x/mod/semver"
 
 	"github.com/onchainengineering/hmi-computer/v2/apiversion"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/buildinfo"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/db2sdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbauthz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/healthcheck/health"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/provisionerdserver"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/ptr"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/healthsdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionerd/proto"
+	"github.com/onchainengineering/hmi-computer/v2/buildinfo"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/db2sdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbauthz"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/healthcheck/health"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/provisionerdserver"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/util/ptr"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/healthsdk"
+	"github.com/onchainengineering/hmi-computer/v2/provisionerd/proto"
 )
 
 type ProvisionerDaemonsReport healthsdk.ProvisionerDaemonsReport

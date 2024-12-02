@@ -7,7 +7,7 @@ import (
 	"runtime"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 // This mapping creates a relationship between an Auditable Resource
@@ -224,7 +224,7 @@ var auditableResourcesTypes = map[any]map[string]Action{
 		"notifier_paused": ActionTrack,
 	},
 	// TODO: track an ID here when the below ticket is completed:
-	// https://github.com/onchainengineering/hmi-computerneering/hmi-computer/pull/6012
+	// https://github.com/onchainengineering/hmi-computer/pull/6012
 	&database.License{}: {
 		"id":          ActionIgnore,
 		"uploaded_at": ActionTrack,

@@ -9,10 +9,10 @@ import (
 	"time"
 
 	"github.com/coder/serpent"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest/oidctest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications/notificationstest"
+	"github.com/onchainengineering/hmi-computer/v2/coderd"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/coderdtest/oidctest"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications/notificationstest"
 	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac/policy"
 
 	"github.com/golang-jwt/jwt/v4"
@@ -23,18 +23,18 @@ import (
 	"golang.org/x/sync/errgroup"
 	"golang.org/x/xerrors"
 
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/audit"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbauthz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbfake"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbgen"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/ptr"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/slice"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/audit"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/coderdtest"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbauthz"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbfake"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbgen"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/util/ptr"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/util/slice"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestFirstUser(t *testing.T) {
@@ -1914,7 +1914,7 @@ func TestDormantUser(t *testing.T) {
 // This is mainly to confirm the db fake has the same behavior.
 func TestSuspendedPagination(t *testing.T) {
 	t.Parallel()
-	t.Skip("This fails when two users are created at the exact same time. The reason is unknown... See: https://github.com/onchainengineering/hmi-computerneering/hmi-computer/actions/runs/3057047622/jobs/4931863163")
+	t.Skip("This fails when two users are created at the exact same time. The reason is unknown... See: https://github.com/onchainengineering/hmi-computer/actions/runs/3057047622/jobs/4931863163")
 	client := coderdtest.New(t, nil)
 	coderdtest.CreateFirstUser(t, client)
 

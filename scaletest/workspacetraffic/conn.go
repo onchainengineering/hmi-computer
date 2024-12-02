@@ -13,7 +13,7 @@ import (
 	"nhooyr.io/websocket"
 
 	"github.com/onchainengineering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/workspacesdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/workspacesdk"
 
 	"github.com/google/uuid"
 	gossh "golang.org/x/crypto/ssh"

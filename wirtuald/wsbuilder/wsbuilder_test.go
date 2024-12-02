@@ -17,13 +17,13 @@ import (
 	"go.opentelemetry.io/otel/propagation"
 	"go.uber.org/mock/gomock"
 
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/audit"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbmock"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/provisionerdserver"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/wsbuilder"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/audit"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbmock"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/provisionerdserver"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/wsbuilder"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 var (

@@ -12,9 +12,9 @@ import (
 	"tailscale.com/tailcfg"
 	"tailscale.com/types/key"
 
+	"github.com/onchainengineering/hmi-computer/proto"
 	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtime"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/proto"
+	"github.com/onchainengineering/hmi-computer/v2/tailnet"
 )
 
 func TestNode(t *testing.T) {

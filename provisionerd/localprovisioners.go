@@ -7,7 +7,7 @@ import (
 
 	"github.com/onchainengineering/hmi-computer/v2/provisionerd/proto"
 
-	sdkproto "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk/proto"
+	sdkproto "github.com/onchainengineering/hmi-computer/v2/provisionersdk/proto"
 )
 
 // LocalProvisioners is a Connector that stores a static set of in-process

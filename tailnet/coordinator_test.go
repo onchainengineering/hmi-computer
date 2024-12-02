@@ -10,10 +10,10 @@ import (
 
 	"cdr.dev/slog"
 	"cdr.dev/slog/sloggers/slogtest"
+	"github.com/onchainengineering/hmi-computer/proto"
+	"github.com/onchainengineering/hmi-computer/test"
 	"github.com/onchainengineering/hmi-computer/v2/tailnet"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/proto"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/test"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestCoordinator(t *testing.T) {

@@ -11,10 +11,10 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/onchainengineering/hmi-computer/v2/archive"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/archive/archivetest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/archive/archivetest"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/coderdtest"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestPostFiles(t *testing.T) {

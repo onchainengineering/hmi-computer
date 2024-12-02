@@ -11,7 +11,7 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/coder/serpent"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cli/cliui"
+	"github.com/onchainengineering/hmi-computer/v2/cli/cliui"
 	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 

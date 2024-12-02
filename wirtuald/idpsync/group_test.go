@@ -14,16 +14,16 @@ import (
 
 	"cdr.dev/slog/sloggers/slogtest"
 	"github.com/onchainengineering/hmi-computer/v2/coderd/coderdtest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/db2sdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbauthz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbgen"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtestutil"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/idpsync"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/runtimeconfig"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/ptr"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/db2sdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbauthz"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbgen"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtestutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/idpsync"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/runtimeconfig"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/util/ptr"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestParseGroupClaims(t *testing.T) {

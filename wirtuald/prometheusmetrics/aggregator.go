@@ -15,7 +15,7 @@ import (
 
 	"cdr.dev/slog"
 
-	agentproto "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/agent/proto"
+	agentproto "github.com/onchainengineering/hmi-computer/v2/agent/proto"
 )
 
 const (

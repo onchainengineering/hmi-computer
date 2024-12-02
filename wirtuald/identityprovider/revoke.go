@@ -6,8 +6,8 @@ import (
 	"net/http"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpapi"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpmw"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpapi"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpmw"
 )
 
 func RevokeApp(db database.Store) http.HandlerFunc {

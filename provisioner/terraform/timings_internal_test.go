@@ -13,8 +13,8 @@ import (
 	"golang.org/x/tools/txtar"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
-	terraform_internal "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisioner/terraform/internal"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk/proto"
+	terraform_internal "github.com/onchainengineering/hmi-computer/v2/provisioner/terraform/internal"
+	"github.com/onchainengineering/hmi-computer/v2/provisionersdk/proto"
 )
 
 var (

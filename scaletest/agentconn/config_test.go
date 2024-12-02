@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/httpapi"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/agentconn"
+	"github.com/onchainengineering/hmi-computer/v2/scaletest/agentconn"
 )
 
 func Test_Config(t *testing.T) {

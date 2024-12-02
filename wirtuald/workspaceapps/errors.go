@@ -7,7 +7,7 @@ import (
 
 	"cdr.dev/slog"
 	"github.com/onchainengineering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/site"
+	"github.com/onchainengineering/hmi-computer/v2/site"
 )
 
 // WriteWorkspaceApp404 writes a HTML 404 error page for a workspace app. If

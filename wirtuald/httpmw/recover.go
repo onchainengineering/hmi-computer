@@ -7,7 +7,7 @@ import (
 
 	"cdr.dev/slog"
 	"github.com/onchainengineering/hmi-computer/v2/coderd/httpapi"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/tracing"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/tracing"
 )
 
 func Recover(log slog.Logger) func(h http.Handler) http.Handler {

@@ -60,7 +60,7 @@ func parseGoTestJSON(name string) (GotestsumReport, error) {
 		if err != nil {
 			return GotestsumReport{}, xerrors.Errorf("error decoding json: %w", err)
 		}
-		e.Package = strings.TrimPrefix(e.Package, "github.com/onchainengineering/hmi-computerneering/hmi-computer/")
+		e.Package = strings.TrimPrefix(e.Package, "github.com/onchainengineering/hmi-computer/")
 		report = append(report, e)
 	}
 

@@ -15,13 +15,13 @@ import (
 	"cdr.dev/slog"
 	"cdr.dev/slog/sloggers/slogtest"
 	"github.com/onchainengineering/hmi-computer/v2/agent"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/agentsdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisioner/echo"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk/proto"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/workspacebuild"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/coderdtest"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/agentsdk"
+	"github.com/onchainengineering/hmi-computer/v2/provisioner/echo"
+	"github.com/onchainengineering/hmi-computer/v2/provisionersdk/proto"
+	"github.com/onchainengineering/hmi-computer/v2/scaletest/workspacebuild"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func Test_Runner(t *testing.T) {

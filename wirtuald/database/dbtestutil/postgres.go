@@ -22,7 +22,7 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/coder/retry"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/migrations"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/migrations"
 	"github.com/onchainengineering/hmi-computer/v2/cryptorand"
 )
 

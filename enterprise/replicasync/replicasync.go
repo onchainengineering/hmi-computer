@@ -18,11 +18,11 @@ import (
 
 	"cdr.dev/slog"
 	"github.com/onchainengineering/hmi-computer/v2/buildinfo"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cli/cliutil"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbauthz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/pubsub"
+	"github.com/onchainengineering/hmi-computer/v2/cli/cliutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbauthz"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/pubsub"
 )
 
 var PubsubEvent = "replica"

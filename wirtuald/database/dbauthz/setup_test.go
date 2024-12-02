@@ -19,14 +19,14 @@ import (
 	"cdr.dev/slog"
 	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac/policy"
 
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbauthz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbmem"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbmock"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac/regosql"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/slice"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/coderdtest"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbauthz"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbmem"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbmock"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac/regosql"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/util/slice"
 )
 
 var errMatchAny = xerrors.New("match any error")

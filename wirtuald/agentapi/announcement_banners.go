@@ -7,8 +7,8 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/onchainengineering/hmi-computer/v2/agent/proto"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/appearance"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/agentsdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/appearance"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/agentsdk"
 )
 
 type AnnouncementBannerAPI struct {

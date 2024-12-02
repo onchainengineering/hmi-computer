@@ -19,10 +19,10 @@ import (
 
 	"cdr.dev/slog"
 	"github.com/onchainengineering/hmi-computer/v2/coderd/workspaceapps/appurl"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/coderd"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/wsproxy"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/coderd"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/wsproxy"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 type ProxyOptions struct {

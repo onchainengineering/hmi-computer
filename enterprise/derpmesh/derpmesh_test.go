@@ -18,8 +18,8 @@ import (
 	"tailscale.com/types/key"
 
 	"github.com/onchainengineering/hmi-computer/v2/enterprise/derpmesh"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/tailnet"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestMain(m *testing.M) {

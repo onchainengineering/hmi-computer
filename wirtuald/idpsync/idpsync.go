@@ -12,10 +12,10 @@ import (
 
 	"cdr.dev/slog"
 	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpapi"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/runtimeconfig"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/site"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpapi"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/runtimeconfig"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/site"
 )
 
 // IDPSync is an interface, so we can implement this as AGPL and as enterprise,

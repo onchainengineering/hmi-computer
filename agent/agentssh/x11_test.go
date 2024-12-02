@@ -22,7 +22,7 @@ import (
 	gossh "golang.org/x/crypto/ssh"
 
 	"github.com/onchainengineering/hmi-computer/v2/agent/agentssh"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestServer_X11(t *testing.T) {

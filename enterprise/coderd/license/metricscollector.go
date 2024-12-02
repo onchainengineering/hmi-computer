@@ -4,7 +4,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/entitlements"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 var (

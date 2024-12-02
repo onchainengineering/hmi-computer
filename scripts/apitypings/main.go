@@ -861,7 +861,7 @@ func (g *Generator) typescriptType(ty types.Type) (TypescriptType, error) {
 			return TypescriptType{ValueType: "number"}, nil
 		case "database/sql.NullTime":
 			return TypescriptType{ValueType: "string", Optional: true}, nil
-		case "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk.NullTime":
+		case "github.com/onchainengineering/hmi-computer/v2/codersdk.NullTime":
 			return TypescriptType{ValueType: "string", Optional: true}, nil
 		case "github.com/google/uuid.NullUUID":
 			return TypescriptType{ValueType: "string", Optional: true}, nil
@@ -873,15 +873,15 @@ func (g *Generator) typescriptType(ty types.Type) (TypescriptType, error) {
 			return TypescriptType{ValueType: "string"}, nil
 		// XXX: For some reason, the type generator generates these as `any`
 		//      so explicitly specifying the correct generic TS type.
-		case "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codergithub.com/onchainengineering/hmi-computerthub.com/onchainengineering/hmi-computer/v2/codersdk.WorkspaceProxy]":
+		case "github.com/onchainengineering/hmi-computer/v2/codergithub.com/onchainengineering/hmi-computerthub.com/onchainengineering/hmi-computer/v2/codersdk.WorkspaceProxy]":
 			return TypescriptType{ValueType: "RegionsResponse<WorkspaceProxy>"}, nil
-		case "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/healthcheck/health.Message":
+		case "github.com/onchainengineering/hmi-computer/v2/coderd/healthcheck/health.Message":
 			return TypescriptType{ValueType: "HealthMessage"}, nil
-		case "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/healthcheck/health.Severity":
+		case "github.com/onchainengineering/hmi-computer/v2/coderd/healthcheck/health.Severity":
 			return TypescriptType{ValueType: "HealthSeverity"}, nil
-		case "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/healthsdk.HealthSection":
+		case "github.com/onchainengineering/hmi-computer/v2/healthsdk.HealthSection":
 			return TypescriptType{ValueType: "HealthSection"}, nil
-		case "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk.ProvisionerDaemon":
+		case "github.com/onchainengineering/hmi-computer/v2/codersdk.ProvisionerDaemon":
 			return TypescriptType{ValueType: "ProvisionerDaemon"}, nil
 
 		// Some very unfortunate `any` types that leaked into the frontend.

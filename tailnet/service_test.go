@@ -16,9 +16,9 @@ import (
 	"tailscale.com/tailcfg"
 
 	"github.com/coder/quartz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/proto"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/tailnettest"
+	"github.com/onchainengineering/hmi-computer/proto"
+	"github.com/onchainengineering/hmi-computer/tailnettest"
+	"github.com/onchainengineering/hmi-computer/v2/tailnet"
 	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 

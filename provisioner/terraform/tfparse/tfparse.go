@@ -13,8 +13,8 @@ import (
 	"strings"
 
 	"github.com/onchainengineering/hmi-computer/v2/archive"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk/proto"
+	"github.com/onchainengineering/hmi-computer/v2/provisionersdk"
+	"github.com/onchainengineering/hmi-computer/v2/provisionersdk/proto"
 
 	"github.com/hashicorp/hcl/v2"
 	"github.com/hashicorp/hcl/v2/hclparse"

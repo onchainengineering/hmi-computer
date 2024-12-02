@@ -10,13 +10,13 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/audit"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/db2sdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbauthz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpapi"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpmw"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac/policy"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/db2sdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbauthz"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpapi"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpmw"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac/policy"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 // @Summary Get template available acl users/groups

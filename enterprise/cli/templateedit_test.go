@@ -8,15 +8,15 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/onchainengineering/hmi-computer/v2/cli/clitest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbfake"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/ptr"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/coderd/coderdenttest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/coderd/license"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/coderdtest"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbfake"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/util/ptr"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/coderd/coderdenttest"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/coderd/license"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestTemplateEdit(t *testing.T) {

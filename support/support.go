@@ -19,11 +19,11 @@ import (
 	"cdr.dev/slog"
 	"cdr.dev/slog/sloggers/sloghuman"
 	"github.com/onchainengineering/hmi-computer/v2/coderd/healthcheck/derphealth"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/agentsdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/healthsdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/workspacesdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/agentsdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/healthsdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/workspacesdk"
+	"github.com/onchainengineering/hmi-computer/v2/tailnet"
 )
 
 // Bundle is a set of information discovered about a deployment.

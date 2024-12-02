@@ -7,7 +7,7 @@ import (
 	"golang.org/x/crypto/ssh"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/gitsshkey"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cryptorand"
+	"github.com/onchainengineering/hmi-computer/v2/cryptorand"
 )
 
 func TestGitSSHKeys(t *testing.T) {

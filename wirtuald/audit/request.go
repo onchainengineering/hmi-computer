@@ -18,9 +18,9 @@ import (
 	"cdr.dev/slog"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpmw"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/tracing"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpmw"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/tracing"
 )
 
 type RequestParams struct {

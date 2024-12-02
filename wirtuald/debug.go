@@ -15,14 +15,14 @@ import (
 
 	"cdr.dev/slog"
 	"github.com/onchainengineering/hmi-computer/v2/coderd/audit"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpapi"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpmw"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac/policy"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/slice"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/healthsdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpapi"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpmw"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac/policy"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/util/slice"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/healthsdk"
 )
 
 // @Summary Debug Info Wireguard Coordinator

@@ -14,12 +14,12 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	agentproto "github.com/onchainengineering/hmi-computer/v2/agent/proto"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/agentapi"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbmock"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/wspubsub"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/agentapi"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbmock"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/wspubsub"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestUpdateLifecycle(t *testing.T) {

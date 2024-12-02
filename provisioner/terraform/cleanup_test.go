@@ -19,7 +19,7 @@ import (
 
 	"cdr.dev/slog"
 	"github.com/onchainengineering/hmi-computer/v2/provisioner/terraform"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 const cachePath = "/tmp/coder/provisioner-0/tf"

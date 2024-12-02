@@ -19,10 +19,10 @@ import (
 	"github.com/coder/serpent"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications/dispatch"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications/dispatch/smtptest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications/types"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications/dispatch/smtptest"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications/types"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestMain(m *testing.M) {

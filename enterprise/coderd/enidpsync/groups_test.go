@@ -8,11 +8,11 @@ import (
 
 	"cdr.dev/slog/sloggers/slogtest"
 	"github.com/onchainengineering/hmi-computer/v2/coderd/entitlements"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/idpsync"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/runtimeconfig"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/coderd/enidpsync"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/idpsync"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/runtimeconfig"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/coderd/enidpsync"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestEnterpriseParseGroupClaims(t *testing.T) {

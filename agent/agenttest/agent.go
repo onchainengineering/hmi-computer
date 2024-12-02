@@ -8,8 +8,8 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/onchainengineering/hmi-computer/v2/agent"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/agentsdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/agentsdk"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 // New starts a new agent for use in tests.

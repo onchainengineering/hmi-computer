@@ -7,7 +7,7 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/httpapi"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/workspacesdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/workspacesdk"
 )
 
 const (

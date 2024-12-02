@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 
 	agentproto "github.com/onchainengineering/hmi-computer/v2/agent/proto"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/workspacestats"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/workspacestats"
 )
 
 type StatsBatcher struct {

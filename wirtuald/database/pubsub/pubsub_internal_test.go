@@ -177,7 +177,7 @@ func TestPubSub_DoesntBlockNotify(t *testing.T) {
 }
 
 // TestPubSub_DoesntRaceListenUnlisten tests for regressions of
-// https://github.com/onchainengineering/hmi-computerneering/hmi-computer/issues/15312
+// https://github.com/onchainengineering/hmi-computer/issues/15312
 func TestPubSub_DoesntRaceListenUnlisten(t *testing.T) {
 	t.Parallel()
 	ctx := testutil.Context(t, testutil.WaitShort)
@@ -236,7 +236,7 @@ const (
 )
 
 // fakePqListener is a fake version of pq.Listener.  This test code tests for regressions of
-// https://github.com/onchainengineering/hmi-computerneering/hmi-computer/issues/11950 where pq.Listener deadlocked because we blocked the
+// https://github.com/onchainengineering/hmi-computer/issues/11950 where pq.Listener deadlocked because we blocked the
 // PGPubsub.listen() goroutine while calling other pq.Listener functions.  So, all function calls
 // into the fakePqListener will send 5 notifications before returning to ensure the listen()
 // goroutine is unblocked.

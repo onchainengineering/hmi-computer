@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/httpmw"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 // AppConnectSessionTokenCookieName returns the cookie name for the session

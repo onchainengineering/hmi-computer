@@ -22,7 +22,7 @@ import (
 	"tailscale.com/wgengine/wgcfg"
 
 	"github.com/coder/quartz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/proto"
+	"github.com/onchainengineering/hmi-computer/proto"
 	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 

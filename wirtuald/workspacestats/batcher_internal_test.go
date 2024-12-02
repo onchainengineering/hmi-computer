@@ -11,13 +11,13 @@ import (
 	"cdr.dev/slog/sloggers/slogtest"
 	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 
-	agentproto "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/agent/proto"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbgen"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtestutil"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/pubsub"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cryptorand"
+	agentproto "github.com/onchainengineering/hmi-computer/v2/agent/proto"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbgen"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtestutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/pubsub"
+	"github.com/onchainengineering/hmi-computer/v2/cryptorand"
 )
 
 func TestBatchStats(t *testing.T) {

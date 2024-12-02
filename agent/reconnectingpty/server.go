@@ -15,7 +15,7 @@ import (
 
 	"cdr.dev/slog"
 	"github.com/onchainengineering/hmi-computer/v2/agent/agentssh"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/workspacesdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/workspacesdk"
 )
 
 type Server struct {

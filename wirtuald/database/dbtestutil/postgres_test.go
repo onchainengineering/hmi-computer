@@ -11,7 +11,7 @@ import (
 	"go.uber.org/goleak"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtestutil"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/migrations"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/migrations"
 )
 
 func TestMain(m *testing.M) {

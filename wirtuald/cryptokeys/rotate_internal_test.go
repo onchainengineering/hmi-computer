@@ -9,10 +9,10 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/coder/quartz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbgen"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtestutil"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbgen"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtestutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtime"
 	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 

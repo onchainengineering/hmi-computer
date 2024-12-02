@@ -17,8 +17,8 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/httpapi/httpapiconstraints"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/tracing"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/tracing"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 var Validate *validator.Validate

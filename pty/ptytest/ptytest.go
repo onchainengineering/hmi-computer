@@ -20,7 +20,7 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/coder/serpent"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/pty"
+	"github.com/onchainengineering/hmi-computer/v2/pty"
 	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 

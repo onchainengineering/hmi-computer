@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac/policy"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/slice"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac/policy"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/util/slice"
 )
 
 func TestObjectEqual(t *testing.T) {

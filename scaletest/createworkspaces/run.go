@@ -13,13 +13,13 @@ import (
 	"cdr.dev/slog/sloggers/sloghuman"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/tracing"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cryptorand"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/agentconn"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/harness"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/loadtestutil"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/reconnectingpty"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/workspacebuild"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/cryptorand"
+	"github.com/onchainengineering/hmi-computer/v2/scaletest/agentconn"
+	"github.com/onchainengineering/hmi-computer/v2/scaletest/harness"
+	"github.com/onchainengineering/hmi-computer/v2/scaletest/loadtestutil"
+	"github.com/onchainengineering/hmi-computer/v2/scaletest/reconnectingpty"
+	"github.com/onchainengineering/hmi-computer/v2/scaletest/workspacebuild"
 )
 
 type Runner struct {

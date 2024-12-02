@@ -13,12 +13,12 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/coder/quartz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/agent"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/agent/agenttest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/agent/proto"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpapi"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/agentsdk"
+	"github.com/onchainengineering/hmi-computer/v2/agent"
+	"github.com/onchainengineering/hmi-computer/v2/agent/agenttest"
+	"github.com/onchainengineering/hmi-computer/v2/agent/proto"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpapi"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/agentsdk"
 	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 

@@ -15,18 +15,18 @@ import (
 	"tailscale.com/types/key"
 
 	"github.com/coder/quartz"
-	"github.com/onchainengineering/hmi-computernt"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cryptorand"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/audit"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/audit/backends"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/coderd"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/coderd/dormancy"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/dbcrypt"
+	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/cryptorand"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/audit"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/audit/backends"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/coderd"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/coderd/dormancy"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/dbcrypt"
 	"github.com/onchainengineering/hmi-computer/v2/enterprise/trialer"
 	"github.com/onchainengineering/hmi-computer/v2/tailnet"
 
-	agplcoderd "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd"
+	agplcoderd "github.com/onchainengineering/hmi-computer/v2/coderd"
 )
 
 func (r *RootCmd) Server(_ func()) *serpent.Command {

@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/coder/serpent"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cli"
+	"github.com/onchainengineering/hmi-computer/v2/cli"
 	"github.com/onchainengineering/hmi-computer/v2/cli/clitest"
 )
 

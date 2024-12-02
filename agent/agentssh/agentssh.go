@@ -31,9 +31,9 @@ import (
 	"cdr.dev/slog"
 
 	"github.com/onchainengineering/hmi-computer/v2/agent/agentexec"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/agent/usershell"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/pty"
+	"github.com/onchainengineering/hmi-computer/v2/agent/usershell"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/pty"
 )
 
 const (
@@ -492,7 +492,7 @@ func (s *Server) startPTYSession(logger slog.Logger, session ptySession, magicTy
 
 	ctx := session.Context()
 	// Disable minimal PTY emulation set by gliderlabs/ssh (NL-to-CRNL).
-	// See https://github.com/onchainengineering/hmi-computerneering/hmi-computer/issues/3371.
+	// See https://github.com/onchainengineering/hmi-computer/issues/3371.
 	session.DisablePTYEmulation()
 
 	if isLoginShell(session.RawCommand()) {

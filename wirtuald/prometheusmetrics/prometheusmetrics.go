@@ -18,11 +18,11 @@ import (
 	"cdr.dev/slog"
 
 	"github.com/coder/quartz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/agentmetrics"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbauthz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/agentmetrics"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbauthz"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 	"github.com/onchainengineering/hmi-computer/v2/tailnet"
 )
 
@@ -134,7 +134,7 @@ func Workspaces(ctx context.Context, logger slog.Logger, registerer prometheus.R
 	}
 
 	// TODO: deprecated: remove in the future
-	// See: https://github.com/onchainengineering/hmi-computerneering/hmi-computer/issues/12999
+	// See: https://github.com/onchainengineering/hmi-computer/issues/12999
 	// Deprecation reason: gauge metrics should avoid suffix `_total``
 	workspaceLatestBuildTotalsDeprecated := prometheus.NewGaugeVec(prometheus.GaugeOpts{
 		Namespace: "coderd",

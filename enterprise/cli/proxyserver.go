@@ -23,13 +23,13 @@ import (
 
 	"cdr.dev/slog"
 	"github.com/coder/pretty"
-	"github.com/onchainengineering/hmi-computernt"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cli"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cli/clilog"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cli/cliui"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpmw"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/workspaceapps/appurl"
+	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computer/v2/cli"
+	"github.com/onchainengineering/hmi-computer/v2/cli/clilog"
+	"github.com/onchainengineering/hmi-computer/v2/cli/cliui"
+	"github.com/onchainengineering/hmi-computer/v2/coderd"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpmw"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/workspaceapps/appurl"
 	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 	"github.com/onchainengineering/hmi-computer/v2/enterprise/wsproxy"
 )
@@ -287,7 +287,7 @@ func (r *RootCmd) proxyServer() *serpent.Command {
 			closers.Add(shutdownConns)
 			// ReadHeaderTimeout is purposefully not enabled. It caused some
 			// issues with websockets over the dev tunnel.
-			// See: https://github.com/onchainengineering/hmi-computerneering/hmi-computer/pull/3730
+			// See: https://github.com/onchainengineering/hmi-computer/pull/3730
 			//nolint:gosec
 			httpServer := &http.Server{
 				// These errors are typically noise like "TLS: EOF". Vault does

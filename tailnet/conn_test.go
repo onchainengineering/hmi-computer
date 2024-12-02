@@ -12,10 +12,10 @@ import (
 	"github.com/stretchr/testify/require"
 	"go.uber.org/goleak"
 
+	"github.com/onchainengineering/hmi-computer/proto"
+	"github.com/onchainengineering/hmi-computer/tailnettest"
 	"github.com/onchainengineering/hmi-computer/v2/tailnet"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/proto"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/tailnettest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestMain(m *testing.M) {

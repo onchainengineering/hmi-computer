@@ -17,11 +17,11 @@ import (
 	tfaddr "github.com/hashicorp/go-terraform-address"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/util/slice"
-	stringutil "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/strings"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisioner"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk/proto"
+	stringutil "github.com/onchainengineering/hmi-computer/v2/coderd/util/strings"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/provisioner"
+	"github.com/onchainengineering/hmi-computer/v2/provisionersdk"
+	"github.com/onchainengineering/hmi-computer/v2/provisionersdk/proto"
 )
 
 type agentMetadata struct {
@@ -364,7 +364,7 @@ func ConvertState(ctx context.Context, modules []*tfjson.StateModule, rawGraph s
 					// Only apply the instance ID if the agent authentication
 					// type is set to do so. A user ran into a bug where they
 					// had the instance ID block, but auth was set to "token". See:
-					// https://github.com/onchainengineering/hmi-computerneering/hmi-computer/issues/4551#issuecomment-1336293468
+					// https://github.com/onchainengineering/hmi-computer/issues/4551#issuecomment-1336293468
 					switch t := agent.Auth.(type) {
 					case *proto.Agent_Token:
 						continue

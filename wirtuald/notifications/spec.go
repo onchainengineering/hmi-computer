@@ -7,8 +7,8 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications/dispatch"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications/types"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications/dispatch"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications/types"
 )
 
 // Store defines the API between the notifications system and the storage.

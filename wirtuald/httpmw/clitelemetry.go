@@ -12,8 +12,8 @@ import (
 
 	"cdr.dev/slog"
 	clitelemetry "github.com/onchainengineering/hmi-computer/v2/cli/telemetry"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/telemetry"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/telemetry"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 func ReportCLITelemetry(log slog.Logger, rep telemetry.Reporter) func(http.Handler) http.Handler {

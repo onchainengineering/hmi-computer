@@ -25,25 +25,25 @@ import (
 
 	"cdr.dev/slog"
 	"github.com/onchainengineering/hmi-computer/v2/coderd/cryptokeys"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/idpsync"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/jwtutils"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/ptr"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/idpsync"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/jwtutils"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/util/ptr"
 
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/apikey"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/audit"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbauthz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/externalauth"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpapi"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpmw"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/promoauth"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/render"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/userpassword"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cryptorand"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/apikey"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/audit"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbauthz"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/externalauth"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpapi"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpmw"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/promoauth"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/render"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/userpassword"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/cryptorand"
 )
 
 const (
@@ -945,7 +945,7 @@ func (api *API) userOAuth2Github(rw http.ResponseWriter, r *http.Request) {
 	if user.ID == uuid.Nil {
 		aReq.Action = database.AuditActionRegister
 	}
-	// See: https://github.com/onchainengineering/hmi-computerneering/hmi-computer/discussions/13340
+	// See: https://github.com/onchainengineering/hmi-computer/discussions/13340
 	// In GitHub Enterprise, admins are permitted to have `_`
 	// in their usernames. This is janky, but much better
 	// than changing the username format globally.
@@ -1185,7 +1185,7 @@ func (api *API) userOIDC(rw http.ResponseWriter, r *http.Request) {
 		// Email is an optional claim in OIDC and
 		// instead the email is frequently sent in
 		// "preferred_username". See:
-		// https://github.com/onchainengineering/hmi-computerneering/hmi-computer/issues/4472
+		// https://github.com/onchainengineering/hmi-computer/issues/4472
 		_, err = mail.ParseAddress(username)
 		if err != nil {
 			httpapi.Write(ctx, rw, http.StatusBadRequest, codersdk.Response{

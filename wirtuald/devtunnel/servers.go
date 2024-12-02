@@ -11,7 +11,7 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/util/slice"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cryptorand"
+	"github.com/onchainengineering/hmi-computer/v2/cryptorand"
 )
 
 type Region struct {

@@ -16,7 +16,7 @@ import (
 func TestValidate(t *testing.T) {
 	t.Parallel()
 	if runtime.GOOS == "darwin" {
-		// This test fails on MacOS for some reason. See https://github.com/onchainengineering/hmi-computerneering/hmi-computer/issues/12978
+		// This test fails on MacOS for some reason. See https://github.com/onchainengineering/hmi-computer/issues/12978
 		t.Skip()
 	}
 

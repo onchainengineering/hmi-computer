@@ -12,16 +12,16 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbauthz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbgen"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/pubsub"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/provisionerdserver"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/telemetry"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/wspubsub"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk"
-	sdkproto "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk/proto"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbauthz"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbgen"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/pubsub"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/provisionerdserver"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/telemetry"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/wspubsub"
+	"github.com/onchainengineering/hmi-computer/v2/provisionersdk"
+	sdkproto "github.com/onchainengineering/hmi-computer/v2/provisionersdk/proto"
 )
 
 var ownerCtx = dbauthz.As(context.Background(), rbac.Subject{

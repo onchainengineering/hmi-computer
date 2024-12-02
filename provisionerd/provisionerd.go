@@ -20,11 +20,11 @@ import (
 	"golang.org/x/xerrors"
 
 	"cdr.dev/slog"
-	"github.com/coder/retry"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/tracing"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionerd/proto"
 	"github.cogithub.com/onchainengineering/hmi-computermi-computer/v2/provisionerd/runner"
+	"github.com/coder/retry"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/tracing"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/provisionerd/proto"
 	sdkproto "github.com/onchainengineering/hmi-computer/v2/provisionersdk/proto"
 )
 

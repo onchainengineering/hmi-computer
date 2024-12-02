@@ -5,9 +5,9 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/onchainengineering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/agentconn"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/reconnectingpty"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/workspacebuild"
+	"github.com/onchainengineering/hmi-computer/v2/scaletest/agentconn"
+	"github.com/onchainengineering/hmi-computer/v2/scaletest/reconnectingpty"
+	"github.com/onchainengineering/hmi-computer/v2/scaletest/workspacebuild"
 )
 
 type UserConfig struct {

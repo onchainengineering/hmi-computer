@@ -14,8 +14,8 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtime"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/workspaceapps"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/workspaceapps"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 type fakeReporter struct {

@@ -12,7 +12,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"github.com/coder/quartz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/jwtutils"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/jwtutils"
 	"github.com/onchainengineering/hmi-computer/v2/tailnet/proto"
 )
 

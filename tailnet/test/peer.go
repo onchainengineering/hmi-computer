@@ -10,8 +10,8 @@ import (
 	"golang.org/x/xerrors"
 	"tailscale.com/types/key"
 
+	"github.com/onchainengineering/hmi-computer/proto"
 	"github.com/onchainengineering/hmi-computer/v2/tailnet"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/proto"
 )
 
 type PeerStatus struct {

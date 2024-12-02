@@ -10,7 +10,7 @@ import (
 	"testing"
 
 	"github.com/onchainengineering/hmi-computer/v2/pty"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/pty/ptytest"
+	"github.com/onchainengineering/hmi-computer/v2/pty/ptytest"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/goleak"

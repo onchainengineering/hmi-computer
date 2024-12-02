@@ -11,14 +11,14 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/coder/quartz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/cryptokeys"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbgen"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtestutil"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/jwtutils"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/workspaceapps"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/coderdtest"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/cryptokeys"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbgen"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtestutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/jwtutils"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/workspaceapps"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 

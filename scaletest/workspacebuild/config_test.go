@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/onchainengineering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/workspacebuild"
+	"github.com/onchainengineering/hmi-computer/v2/scaletest/workspacebuild"
 )
 
 func Test_Config(t *testing.T) {

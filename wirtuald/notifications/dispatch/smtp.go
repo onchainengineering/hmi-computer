@@ -28,9 +28,9 @@ import (
 	"cdr.dev/slog"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications/render"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications/types"
-	markdown "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/render"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications/types"
+	markdown "github.com/onchainengineering/hmi-computer/v2/coderd/render"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 var (

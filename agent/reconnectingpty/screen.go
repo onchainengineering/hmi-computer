@@ -20,7 +20,7 @@ import (
 
 	"cdr.dev/slog"
 	"github.com/onchainengineering/hmi-computer/v2/agent/agentexec"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/pty"
+	"github.com/onchainengineering/hmi-computer/v2/pty"
 )
 
 // screenReconnectingPTY provides a reconnectable PTY via `screen`.

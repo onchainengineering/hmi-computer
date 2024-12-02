@@ -41,8 +41,8 @@ import (
 	"tailscale.com/wgengine/router"
 
 	"cdr.dev/slog"
+	"github.com/onchainengineering/hmi-computer/proto"
 	"github.com/onchainengineering/hmi-computer/v2/cryptorand"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/proto"
 )
 
 var ErrConnClosed = xerrors.New("connection closed")

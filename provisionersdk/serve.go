@@ -17,7 +17,7 @@ import (
 	"cdr.dev/slog"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/tracing"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk/proto"
+	"github.com/onchainengineering/hmi-computer/v2/provisionersdk/proto"
 )
 
 // ServeOptions are configurations to serve a provisioner.

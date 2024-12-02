@@ -11,7 +11,7 @@ import (
 
 	"cdr.dev/slog"
 	"github.com/onchainengineering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/harness"
+	"github.com/onchainengineering/hmi-computer/v2/scaletest/harness"
 )
 
 type Runner struct {

@@ -40,7 +40,7 @@ var (
 	//go:embed templates/scratch
 	files embed.FS
 
-	exampleBasePath = "https://github.com/onchainengineering/hmi-computerneering/hmi-computer/tree/main/examples/templates/"
+	exampleBasePath = "https://github.com/onchainengineering/hmi-computer/tree/main/examples/templates/"
 	examplesJSON    = "examples.gen.json"
 	parsedExamples  []codersdk.TemplateExample
 	parseExamples   sync.Once

@@ -8,8 +8,8 @@ import (
 	"golang.org/x/xerrors"
 
 	"cdr.dev/slog"
+	"github.com/onchainengineering/hmi-computer/proto"
 	"github.com/onchainengineering/hmi-computer/v2/codersdk/drpc"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/proto"
 )
 
 func NewDRPCClient(conn net.Conn, logger slog.Logger) (proto.DRPCTailnetClient, error) {

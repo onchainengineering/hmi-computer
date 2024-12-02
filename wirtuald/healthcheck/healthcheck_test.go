@@ -7,9 +7,9 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/healthcheck"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/healthcheck/derphealth"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/healthcheck/health"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/healthsdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/healthcheck/derphealth"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/healthcheck/health"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/healthsdk"
 )
 
 type testChecker struct {

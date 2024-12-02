@@ -9,7 +9,7 @@ import (
 	"cdr.dev/slog"
 	"cdr.dev/slog/sloggers/slogtest"
 	"github.com/coder/quartz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/pubsub"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/pubsub"
 	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 

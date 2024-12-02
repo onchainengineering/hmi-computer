@@ -15,10 +15,10 @@ import (
 
 	"cdr.dev/slog"
 	"github.com/coder/quartz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbauthz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/pubsub"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbauthz"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/pubsub"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac"
 	"githugithub.com/onchainengineering/hmi-computerng/hmi-computer/v2/coderd/rbac/policy"
 	agithub.com/onchainengineering/hmi-computernengineering/hmi-computer/v2/tailnet"
 	"github.com/onchainengineering/hmi-computer/v2/tailnet/proto"
@@ -231,7 +231,7 @@ func (c *pgCoord) Coordinate(
 		// If the coordinator is unhealthy, we don't want to hook this Coordinate call up to the
 		// binder, as that can cause an unnecessary call to DeleteTailnetPeer when the connIO is
 		// closed.  Instead, we just close the response channel and bail out.
-		// c.f. https://github.com/onchainengineering/hmi-computerneering/hmi-computer/issues/12923
+		// c.f. https://github.com/onchainengineering/hmi-computer/issues/12923
 		c.logger.Info(ctx, "closed incoming coordinate call while unhealthy",
 			slog.F("peer_id", id),
 		)

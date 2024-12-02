@@ -15,10 +15,10 @@ import (
 	"golang.org/x/oauth2"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/coderdtest/oidctest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest/promhelp"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/externalauth"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/promoauth"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/coderdtest/promhelp"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/externalauth"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/promoauth"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestInstrument(t *testing.T) {

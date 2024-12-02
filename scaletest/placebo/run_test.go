@@ -10,11 +10,11 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/httpapi"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/scaletest/placebo"
+	"github.com/onchainengineering/hmi-computer/v2/scaletest/placebo"
 )
 
 func Test_Runner(t *testing.T) {
-	t.Skip("This test is flakey, see https://github.com/onchainengineering/hmi-computerneering/hmi-computer/actions/runs/3463709674/jobs/5784335013#step:9:215")
+	t.Skip("This test is flakey, see https://github.com/onchainengineering/hmi-computer/actions/runs/3463709674/jobs/5784335013#step:9:215")
 	t.Parallel()
 
 	t.Run("NoSleep", func(t *testing.T) {

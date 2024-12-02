@@ -37,12 +37,12 @@ import (
 	"cdr.dev/slog"
 	"cdr.dev/slog/sloggers/slogtest"
 	"github.com/onchainengineering/hmi-computer/v2/coderd"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/externalauth"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpapi"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/promoauth"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/syncmap"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/externalauth"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpapi"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/promoauth"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/util/syncmap"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 type token struct {

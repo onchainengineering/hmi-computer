@@ -13,8 +13,8 @@ import (
 
 	"cdr.dev/slog"
 
+	"github.com/onchainengineering/hmi-computer/proto"
 	agpl "github.com/onchainengineering/hmi-computer/v2/tailnet"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/proto"
 )
 
 // connIO manages the reading and writing to a connected peer. It reads requests via its requests

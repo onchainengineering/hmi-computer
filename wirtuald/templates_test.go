@@ -12,21 +12,21 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/onchainengineering/hmi-computer/v2/agent/agenttest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/audit"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbauthz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtestutil"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications/notificationstest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/schedule"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/ptr"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/workspacesdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisioner/echo"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/audit"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/coderdtest"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbauthz"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtestutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications/notificationstest"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/schedule"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/util/ptr"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/workspacesdk"
+	"github.com/onchainengineering/hmi-computer/v2/provisioner/echo"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestTemplate(t *testing.T) {
@@ -1298,7 +1298,7 @@ func TestDeleteTemplate(t *testing.T) {
 func TestTemplateMetrics(t *testing.T) {
 	t.Parallel()
 
-	t.Skip("flaky test: https://github.com/onchainengineering/hmi-computerneering/hmi-computer/issues/6481")
+	t.Skip("flaky test: https://github.com/onchainengineering/hmi-computer/issues/6481")
 
 	client := coderdtest.New(t, &coderdtest.Options{
 		IncludeProvisionerDaemon:    true,

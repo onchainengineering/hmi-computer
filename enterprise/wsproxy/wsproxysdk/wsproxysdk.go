@@ -14,11 +14,11 @@ import (
 	"tailscale.com/tailcfg"
 
 	"cdr.dev/slog"
+	agpl "github.com/onchainengineering/hmi-computer"
 	"github.com/onchainengineering/hmi-computer/v2/coderd/httpmw"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/workspaceapps"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/workspacesdk"
-	agpl "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/workspaceapps"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/workspacesdk"
 )
 
 // Client is a HTTP client for a subset of Coder API routes that external

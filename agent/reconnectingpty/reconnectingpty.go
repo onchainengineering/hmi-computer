@@ -15,7 +15,7 @@ import (
 
 	"cdr.dev/slog"
 	"github.com/onchainengineering/hmi-computer/v2/codersdk/workspacesdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/pty"
+	"github.com/onchainengineering/hmi-computer/v2/pty"
 )
 
 // attachTimeout is the initial timeout for attaching and will probably be far

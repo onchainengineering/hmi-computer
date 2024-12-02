@@ -9,10 +9,10 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/onchainengineering/hmi-computer/v2/cli/clitest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/coderd/coderdenttest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/pty/ptytest"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/coderdtest"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/coderd/coderdenttest"
+	"github.com/onchainengineering/hmi-computer/v2/pty/ptytest"
 )
 
 func TestFeaturesList(t *testing.T) {

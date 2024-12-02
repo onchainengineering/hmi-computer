@@ -8,10 +8,10 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/coder/serpent"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cli/clitest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cli/config"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/cli"
+	"github.com/onchainengineering/hmi-computer/v2/cli/clitest"
+	"github.com/onchainengineering/hmi-computer/v2/cli/config"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/coderdtest"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/cli"
 	"github.com/onchainengineering/hmi-computer/v2/enterprise/coderd/coderdenttest"
 )
 

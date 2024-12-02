@@ -33,13 +33,13 @@ import (
 	"tailscale.com/types/key"
 
 	"cdr.dev/slog"
+	tailnetproto "github.com/onchainengineering/hmi-computer/proto"
 	"github.com/onchainengineering/hmi-computer/v2/coderd/httpapi"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpmw"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/tracing"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet"
-	tailnetproto "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/proto"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpmw"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/tracing"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/tailnet"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 type ClientNumber int

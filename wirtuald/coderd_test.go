@@ -20,19 +20,19 @@ import (
 	"tailscale.com/tailcfg"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbfake"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/workspacesdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk/proto"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbfake"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/workspacesdk"
+	"github.com/onchainengineering/hmi-computer/v2/provisionersdk/proto"
+	"github.com/onchainengineering/hmi-computer/v2/tailnet"
 
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/agent/agenttest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/buildinfo"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisioner/echo"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet"
-	tailnetproto "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet/proto"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	tailnetproto "github.com/onchainengineering/hmi-computer/proto"
+	"github.com/onchainengineering/hmi-computer/v2/agent/agenttest"
+	"github.com/onchainengineering/hmi-computer/v2/buildinfo"
+	"github.com/onchainengineering/hmi-computer/v2/coderd"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/coderdtest"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/provisioner/echo"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 // updateGoldenFiles is a flag that can be set to update golden files.

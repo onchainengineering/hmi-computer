@@ -9,9 +9,9 @@ import (
 	"go.uber.org/mock/gomock"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbmock"
-	agpl "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/schedule"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/coderd/schedule"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbmock"
+	agpl "github.com/onchainengineering/hmi-computer/v2/coderd/schedule"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/coderd/schedule"
 )
 
 func TestEnterpriseUserQuietHoursSchedule(t *testing.T) {

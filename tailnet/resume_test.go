@@ -10,8 +10,8 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/coder/quartz"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/jwtutils"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/tailnet"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/jwtutils"
+	"github.com/onchainengineering/hmi-computer/v2/tailnet"
 	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 

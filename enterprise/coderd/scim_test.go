@@ -17,17 +17,17 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/audit"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/coderdtest/oidctest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/notifications/notificationstest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/cryptorand"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/coderd"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/coderd/coderdenttest"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/coderd/license"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/enterprise/coderd/scim"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/coderdtest"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/coderdtest/oidctest"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/notifications/notificationstest"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/cryptorand"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/coderd"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/coderd/coderdenttest"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/coderd/license"
+	"github.com/onchainengineering/hmi-computer/v2/enterprise/coderd/scim"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 //nolint:revive

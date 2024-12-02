@@ -22,11 +22,11 @@ import (
 	"cdr.dev/slog"
 	"cdr.dev/slog/sloggers/slogtest"
 	"github.com/onchainengineering/hmi-computer/v2/codersdk/drpc"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionerd"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionerd/proto"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk"
-	sdkproto "github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk/proto"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/provisionerd"
+	"github.com/onchainengineering/hmi-computer/v2/provisionerd/proto"
+	"github.com/onchainengineering/hmi-computer/v2/provisionersdk"
+	sdkproto "github.com/onchainengineering/hmi-computer/v2/provisionersdk/proto"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestMain(m *testing.M) {

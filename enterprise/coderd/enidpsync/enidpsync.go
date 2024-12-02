@@ -3,8 +3,8 @@ package enidpsync
 import (
 	"cdr.dev/slog"
 	"github.com/onchainengineering/hmi-computer/v2/coderd/entitlements"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/idpsync"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/runtimeconfig"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/idpsync"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/runtimeconfig"
 )
 
 // EnterpriseIDPSync enabled syncing user information from an external IDP.

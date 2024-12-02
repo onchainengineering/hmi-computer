@@ -19,14 +19,14 @@ import (
 	"cdr.dev/slog"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac/policy"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac/rolestore"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac/rolestore"
 
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/database/dbtime"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/httpapi/httpapiconstraints"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/rbac"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/slice"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/provisionersdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/dbtime"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/httpapi/httpapiconstraints"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/rbac"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/util/slice"
+	"github.com/onchainengineering/hmi-computer/v2/provisionersdk"
 )
 
 var _ database.Store = (*querier)(nil)

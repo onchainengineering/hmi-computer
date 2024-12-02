@@ -23,9 +23,9 @@ import (
 	tslogger "tailscale.com/types/logger"
 
 	"github.com/onchainengineering/hmi-computer/v2/coderd/healthcheck/health"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/ptr"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/coderd/util/slice"
-	"github.com/onchainengineering/hmi-computerneering/hmi-computer/v2/codersdk/healthsdk"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/util/ptr"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/util/slice"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/healthsdk"
 )
 
 const (
