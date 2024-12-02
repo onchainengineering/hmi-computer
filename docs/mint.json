@@ -1,5 +1,5 @@
  {
-  "name": "Wirtual Documentation",
+  "name": "Coder Documentation",
   "logo": {
     "light": "./images/icons/home.svg",
     "dark": "./images/icons/home.svg"
@@ -14,226 +14,87 @@
     {
       "group": "About",
       "pages": [
-        {
-          "name": "About Coder",
-          "path": "./README.md"
-        },
-        {
-          "name": "Coder Quickstart",
-          "path": "./tutorials/quickstart.md"
-        },
-        {
-          "name": "Screenshots",
-          "path": "./start/screenshots.md"
-        }
+        "./README.md",
+        "./tutorials/quickstart.md",
+        "./start/screenshots.md"
       ]
     },
     {
       "group": "Install",
       "pages": [
+        "./install/index.md",
+        "./install/cli.md",
+        "./install/docker.md",
+        "./install/kubernetes.md",
+        "./install/openshift.md",
         {
-          "name": "Installing Coder",
-          "path": "./install/index.md"
-        },
-        {
-          "name": "Coder CLI",
-          "path": "./install/cli.md"
-        },
-        {
-          "name": "Docker Installation",
-          "path": "./install/docker.md"
-        },
-        {
-          "name": "Kubernetes Installation",
-          "path": "./install/kubernetes.md"
-        },
-        {
-          "name": "OpenShift Installation",
-          "path": "./install/openshift.md"
-        },
-        {
-          "name": "Cloud Providers",
-          "path": "./install/cloud/index.md",
-          "children": [
-            {
-              "name": "AWS EC2",
-              "path": "./install/cloud/ec2.md"
-            },
-            {
-              "name": "GCP Compute Engine",
-              "path": "./install/cloud/compute-engine.md"
-            },
-            {
-              "name": "Azure VM",
-              "path": "./install/cloud/azure-vm.md"
-            }
+          "group": "Cloud Providers",
+          "pages": [
+            "./install/cloud/ec2.md",
+            "./install/cloud/compute-engine.md",
+            "./install/cloud/azure-vm.md"
           ]
         },
-        {
-          "name": "Offline Deployments",
-          "path": "./install/offline.md"
-        },
-        {
-          "name": "Unofficial Install Methods",
-          "path": "./install/other/index.md"
-        },
-        {
-          "name": "Upgrading Coder",
-          "path": "./install/upgrade.md"
-        },
-        {
-          "name": "Uninstall Coder",
-          "path": "./install/uninstall.md"
-        },
-        {
-          "name": "Releases",
-          "path": "./install/releases.md"
-        }
+        "./install/offline.md",
+        "./install/other/index.md",
+        "./install/upgrade.md",
+        "./install/uninstall.md",
+        "./install/releases.md"
       ]
     },
     {
       "group": "User Guides",
       "pages": [
-        {
-          "name": "Access Workspaces",
-          "path": "./user-guides/workspace-access/index.md"
-        },
-        {
-          "name": "Workspace Management",
-          "path": "./user-guides/workspace-management.md"
-        },
-        {
-          "name": "Workspace Scheduling",
-          "path": "./user-guides/workspace-scheduling.md"
-        },
-        {
-          "name": "Workspace Lifecycle",
-          "path": "./user-guides/workspace-lifecycle.md"
-        },
-        {
-          "name": "Dotfiles",
-          "path": "./user-guides/workspace-dotfiles.md"
-        }
+        "./user-guides/workspace-access/index.md",
+        "./user-guides/workspace-management.md",
+        "./user-guides/workspace-scheduling.md",
+        "./user-guides/workspace-lifecycle.md",
+        "./user-guides/workspace-dotfiles.md"
       ]
     },
     {
       "group": "Administration",
       "pages": [
-        {
-          "name": "Setup",
-          "path": "./admin/setup/index.md"
-        },
-        {
-          "name": "Infrastructure",
-          "path": "./admin/infrastructure/index.md"
-        },
-        {
-          "name": "Users",
-          "path": "./admin/users/index.md"
-        },
-        {
-          "name": "Templates",
-          "path": "./admin/templates/index.md"
-        },
-        {
-          "name": "External Provisioners",
-          "path": "./admin/provisioners.md"
-        },
-        {
-          "name": "External Auth",
-          "path": "./admin/external-auth.md"
-        },
-        {
-          "name": "Integrations",
-          "path": "./admin/integrations/index.md"
-        },
-        {
-          "name": "Networking",
-          "path": "./admin/networking/index.md"
-        },
-        {
-          "name": "Monitoring",
-          "path": "./admin/monitoring/index.md"
-        },
-        {
-          "name": "Security",
-          "path": "./admin/security/index.md"
-        },
-        {
-          "name": "Licensing",
-          "path": "./admin/licensing/index.md"
-        }
+        "./admin/setup/index.md",
+        "./admin/infrastructure/index.md",
+        "./admin/users/index.md",
+        "./admin/templates/index.md",
+        "./admin/provisioners.md",
+        "./admin/external-auth.md",
+        "./admin/integrations/index.md",
+        "./admin/networking/index.md",
+        "./admin/monitoring/index.md",
+        "./admin/security/index.md",
+        "./admin/licensing/index.md"
       ]
     },
     {
       "group": "Contributing",
       "pages": [
-        {
-          "name": "Code of Conduct",
-          "path": "./contributing/CODE_OF_CONDUCT.md"
-        },
-        {
-          "name": "Feature Stages",
-          "path": "./contributing/feature-stages.md"
-        },
-        {
-          "name": "Documentation Guide",
-          "path": "./contributing/documentation.md"
-        },
-        {
-          "name": "Frontend Guide",
-          "path": "./contributing/frontend.md"
-        },
-        {
-          "name": "Security Guide",
-          "path": "./contributing/SECURITY.md"
-        }
+        "./contributing/CODE_OF_CONDUCT.md",
+        "./contributing/feature-stages.md",
+        "./contributing/documentation.md",
+        "./contributing/frontend.md",
+        "./contributing/SECURITY.md"
       ]
     },
     {
       "group": "Tutorials",
       "pages": [
-        {
-          "name": "Get Started with Coder",
-          "path": "./tutorials/quickstart.md"
-        },
-        {
-          "name": "Write a Template from Scratch",
-          "path": "./tutorials/template-from-scratch.md"
-        },
-        {
-          "name": "Using an External Database",
-          "path": "./tutorials/external-database.md"
-        },
-        {
-          "name": "Postgres SSL",
-          "path": "./tutorials/postgres-ssl.md"
-        },
-        {
-          "name": "FAQs",
-          "path": "./tutorials/faqs.md"
-        },
-        {
-          "name": "Best Practices",
-          "path": "./tutorials/best-practices/index.md"
-        }
+        "./tutorials/quickstart.md",
+        "./tutorials/template-from-scratch.md",
+        "./tutorials/external-database.md",
+        "./tutorials/postgres-ssl.md",
+        "./tutorials/faqs.md",
+        "./tutorials/best-practices/index.md"
       ]
     },
     {
       "group": "Reference",
       "pages": [
-        {
-          "name": "REST API",
-          "path": "./reference/api/index.md"
-        },
-        {
-          "name": "Command Line",
-          "path": "./reference/cli/index.md"
-        },
-        {
-          "name": "Agent API",
-          "path": "./reference/agent-api/index.md"
-        }
+        "./reference/api/index.md",
+        "./reference/cli/index.md",
+        "./reference/agent-api/index.md"
       ]
     }
   ]
