@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/coder/coder/v2/codersdk"
 	"github.com/coder/pretty"
 	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 func RichParameter(inv *serpent.Invocation, templateVersionParameter codersdk.TemplateVersionParameter, defaultOverrides map[string]string) (string, error) {

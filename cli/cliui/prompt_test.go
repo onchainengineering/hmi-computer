@@ -12,11 +12,11 @@ import (
 	"github.com/stretchr/testify/require"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/cli/cliui"
-	"github.com/coder/coder/v2/pty"
-	"github.com/coder/coder/v2/pty/ptytest"
-	"github.com/coder/coder/v2/testutil"
 	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computer/v2/cli/cliui"
+	"github.com/onchainengineering/hmi-computer/v2/pty"
+	"github.com/onchainengineering/hmi-computer/v2/pty/ptytest"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 func TestPrompt(t *testing.T) {

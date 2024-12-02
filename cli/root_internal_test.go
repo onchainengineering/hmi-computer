@@ -16,17 +16,17 @@ import (
 	"github.com/stretchr/testify/require"
 	"go.uber.org/goleak"
 
-	"github.com/coder/coder/v2/cli/cliui"
-	"github.com/coder/coder/v2/cli/telemetry"
-	"github.com/coder/coder/v2/codersdk"
 	"github.com/coder/pretty"
 	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computer/v2/cli/cliui"
+	"github.com/onchainengineering/hmi-computer/v2/cli/telemetry"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 func TestMain(m *testing.M) {
 	if runtime.GOOS == "windows" {
 		// Don't run goleak on windows tests, they're super flaky right now.
-		// See: https://github.com/coder/coder/issues/8954
+		// See: https://github.com/onchainengineering/hmi-computer/issues/8954
 		os.Exit(m.Run())
 	}
 	goleak.VerifyTestMain(m,

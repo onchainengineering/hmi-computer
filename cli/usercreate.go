@@ -10,10 +10,10 @@ import (
 
 	"github.com/coder/pretty"
 
-	"github.com/coder/coder/v2/cli/cliui"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/cryptorand"
 	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computer/v2/cli/cliui"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/cryptorand"
 )
 
 func (r *RootCmd) userCreate() *serpent.Command {
@@ -129,7 +129,7 @@ func (r *RootCmd) userCreate() *serpent.Command {
 Share the instructions below to get them started.
 `+pretty.Sprint(cliui.DefaultStyles.Placeholder, "—————————————————————————————————————————————————")+`
 Download the Coder command line for your operating system:
-https://github.com/coder/coder/releases
+https://github.com/onchainengineering/hmi-computer/releases
 
 Run `+pretty.Sprint(cliui.DefaultStyles.Code, "coder login "+client.URL.String())+` to authenticate.
 

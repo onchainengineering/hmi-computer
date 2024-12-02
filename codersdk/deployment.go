@@ -22,9 +22,9 @@ import (
 
 	"github.com/coder/serpent"
 
-	"github.com/coder/coder/v2/buildinfo"
-	"github.com/coder/coder/v2/coderd/agentmetrics"
-	"github.com/coder/coder/v2/coderd/workspaceapps/appurl"
+	"github.com/onchainengineering/hmi-computer/v2/buildinfo"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/agentmetrics"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/workspaceapps/appurl"
 )
 
 // Entitlement represents whether a feature is licensed.
@@ -793,7 +793,7 @@ func DefaultSupportLinks(docsURL string) []LinkConfig {
 		},
 		{
 			Name:   "Report a bug",
-			Target: "https://github.com/coder/coder/issues/new?labels=needs+grooming&body=" + buildInfo,
+			Target: "https://github.com/onchainengineering/hmi-computer/issues/new?labels=needs+grooming&body=" + buildInfo,
 			Icon:   "bug",
 		},
 		{
@@ -803,7 +803,7 @@ func DefaultSupportLinks(docsURL string) []LinkConfig {
 		},
 		{
 			Name:   "Star the Repo",
-			Target: "https://github.com/coder/coder",
+			Target: "https://github.com/onchainengineering/hmi-computer",
 			Icon:   "star",
 		},
 	}

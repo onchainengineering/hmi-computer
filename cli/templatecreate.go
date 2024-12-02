@@ -11,9 +11,9 @@ import (
 	"github.com/coder/pretty"
 	"github.com/coder/serpent"
 
-	"github.com/coder/coder/v2/cli/cliui"
-	"github.com/coder/coder/v2/coderd/util/ptr"
-	"github.com/coder/coder/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/cli/cliui"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/util/ptr"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 func (r *RootCmd) templateCreate() *serpent.Command {

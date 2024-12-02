@@ -31,14 +31,14 @@ import (
 
 	"github.com/coder/pretty"
 
-	"github.com/coder/coder/v2/buildinfo"
-	"github.com/coder/coder/v2/cli/cliui"
-	"github.com/coder/coder/v2/cli/config"
-	"github.com/coder/coder/v2/cli/gitauth"
-	"github.com/coder/coder/v2/cli/telemetry"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/codersdk/agentsdk"
 	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computer/v2/buildinfo"
+	"github.com/onchainengineering/hmi-computer/v2/cli/cliui"
+	"github.com/onchainengineering/hmi-computer/v2/cli/config"
+	"github.com/onchainengineering/hmi-computer/v2/cli/gitauth"
+	"github.com/onchainengineering/hmi-computer/v2/cli/telemetry"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/agentsdk"
 )
 
 var (
@@ -1156,7 +1156,7 @@ func SlimUnsupported(w io.Writer, cmd string) {
 	_, _ = fmt.Fprintf(w, "You are using a 'slim' build of Coder, which does not support the %s subcommand.\n", pretty.Sprint(cliui.DefaultStyles.Code, cmd))
 	_, _ = fmt.Fprintln(w, "")
 	_, _ = fmt.Fprintln(w, "Please use a build of Coder from GitHub releases:")
-	_, _ = fmt.Fprintln(w, "  https://github.com/coder/coder/releases")
+	_, _ = fmt.Fprintln(w, "  https://github.com/onchainengineering/hmi-computer/releases")
 
 	//nolint:revive
 	os.Exit(1)
@@ -1167,7 +1167,7 @@ func defaultUpgradeMessage(version string) string {
 	// to the GitHub release page to download the latest installer.
 	version = strings.TrimPrefix(version, "v")
 	if runtime.GOOS == "windows" {
-		return fmt.Sprintf("download the server version from: https://github.com/coder/coder/releases/v%s", version)
+		return fmt.Sprintf("download the server version from: https://github.com/onchainengineering/hmi-computer/releases/v%s", version)
 	}
 	return fmt.Sprintf("download the server version with: 'curl -L https://coder.com/install.sh | sh -s -- --version %s'", version)
 }

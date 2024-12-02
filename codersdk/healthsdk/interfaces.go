@@ -5,7 +5,7 @@ import (
 
 	"tailscale.com/net/interfaces"
 
-	"github.com/coder/coder/v2/coderd/healthcheck/health"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/healthcheck/health"
 )
 
 // gVisor is nominally permitted to send packets up to 1280.

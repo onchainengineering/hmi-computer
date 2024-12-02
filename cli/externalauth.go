@@ -8,10 +8,10 @@ import (
 
 	"github.com/tidwall/gjson"
 
-	"github.com/coder/coder/v2/cli/cliui"
-	"github.com/coder/coder/v2/codersdk/agentsdk"
 	"github.com/coder/pretty"
 	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computer/v2/cli/cliui"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/agentsdk"
 )
 
 func (r *RootCmd) externalAuth() *serpent.Command {

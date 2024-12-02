@@ -1,4 +1,4 @@
-# This is the base image used for Coder images. It's a multi-arch image that is
+# This is the base image used for wirtual images. It's a multi-arch image that is
 # built in depot.dev for all supported architectures. Since it's built on real
 # hardware and not cross-compiled, it can have "RUN" commands.
 FROM alpine:3.20.3
@@ -15,14 +15,14 @@ RUN apk add --no-cache \
 		openssh-client && \
 	addgroup \
 		-g 1000 \
-		coder && \
+		wirtual && \
 	adduser \
 		-D \
 		-s /bin/bash \
-		-h /home/coder \
+		-h /home/wirtual \
 		-u 1000 \
-		-G coder \
-		coder
+		-G wirtual \
+		wirtual
 # Terraform was disabled in the edge repo due to a build issue.
 # https://gitlab.alpinelinux.org/alpine/aports/-/commit/f3e263d94cfac02d594bef83790c280e045eba35
 # Using wget for now. Note that busybox unzip doesn't support streaming.
@@ -32,6 +32,6 @@ RUN ARCH="$(arch)"; if [ "${ARCH}" == "x86_64" ]; then ARCH="amd64"; elif [ "${A
 		chmod +x /usr/local/bin/terraform && \
 		terraform --version
 USER 1000:1000
-ENV HOME=/home/coder
+ENV HOME=/home/wirtual
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt
-WORKDIR /home/coder
+WORKDIR /home/wirtual

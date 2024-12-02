@@ -9,9 +9,9 @@ import (
 
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/coderd/schedule/cron"
-	"github.com/coder/coder/v2/coderd/util/tz"
 	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/schedule/cron"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/util/tz"
 )
 
 var (
@@ -188,7 +188,7 @@ func isDigit(s string) bool {
 //   - d (days, interpreted as 24h)
 //   - y (years, interpreted as 8_760h)
 //
-// FIXME: handle fractional values as discussed in https://github.com/coder/coder/pull/15040#discussion_r1799261736
+// FIXME: handle fractional values as discussed in https://github.com/onchainengineering/hmi-computer/pull/15040#discussion_r1799261736
 func extendedParseDuration(raw string) (time.Duration, error) {
 	var d int64
 	isPositive := true

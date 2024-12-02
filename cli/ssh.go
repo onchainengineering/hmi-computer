@@ -29,17 +29,17 @@ import (
 
 	"cdr.dev/slog"
 	"cdr.dev/slog/sloggers/sloghuman"
-	"github.com/coder/coder/v2/cli/cliui"
-	"github.com/coder/coder/v2/cli/cliutil"
-	"github.com/coder/coder/v2/coderd/autobuild/notify"
-	"github.com/coder/coder/v2/coderd/util/ptr"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/codersdk/workspacesdk"
-	"github.com/coder/coder/v2/cryptorand"
-	"github.com/coder/coder/v2/pty"
 	"github.com/coder/quartz"
 	"github.com/coder/retry"
 	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computer/v2/cli/cliui"
+	"github.com/onchainengineering/hmi-computer/v2/cli/cliutil"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/autobuild/notify"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/util/ptr"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/workspacesdk"
+	"github.com/onchainengineering/hmi-computer/v2/cryptorand"
+	"github.com/onchainengineering/hmi-computer/v2/pty"
 )
 
 const (
@@ -92,7 +92,7 @@ func (r *RootCmd) ssh() *serpent.Command {
 			defer cancel()
 
 			// Prevent unnecessary logs from the stdlib from messing up the TTY.
-			// See: https://github.com/coder/coder/issues/13144
+			// See: https://github.com/onchainengineering/hmi-computer/issues/13144
 			log.SetOutput(io.Discard)
 
 			logger := inv.Logger
@@ -554,7 +554,7 @@ func (r *RootCmd) ssh() *serpent.Command {
 // is stopped before the agent is shut down, the disconnect
 // will usually not propagate.
 //
-// See: https://github.com/coder/coder/issues/6180
+// See: https://github.com/onchainengineering/hmi-computer/issues/6180
 func watchAndClose(ctx context.Context, closer func() error, logger slog.Logger, client *codersdk.Client, workspace codersdk.Workspace) {
 	// Ensure session is ended on both context cancellation
 	// and workspace stop.

@@ -12,12 +12,12 @@ import (
 	"golang.org/x/exp/maps"
 	"golang.org/x/xerrors"
 
-	"github.com/coder/coder/v2/cli/cliui"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/examples"
-	"github.com/coder/coder/v2/provisionersdk"
 	"github.com/coder/pretty"
 	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computer/v2/cli/cliui"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/examples"
+	"github.com/onchainengineering/hmi-computer/v2/provisionersdk"
 )
 
 func (*RootCmd) templateInit() *serpent.Command {

@@ -16,8 +16,8 @@ import (
 	"cdr.dev/slog/sloggers/slogtest"
 	"github.com/coder/quartz"
 
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/testutil"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 const (

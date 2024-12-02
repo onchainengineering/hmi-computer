@@ -10,9 +10,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/coder/coder/v2/cli/clitest"
-	"github.com/coder/coder/v2/cli/config"
-	"github.com/coder/coder/v2/cryptorand"
+	"github.com/onchainengineering/hmi-computer/v2/cli/clitest"
+	"github.com/onchainengineering/hmi-computer/v2/cli/config"
+	"github.com/onchainengineering/hmi-computer/v2/cryptorand"
 )
 
 func TestDotfiles(t *testing.T) {

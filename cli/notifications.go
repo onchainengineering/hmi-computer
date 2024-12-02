@@ -7,7 +7,7 @@ import (
 
 	"github.com/coder/serpent"
 
-	"github.com/coder/coder/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 func (r *RootCmd) notifications() *serpent.Command {

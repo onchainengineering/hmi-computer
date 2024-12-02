@@ -11,10 +11,10 @@ import (
 	"github.com/coder/pretty"
 	"github.com/coder/serpent"
 
-	"github.com/coder/coder/v2/cli/cliui"
-	"github.com/coder/coder/v2/coderd/database"
-	"github.com/coder/coder/v2/coderd/database/migrations"
-	"github.com/coder/coder/v2/coderd/userpassword"
+	"github.com/onchainengineering/hmi-computer/v2/cli/cliui"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/database/migrations"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/userpassword"
 )
 
 func (*RootCmd) resetPassword() *serpent.Command {

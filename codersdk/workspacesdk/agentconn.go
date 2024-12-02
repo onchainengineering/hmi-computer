@@ -20,10 +20,10 @@ import (
 	"tailscale.com/ipn/ipnstate"
 	"tailscale.com/net/speedtest"
 
-	"github.com/coder/coder/v2/coderd/tracing"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/codersdk/healthsdk"
-	"github.com/coder/coder/v2/tailnet"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/tracing"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/healthsdk"
+	"github.com/onchainengineering/hmi-computer/v2/tailnet"
 )
 
 // NewAgentConn creates a new WorkspaceAgentConn. `conn` may be unique

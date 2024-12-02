@@ -8,8 +8,8 @@ import (
 	"github.com/coder/pretty"
 	"github.com/coder/serpent"
 
-	"github.com/coder/coder/v2/buildinfo"
-	"github.com/coder/coder/v2/cli/cliui"
+	"github.com/onchainengineering/hmi-computer/v2/buildinfo"
+	"github.com/onchainengineering/hmi-computer/v2/cli/cliui"
 )
 
 // versionInfo wraps the stuff we get from buildinfo so that it's

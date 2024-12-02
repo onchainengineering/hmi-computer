@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"tailscale.com/tailcfg"
 
-	"github.com/coder/coder/v2/codersdk/agentsdk"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk/agentsdk"
 )
 
 func TestWorkspaceRewriteDERPMap(t *testing.T) {

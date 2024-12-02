@@ -1,8 +1,8 @@
 package cli
 
 import (
-	"github.com/coder/coder/v2/codersdk"
 	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
 )
 
 func (r *RootCmd) users() *serpent.Command {

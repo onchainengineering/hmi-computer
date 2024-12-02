@@ -5,9 +5,9 @@ import (
 
 	"go.uber.org/goleak"
 
-	"github.com/coder/coder/v2/cli/clitest"
-	"github.com/coder/coder/v2/coderd/coderdtest"
-	"github.com/coder/coder/v2/pty/ptytest"
+	"github.com/onchainengineering/hmi-computer/v2/cli/clitest"
+	"github.com/onchainengineering/hmi-computer/v2/coderd/coderdtest"
+	"github.com/onchainengineering/hmi-computer/v2/pty/ptytest"
 )
 
 func TestMain(m *testing.M) {

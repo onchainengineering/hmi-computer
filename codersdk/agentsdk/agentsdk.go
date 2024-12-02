@@ -20,11 +20,11 @@ import (
 	"tailscale.com/tailcfg"
 
 	"cdr.dev/slog"
-	"github.com/coder/coder/v2/agent/proto"
-	"github.com/coder/coder/v2/apiversion"
-	"github.com/coder/coder/v2/codersdk"
-	drpcsdk "github.com/coder/coder/v2/codersdk/drpc"
-	tailnetproto "github.com/coder/coder/v2/tailnet/proto"
+	"github.com/onchainengineering/hmi-computer/v2/agent/proto"
+	"github.com/onchainengineering/hmi-computer/v2/apiversion"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	drpcsdk "github.com/onchainengineering/hmi-computer/v2/codersdk/drpc"
+	tailnetproto "github.com/onchainengineering/hmi-computer/v2/tailnet/proto"
 )
 
 // ExternalLogSourceID is the statically-defined ID of a log-source that

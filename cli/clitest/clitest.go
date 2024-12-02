@@ -19,12 +19,12 @@ import (
 
 	"cdr.dev/slog"
 	"cdr.dev/slog/sloggers/slogtest"
-	"github.com/coder/coder/v2/cli"
-	"github.com/coder/coder/v2/cli/config"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/provisioner/echo"
-	"github.com/coder/coder/v2/testutil"
 	"github.com/coder/serpent"
+	"github.com/onchainengineering/hmi-computer/v2/cli"
+	"github.com/onchainengineering/hmi-computer/v2/cli/config"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/provisioner/echo"
+	"github.com/onchainengineering/hmi-computer/v2/testutil"
 )
 
 // New creates a CLI instance with a configuration pointed to a

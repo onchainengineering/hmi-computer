@@ -19,10 +19,10 @@ import (
 	"tailscale.com/wgengine/capture"
 
 	"cdr.dev/slog"
-	"github.com/coder/coder/v2/codersdk"
-	"github.com/coder/coder/v2/tailnet"
-	"github.com/coder/coder/v2/tailnet/proto"
 	"github.com/coder/quartz"
+	"github.com/onchainengineering/hmi-computer/v2/codersdk"
+	"github.com/onchainengineering/hmi-computer/v2/tailnet"
+	"github.com/onchainengineering/hmi-computer/v2/tailnet/proto"
 )
 
 var ErrSkipClose = xerrors.New("skip tailnet close")
