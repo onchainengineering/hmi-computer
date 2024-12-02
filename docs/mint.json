@@ -55,24 +55,6 @@
 
       ]
     },
-    {
-      "group": "Essentials",
-      "pages": [
-        
-      ]
-    },
-    {
-      "group": "API Documentation",
-      "pages": [
-        "api-reference/introduction"
-      ]
-    },
-    {
-      "group": "Endpoint Examples",
-      "pages": [
-        
-      ]
-    }
   ],
   "footerSocials": {
     "x": "https://x.com/mintlify",
